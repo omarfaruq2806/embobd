@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/navbar/Navbar";
+import Footer from "@/components/footer/Footer";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "EMBOBD - Embroidery Jobs & Community",
-  description: "Job Portal and Innovative Community for Embroidery in Bangladesh",
+  title: "EMBOBD - Embroidery Jobs, Talent & Community",
+  description: "Bangladesh's premier marketplace & community for embroidery artists, digitizers, manufacturers, and fashion businesses.",
 };
 
 export default function RootLayout({
@@ -30,7 +31,8 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col bg-white text-black antialiased dark:bg-black dark:text-white">
         <Navbar />
-        {children}
+        <div className="flex-1">{children}</div>
+        <Footer />
       </body>
     </html>
   );
