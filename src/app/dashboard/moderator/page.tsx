@@ -42,7 +42,7 @@ export default function ModeratorDashboardPage() {
           </div>
 
           <Link
-            href="/admin/jobs"
+            href="/dashboard/admin/jobs"
             className="flex items-center gap-1.5 rounded-xl bg-black px-4 py-2.5 text-xs font-semibold text-white transition hover:opacity-90 dark:bg-white dark:text-black"
           >
             <CheckCircle2 size={15} /> Review Pending Jobs
@@ -89,7 +89,7 @@ export default function ModeratorDashboardPage() {
         </div>
 
         {/* Action Shortcuts */}
-        <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
           <div className="rounded-3xl border border-black/10 bg-white p-6 shadow-xs dark:border-white/10 dark:bg-zinc-950">
             <h2 className="text-sm font-bold text-black dark:text-white">
               Job Queue Moderation
@@ -98,10 +98,25 @@ export default function ModeratorDashboardPage() {
               Accept employer submissions to make them publicly visible on the job board.
             </p>
             <Link
-              href="/admin/jobs"
+              href="/dashboard/admin/jobs"
               className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-black underline underline-offset-4 hover:opacity-80 dark:text-white"
             >
               Open Job Moderation Table <ArrowRight size={14} />
+            </Link>
+          </div>
+
+          <div className="rounded-3xl border border-black/10 bg-white p-6 shadow-xs dark:border-white/10 dark:bg-zinc-950">
+            <h2 className="text-sm font-bold text-black dark:text-white">
+              Business Directory Review
+            </h2>
+            <p className="mt-1 text-xs text-zinc-500">
+              Approve submitted embroidery shops, factories, dealerships, and verify entities.
+            </p>
+            <Link
+              href="/dashboard/admin/businesses"
+              className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-black underline underline-offset-4 hover:opacity-80 dark:text-white"
+            >
+              Review Business Queue <ArrowRight size={14} />
             </Link>
           </div>
 
@@ -113,7 +128,7 @@ export default function ModeratorDashboardPage() {
               Verify embroidery techniques, specialty niches, and machine types.
             </p>
             <Link
-              href="/admin/categories"
+              href="/dashboard/admin/categories"
               className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-black underline underline-offset-4 hover:opacity-80 dark:text-white"
             >
               Manage Specialty Categories <ArrowRight size={14} />

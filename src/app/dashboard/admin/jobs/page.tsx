@@ -13,41 +13,35 @@ import {
   DollarSign,
   MapPin,
 } from "lucide-react";
-
-interface Job {
-  id: string;
-  title: string;
-  status: string;
-  jobType: string;
-  location: string | null;
-  createdAt: string;
-  company: {
-    id: string;
-    name: string;
-  };
-  category: {
-    id: string;
-    name: string;
-  };
-}
+import { jobApi } from "@/services";
 
 export default function AdminJobsPage() {
-  const [jobs, setJobs] = useState<Job[]>([]);
+  const [jobs, setJobs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+  // Debounce search input (300ms)
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search.trim());
+    }, 300);
+    return () => clearTimeout(handler);
+  }, [search]);
 
   const fetchJobs = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${API_URL}/api/v1/jobs`);
-      const json = await res.json();
-      if (json.success && Array.isArray(json.data)) {
-        setJobs(json.data);
+      const res = await jobApi.getAll({
+        status: statusFilter !== "ALL" ? statusFilter : undefined,
+        search: debouncedSearch || undefined,
+      });
+
+      if (res.success && Array.isArray(res.data)) {
+        setJobs(res.data);
       }
     } catch (err) {
       console.error("Failed to load jobs:", err);
@@ -58,19 +52,14 @@ export default function AdminJobsPage() {
 
   useEffect(() => {
     fetchJobs();
-  }, [API_URL]);
+  }, [statusFilter, debouncedSearch]);
 
   const handleStatusChange = async (jobId: string, newStatus: string) => {
     setUpdatingId(jobId);
     setMessage(null);
     try {
-      const res = await fetch(`${API_URL}/api/v1/jobs/${jobId}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: newStatus }),
-      });
-      const json = await res.json();
-      if (json.success) {
+      const res = await jobApi.update(jobId, { status: newStatus });
+      if (res.success) {
         setJobs((prev) =>
           prev.map((j) => (j.id === jobId ? { ...j, status: newStatus } : j))
         );
@@ -90,11 +79,8 @@ export default function AdminJobsPage() {
     }
 
     try {
-      const res = await fetch(`${API_URL}/api/v1/jobs/${jobId}`, {
-        method: "DELETE",
-      });
-      const json = await res.json();
-      if (json.success) {
+      const res = await jobApi.delete(jobId);
+      if (res.success) {
         setJobs((prev) => prev.filter((j) => j.id !== jobId));
         setMessage("Job deleted successfully");
         setTimeout(() => setMessage(null), 3000);
@@ -104,14 +90,7 @@ export default function AdminJobsPage() {
     }
   };
 
-  const filteredJobs = jobs.filter((job) => {
-    const matchesSearch =
-      job.title.toLowerCase().includes(search.toLowerCase()) ||
-      job.company?.name.toLowerCase().includes(search.toLowerCase()) ||
-      job.category?.name.toLowerCase().includes(search.toLowerCase());
-    const matchesStatus = statusFilter === "ALL" || job.status === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
+  const filteredJobs = jobs;
 
   return (
     <div className="mx-auto max-w-7xl">

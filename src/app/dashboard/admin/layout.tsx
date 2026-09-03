@@ -8,6 +8,7 @@ import {
   Briefcase,
   Layers,
   Building,
+  Store,
   ArrowLeft,
   ShieldAlert,
   ChevronRight,
@@ -17,11 +18,12 @@ import {
 import { authClient } from "@/lib/auth-client";
 
 const adminNavItems = [
-  { name: "Overview", href: "/admin", icon: LayoutDashboard },
-  { name: "Manage Jobs", href: "/admin/jobs", icon: Briefcase },
-  { name: "Manage Users", href: "/admin/users", icon: Users },
-  { name: "Categories", href: "/admin/categories", icon: Layers },
-  { name: "Companies", href: "/admin/companies", icon: Building },
+  { name: "Overview", href: "/dashboard/admin", icon: LayoutDashboard },
+  { name: "Manage Jobs", href: "/dashboard/admin/jobs", icon: Briefcase },
+  { name: "Businesses", href: "/dashboard/admin/businesses", icon: Store },
+  { name: "Manage Users", href: "/dashboard/admin/users", icon: Users },
+  { name: "Categories", href: "/dashboard/admin/categories", icon: Layers },
+  { name: "Companies", href: "/dashboard/admin/companies", icon: Building },
 ];
 
 export default function AdminLayout({
@@ -56,8 +58,8 @@ export default function AdminLayout({
             {adminNavItems.map((item) => {
               const Icon = item.icon;
               const isActive =
-                item.href === "/admin"
-                  ? pathname === "/admin"
+                item.href === "/dashboard/admin"
+                  ? pathname === "/dashboard/admin"
                   : pathname.startsWith(item.href);
 
               return (
@@ -93,7 +95,7 @@ export default function AdminLayout({
       <div className="flex flex-1 flex-col overflow-hidden">
         {/* Mobile Header */}
         <header className="flex h-14 items-center justify-between border-b border-black/10 bg-white px-6 dark:border-white/10 dark:bg-zinc-950 md:hidden">
-          <Link href="/admin" className="text-base font-bold text-black dark:text-white">
+          <Link href="/dashboard/admin" className="text-base font-bold text-black dark:text-white">
             EMBOBD Admin
           </Link>
           <Link

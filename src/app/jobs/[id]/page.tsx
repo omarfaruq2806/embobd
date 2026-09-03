@@ -21,59 +21,24 @@ import {
   Layers,
   Copy,
 } from "lucide-react";
-
-interface Job {
-  id: string;
-  title: string;
-  description: string;
-  salaryMin: number | null;
-  salaryMax: number | null;
-  salaryCurrency: string;
-  location: string | null;
-  jobType: string;
-  workplaceType: string;
-  deadline: string | null;
-  status: string;
-  applyEmail: string;
-  publishedAt: string | null;
-  createdAt: string;
-  company: {
-    id: string;
-    name: string;
-    description: string | null;
-    website: string | null;
-    logo: string | null;
-  };
-  category: {
-    id: string;
-    name: string;
-    description: string | null;
-  };
-  owner: {
-    id: string;
-    name: string;
-    email: string;
-  };
-}
+import { jobApi } from "@/services";
 
 export default function JobDetailsPage() {
   const params = useParams();
   const id = params.id as string;
 
-  const [job, setJob] = useState<Job | null>(null);
+  const [job, setJob] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-
   useEffect(() => {
     async function fetchJob() {
+      if (!id) return;
       try {
         setLoading(true);
-        const res = await fetch(`${API_URL}/api/v1/jobs/${id}`);
-        const json = await res.json();
-        if (json.success && json.data) {
-          setJob(json.data);
+        const res = await jobApi.getById(id);
+        if (res.success && res.data) {
+          setJob(res.data);
         }
       } catch (err) {
         console.error("Failed to load job details:", err);
@@ -81,10 +46,9 @@ export default function JobDetailsPage() {
         setLoading(false);
       }
     }
-    if (id) {
-      fetchJob();
-    }
-  }, [id, API_URL]);
+
+    fetchJob();
+  }, [id]);
 
   const handleShare = () => {
     if (typeof window !== "undefined") {

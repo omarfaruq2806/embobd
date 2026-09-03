@@ -18,12 +18,7 @@ import {
   CheckCircle2,
   Lock,
 } from "lucide-react";
-
-interface Category {
-  id: string;
-  name: string;
-  description?: string;
-}
+import { categoryApi, jobApi, Category } from "@/services";
 
 export default function PostJobPage() {
   const router = useRouter();
@@ -51,8 +46,6 @@ export default function PostJobPage() {
   const [deadline, setDeadline] = useState("");
   const [description, setDescription] = useState("");
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-
   // Pre-fill user email if available
   useEffect(() => {
     if (user?.email && !applyEmail) {
@@ -64,12 +57,11 @@ export default function PostJobPage() {
   useEffect(() => {
     async function fetchCategories() {
       try {
-        const res = await fetch(`${API_URL}/api/v1/categories`);
-        const json = await res.json();
-        if (json.success && Array.isArray(json.data)) {
-          setCategories(json.data);
-          if (json.data.length > 0) {
-            setCategoryId(json.data[0].id);
+        const res = await categoryApi.getAll();
+        if (res.success && Array.isArray(res.data)) {
+          setCategories(res.data);
+          if (res.data.length > 0) {
+            setCategoryId(res.data[0].id);
           }
         }
       } catch (err) {
@@ -77,7 +69,7 @@ export default function PostJobPage() {
       }
     }
     fetchCategories();
-  }, [API_URL]);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -119,18 +111,10 @@ export default function PostJobPage() {
         ownerUserId: user.id,
       };
 
-      const res = await fetch(`${API_URL}/api/v1/jobs`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+      const res = await jobApi.create(payload as any);
 
-      const json = await res.json();
-
-      if (!res.ok || !json.success) {
-        throw new Error(json.message || "Failed to post job.");
+      if (!res.success) {
+        throw new Error(res.message || "Failed to post job.");
       }
 
       setSuccess(true);

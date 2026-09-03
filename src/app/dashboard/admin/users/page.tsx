@@ -11,36 +11,22 @@ import {
   Loader2,
   Filter,
 } from "lucide-react";
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-  createdAt: string;
-  _count?: {
-    jobs: number;
-    companies: number;
-  };
-}
+import { userApi, UserItem } from "@/services";
 
 export default function AdminUsersPage() {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<UserItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("ALL");
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${API_URL}/api/v1/users`);
-      const json = await res.json();
-      if (json.success && Array.isArray(json.data)) {
-        setUsers(json.data);
+      const res = await userApi.getAll();
+      if (res.success && Array.isArray(res.data)) {
+        setUsers(res.data);
       }
     } catch (err) {
       console.error("Failed to load users:", err);
@@ -51,19 +37,14 @@ export default function AdminUsersPage() {
 
   useEffect(() => {
     fetchUsers();
-  }, [API_URL]);
+  }, []);
 
   const handleRoleChange = async (userId: string, newRole: string) => {
     setUpdatingId(userId);
     setMessage(null);
     try {
-      const res = await fetch(`${API_URL}/api/v1/users/${userId}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ role: newRole }),
-      });
-      const json = await res.json();
-      if (json.success) {
+      const res = await userApi.updateRole(userId, newRole);
+      if (res.success) {
         setUsers((prev) =>
           prev.map((u) => (u.id === userId ? { ...u, role: newRole } : u))
         );

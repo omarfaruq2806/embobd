@@ -9,38 +9,20 @@ import {
   Loader2,
   Briefcase,
 } from "lucide-react";
-
-interface Company {
-  id: string;
-  name: string;
-  description: string | null;
-  website: string | null;
-  logo: string | null;
-  createdAt: string;
-  owner?: {
-    name: string;
-    email: string;
-  };
-  _count?: {
-    jobs: number;
-  };
-}
+import { companyApi, Company } from "@/services";
 
 export default function AdminCompaniesPage() {
   const [companies, setCompanies] = useState<Company[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-
   useEffect(() => {
     async function fetchCompanies() {
       try {
         setLoading(true);
-        const res = await fetch(`${API_URL}/api/v1/companies`);
-        const json = await res.json();
-        if (json.success && Array.isArray(json.data)) {
-          setCompanies(json.data);
+        const res = await companyApi.getAll();
+        if (res.success && Array.isArray(res.data)) {
+          setCompanies(res.data);
         }
       } catch (err) {
         console.error("Failed to load companies:", err);
@@ -49,7 +31,7 @@ export default function AdminCompaniesPage() {
       }
     }
     fetchCompanies();
-  }, [API_URL]);
+  }, []);
 
   const filtered = companies.filter((c) =>
     c.name.toLowerCase().includes(search.toLowerCase())

@@ -9,15 +9,7 @@ import {
   Loader2,
   FolderPlus,
 } from "lucide-react";
-
-interface Category {
-  id: string;
-  name: string;
-  description: string | null;
-  _count?: {
-    jobs: number;
-  };
-}
+import { categoryApi, Category } from "@/services";
 
 export default function AdminCategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -28,15 +20,12 @@ export default function AdminCategoriesPage() {
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-
   const fetchCategories = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${API_URL}/api/v1/categories`);
-      const json = await res.json();
-      if (json.success && Array.isArray(json.data)) {
-        setCategories(json.data);
+      const res = await categoryApi.getAll();
+      if (res.success && Array.isArray(res.data)) {
+        setCategories(res.data);
       }
     } catch (err) {
       console.error("Failed to load categories:", err);
@@ -47,7 +36,7 @@ export default function AdminCategoriesPage() {
 
   useEffect(() => {
     fetchCategories();
-  }, [API_URL]);
+  }, []);
 
   const handleAddCategory = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,41 +50,34 @@ export default function AdminCategoriesPage() {
 
     setSubmitting(true);
     try {
-      const res = await fetch(`${API_URL}/api/v1/categories`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim(), description: description.trim() || null }),
+      const res = await categoryApi.create({
+        name: name.trim(),
+        description: description.trim() || null,
       });
-      const json = await res.json();
-      if (json.success) {
+      if (res.success) {
         setName("");
         setDescription("");
         setMessage("Category created successfully! 🎉");
         fetchCategories();
         setTimeout(() => setMessage(null), 3000);
       } else {
-        setError(json.message || "Failed to create category.");
+        setError(res.message || "Failed to create category.");
       }
     } catch (err: any) {
-      setError(err?.message || "Failed to create category.");
+      setError(err?.message || "Error creating category.");
     } finally {
       setSubmitting(false);
     }
   };
 
-  const handleDeleteCategory = async (catId: string) => {
-    if (!confirm("Are you sure you want to delete this category?")) {
-      return;
-    }
+  const handleDeleteCategory = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this category?")) return;
 
     try {
-      const res = await fetch(`${API_URL}/api/v1/categories/${catId}`, {
-        method: "DELETE",
-      });
-      const json = await res.json();
-      if (json.success) {
-        setCategories((prev) => prev.filter((c) => c.id !== catId));
-        setMessage("Category removed successfully");
+      const res = await categoryApi.delete(id);
+      if (res.success) {
+        setCategories((prev) => prev.filter((c) => c.id !== id));
+        setMessage("Category deleted successfully.");
         setTimeout(() => setMessage(null), 3000);
       }
     } catch (err) {

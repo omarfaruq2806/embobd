@@ -7,6 +7,7 @@ import {
   Briefcase,
   Layers,
   Building,
+  Store,
   PlusCircle,
   ArrowRight,
   CheckCircle2,
@@ -14,6 +15,7 @@ import {
   Sparkles,
   TrendingUp,
 } from "lucide-react";
+import { jobApi, userApi, categoryApi, companyApi, businessApi } from "@/services";
 
 export default function AdminOverviewPage() {
   const [stats, setStats] = useState({
@@ -21,34 +23,36 @@ export default function AdminOverviewPage() {
     usersCount: 0,
     categoriesCount: 0,
     companiesCount: 0,
+    businessesCount: 0,
   });
   const [recentJobs, setRecentJobs] = useState<any[]>([]);
   const [recentUsers, setRecentUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-
   useEffect(() => {
     async function fetchDashboardData() {
       try {
         setLoading(true);
-        const [jobsRes, usersRes, catRes, compRes] = await Promise.all([
-          fetch(`${API_URL}/api/v1/jobs`).then((r) => r.json()).catch(() => ({ data: [] })),
-          fetch(`${API_URL}/api/v1/users`).then((r) => r.json()).catch(() => ({ data: [] })),
-          fetch(`${API_URL}/api/v1/categories`).then((r) => r.json()).catch(() => ({ data: [] })),
-          fetch(`${API_URL}/api/v1/companies`).then((r) => r.json()).catch(() => ({ data: [] })),
+        const [jobsRes, usersRes, catRes, compRes, bizRes] = await Promise.all([
+          jobApi.getAll(),
+          userApi.getAll(),
+          categoryApi.getAll(),
+          companyApi.getAll(),
+          businessApi.getAll(),
         ]);
 
-        const jobs = Array.isArray(jobsRes.data) ? jobsRes.data : [];
-        const users = Array.isArray(usersRes.data) ? usersRes.data : [];
-        const categories = Array.isArray(catRes.data) ? catRes.data : [];
-        const companies = Array.isArray(compRes.data) ? compRes.data : [];
+        const jobs = jobsRes.success && Array.isArray(jobsRes.data) ? jobsRes.data : [];
+        const users = usersRes.success && Array.isArray(usersRes.data) ? usersRes.data : [];
+        const categories = catRes.success && Array.isArray(catRes.data) ? catRes.data : [];
+        const companies = compRes.success && Array.isArray(compRes.data) ? compRes.data : [];
+        const businesses = bizRes.success && Array.isArray(bizRes.data) ? bizRes.data : [];
 
         setStats({
           jobsCount: jobs.length,
           usersCount: users.length,
           categoriesCount: categories.length,
           companiesCount: companies.length,
+          businessesCount: businesses.length,
         });
 
         setRecentJobs(jobs.slice(0, 5));
@@ -61,7 +65,7 @@ export default function AdminOverviewPage() {
     }
 
     fetchDashboardData();
-  }, [API_URL]);
+  }, []);
 
   return (
     <div className="mx-auto max-w-7xl">
@@ -78,7 +82,7 @@ export default function AdminOverviewPage() {
 
         <div className="flex items-center gap-3">
           <Link
-            href="/admin/categories"
+            href="/dashboard/admin/categories"
             className="flex items-center gap-1.5 rounded-xl border border-black/15 bg-white px-3.5 py-2 text-xs font-semibold text-black transition hover:bg-zinc-100 dark:border-white/15 dark:bg-zinc-900 dark:text-white dark:hover:bg-zinc-800"
           >
             <PlusCircle size={14} />
@@ -95,7 +99,7 @@ export default function AdminOverviewPage() {
       </div>
 
       {/* Metrics Cards */}
-      <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+      <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-5">
         <div className="rounded-2xl border border-black/10 bg-white p-5 shadow-xs dark:border-white/10 dark:bg-zinc-950">
           <div className="flex items-center justify-between text-zinc-500 dark:text-zinc-400">
             <span className="text-xs font-medium">Total Users</span>
@@ -105,7 +109,7 @@ export default function AdminOverviewPage() {
             {stats.usersCount}
           </p>
           <Link
-            href="/admin/users"
+            href="/dashboard/admin/users"
             className="mt-3 inline-flex items-center gap-1 text-[11px] font-semibold text-zinc-600 hover:text-black dark:text-zinc-400 dark:hover:text-white"
           >
             Manage users <ArrowRight size={12} />
@@ -121,10 +125,26 @@ export default function AdminOverviewPage() {
             {stats.jobsCount}
           </p>
           <Link
-            href="/admin/jobs"
+            href="/dashboard/admin/jobs"
             className="mt-3 inline-flex items-center gap-1 text-[11px] font-semibold text-zinc-600 hover:text-black dark:text-zinc-400 dark:hover:text-white"
           >
             Moderate jobs <ArrowRight size={12} />
+          </Link>
+        </div>
+
+        <div className="rounded-2xl border border-black/10 bg-white p-5 shadow-xs dark:border-white/10 dark:bg-zinc-950">
+          <div className="flex items-center justify-between text-zinc-500 dark:text-zinc-400">
+            <span className="text-xs font-medium">Businesses</span>
+            <Store size={16} />
+          </div>
+          <p className="mt-3 text-2xl font-extrabold text-black dark:text-white">
+            {stats.businessesCount}
+          </p>
+          <Link
+            href="/dashboard/admin/businesses"
+            className="mt-3 inline-flex items-center gap-1 text-[11px] font-semibold text-zinc-600 hover:text-black dark:text-zinc-400 dark:hover:text-white"
+          >
+            Review listings <ArrowRight size={12} />
           </Link>
         </div>
 
@@ -137,14 +157,14 @@ export default function AdminOverviewPage() {
             {stats.categoriesCount}
           </p>
           <Link
-            href="/admin/categories"
+            href="/dashboard/admin/categories"
             className="mt-3 inline-flex items-center gap-1 text-[11px] font-semibold text-zinc-600 hover:text-black dark:text-zinc-400 dark:hover:text-white"
           >
             View categories <ArrowRight size={12} />
           </Link>
         </div>
 
-        <div className="rounded-2xl border border-black/10 bg-white p-5 shadow-xs dark:border-white/10 dark:bg-zinc-950">
+        <div className="rounded-2xl border border-black/10 bg-white p-5 shadow-xs dark:border-white/10 dark:bg-zinc-950 col-span-2 lg:col-span-1">
           <div className="flex items-center justify-between text-zinc-500 dark:text-zinc-400">
             <span className="text-xs font-medium">Verified Companies</span>
             <Building size={16} />
@@ -153,7 +173,7 @@ export default function AdminOverviewPage() {
             {stats.companiesCount}
           </p>
           <Link
-            href="/admin/companies"
+            href="/dashboard/admin/companies"
             className="mt-3 inline-flex items-center gap-1 text-[11px] font-semibold text-zinc-600 hover:text-black dark:text-zinc-400 dark:hover:text-white"
           >
             Manage companies <ArrowRight size={12} />
@@ -170,7 +190,7 @@ export default function AdminOverviewPage() {
               Recently Posted Jobs
             </h2>
             <Link
-              href="/admin/jobs"
+              href="/dashboard/admin/jobs"
               className="text-xs font-semibold text-black underline underline-offset-4 hover:opacity-80 dark:text-white"
             >
               View all
@@ -221,7 +241,7 @@ export default function AdminOverviewPage() {
               Recent Users
             </h2>
             <Link
-              href="/admin/users"
+              href="/dashboard/admin/users"
               className="text-xs font-semibold text-black underline underline-offset-4 hover:opacity-80 dark:text-white"
             >
               View all

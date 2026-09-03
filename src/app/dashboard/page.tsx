@@ -14,8 +14,10 @@ export default function DashboardRedirectPage() {
     if (!isPending) {
       if (!user) {
         router.push("/login");
-      } else if (user.role === "ADMIN" || user.role === "MODERATOR") {
-        router.push("/admin");
+      } else if (user.role === "ADMIN") {
+        router.push("/dashboard/admin");
+      } else if (user.role === "MODERATOR") {
+        router.push("/dashboard/moderator");
       } else if (user.role === "EMPLOYER") {
         router.push("/dashboard/employer");
       } else {

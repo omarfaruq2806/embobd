@@ -257,11 +257,17 @@ export default function Home() {
               <ArrowRight size={16} />
             </Link>
             <Link
-              href="/register"
+              href="/businesses"
               className="flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-black/15 bg-white px-6 text-sm font-semibold text-black transition hover:bg-zinc-100 dark:border-white/20 dark:bg-zinc-900 dark:text-white dark:hover:bg-zinc-800 sm:w-auto"
             >
+              Explore Business Directory
+            </Link>
+            <Link
+              href="/register"
+              className="flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-transparent bg-zinc-100 px-6 text-sm font-semibold text-zinc-800 transition hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 sm:w-auto"
+            >
               <Users size={17} />
-              Join the Community
+              Join Community
             </Link>
           </div>
 
