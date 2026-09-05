@@ -64,11 +64,8 @@ export default function AdminUsersPage() {
     }
 
     try {
-      const res = await fetch(`${API_URL}/api/v1/users/${userId}`, {
-        method: "DELETE",
-      });
-      const json = await res.json();
-      if (json.success) {
+      const res = await userApi.delete(userId);
+      if (res.success) {
         setUsers((prev) => prev.filter((u) => u.id !== userId));
         setMessage("User deleted successfully");
         setTimeout(() => setMessage(null), 3000);

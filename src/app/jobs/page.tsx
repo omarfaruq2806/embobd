@@ -80,7 +80,6 @@ export default function JobsPage() {
       setLoading(false);
     }
   }, [
-    API_URL,
     debouncedSearch,
     selectedCategory,
     selectedType,
