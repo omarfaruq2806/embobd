@@ -3,9 +3,21 @@
  * Automatically handles API baseUrl, JSON serialization, headers, credentials, and query strings.
  */
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL
-  ? `${process.env.NEXT_PUBLIC_API_URL}/api/v1`
-  : "http://localhost:5000/api/v1";
+export function getBaseApiUrl(): string {
+  const envUrl = process.env.NEXT_PUBLIC_API_URL;
+  if (!envUrl) {
+    if (typeof window !== "undefined") {
+      // In browser deployment without explicit env var, use relative path via Next.js rewrites
+      return "/api/v1";
+    }
+    return "http://localhost:5000/api/v1";
+  }
+
+  // Clean trailing slashes and redundant /api or /api/v1
+  const clean = envUrl.replace(/\/+$/, "").replace(/\/api(\/v1)?\/?$/, "");
+  return `${clean}/api/v1`;
+}
+
 
 interface RequestOptions extends RequestInit {
   params?: Record<string, string | number | boolean | undefined | null>;
@@ -24,7 +36,8 @@ export async function apiClient<T = any>(
 ): Promise<ApiResponse<T>> {
   const { params, headers, ...restOptions } = options;
 
-  let url = `${BASE_URL}${endpoint.startsWith("/") ? endpoint : `/${endpoint}`}`;
+  const baseUrl = getBaseApiUrl();
+  let url = `${baseUrl}${endpoint.startsWith("/") ? endpoint : `/${endpoint}`}`;
 
   if (params) {
     const searchParams = new URLSearchParams();
@@ -43,23 +56,33 @@ export async function apiClient<T = any>(
     "Content-Type": "application/json",
   };
 
-  const response = await fetch(url, {
-    headers: {
-      ...defaultHeaders,
-      ...headers,
-    },
-    credentials: "include", // Send session cookies for authenticated requests
-    ...restOptions,
-  });
+  try {
+    const response = await fetch(url, {
+      headers: {
+        ...defaultHeaders,
+        ...headers,
+      },
+      credentials: "include", // Send session cookies for authenticated requests
+      ...restOptions,
+    });
 
-  const json = await response.json().catch(() => ({
-    statusCode: response.status,
-    success: response.ok,
-    message: response.statusText,
-    data: null as unknown as T,
-  }));
+    const json = await response.json().catch(() => ({
+      statusCode: response.status,
+      success: response.ok,
+      message: response.statusText,
+      data: null as unknown as T,
+    }));
 
-  return json as ApiResponse<T>;
+    return json as ApiResponse<T>;
+  } catch (error: any) {
+    console.error(`[API Client Error] Failed request to ${url}:`, error?.message || error);
+    return {
+      statusCode: 500,
+      success: false,
+      message: error?.message || "Network request failed",
+      data: null as unknown as T,
+    };
+  }
 }
 
 export const http = {

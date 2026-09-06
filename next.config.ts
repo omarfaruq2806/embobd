@@ -17,10 +17,11 @@ const nextConfig: NextConfig = {
     ];
   },
   async rewrites() {
-    const backendUrl =
+    const rawBackendUrl =
       process.env.BACKEND_URL ||
       process.env.NEXT_PUBLIC_API_URL ||
       "https://embobd-server.onrender.com";
+    const backendUrl = rawBackendUrl.replace(/\/+$/, "").replace(/\/api(\/v1)?\/?$/, "");
 
     return [
       {
