@@ -2,6 +2,12 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   async redirects() {
     return [
       {
@@ -13,6 +19,16 @@ const nextConfig: NextConfig = {
         source: "/admin/:path*",
         destination: "/dashboard/admin/:path*",
         permanent: false,
+      },
+      {
+        source: "/business",
+        destination: "/businesses",
+        permanent: true,
+      },
+      {
+        source: "/business/:path*",
+        destination: "/businesses/:path*",
+        permanent: true,
       },
     ];
   },

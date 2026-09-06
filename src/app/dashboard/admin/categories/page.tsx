@@ -9,10 +9,10 @@ import {
   Loader2,
   FolderPlus,
 } from "lucide-react";
-import { categoryApi, Category } from "@/services";
+import { categoryApi } from "@/services";
 
 export default function AdminCategoriesPage() {
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");

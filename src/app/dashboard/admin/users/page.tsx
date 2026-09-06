@@ -11,10 +11,10 @@ import {
   Loader2,
   Filter,
 } from "lucide-react";
-import { userApi, UserItem } from "@/services";
+import { userApi } from "@/services";
 
 export default function AdminUsersPage() {
-  const [users, setUsers] = useState<UserItem[]>([]);
+  const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("ALL");

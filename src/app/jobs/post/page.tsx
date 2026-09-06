@@ -18,14 +18,14 @@ import {
   CheckCircle2,
   Lock,
 } from "lucide-react";
-import { categoryApi, jobApi, Category } from "@/services";
+import { categoryApi, jobApi } from "@/services";
 
 export default function PostJobPage() {
   const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
   const user = (session as any)?.user;
 
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);

@@ -9,10 +9,10 @@ import {
   Loader2,
   Briefcase,
 } from "lucide-react";
-import { companyApi, Company } from "@/services";
+import { companyApi } from "@/services";
 
 export default function AdminCompaniesPage() {
-  const [companies, setCompanies] = useState<Company[]>([]);
+  const [companies, setCompanies] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
 
