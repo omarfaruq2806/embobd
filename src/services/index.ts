@@ -4,3 +4,4 @@ export * from "./business.service";
 export * from "./category.service";
 export * from "./company.service";
 export * from "./user.service";
+export * from "./community.service";
