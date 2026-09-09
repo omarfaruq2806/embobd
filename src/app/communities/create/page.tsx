@@ -283,8 +283,9 @@ export default function CreateCommunityPostPage() {
 
               {/* Cover Image URL */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-zinc-800 dark:text-zinc-200">
-                  Cover Image URL (Optional)
+                <label className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-zinc-800 dark:text-zinc-200">
+                  <span>Cover Image URL (Optional)</span>
+                  <span className="text-[10px] text-zinc-400 font-normal">Direct Link</span>
                 </label>
                 <div className="relative mt-2">
                   <ImageIcon className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
@@ -296,8 +297,12 @@ export default function CreateCommunityPostPage() {
                     className="w-full rounded-xl border border-zinc-300 bg-white py-3 pl-10 pr-4 text-sm text-zinc-900 shadow-xs transition placeholder:text-zinc-400 focus:border-black focus:outline-none dark:border-zinc-800 dark:bg-zinc-900 dark:text-white dark:placeholder:text-zinc-500 dark:focus:border-white"
                   />
                 </div>
+                <p className="mt-1.5 text-[10px] text-zinc-500 dark:text-zinc-400">
+                  ☁️ <strong>R2 Upload [Demo Mode]:</strong> Direct image upload via Cloudflare R2 coming soon. Enter image URL for now.
+                </p>
               </div>
             </div>
+
 
             {/* Cover Image Thumbnail Preview */}
             {coverImage && (

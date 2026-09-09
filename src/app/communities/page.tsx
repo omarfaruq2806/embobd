@@ -93,10 +93,11 @@ export default function CommunitiesPage() {
 
         if (res.success && Array.isArray(res.data)) {
           setPosts(res.data);
-          if (res.meta) {
-            setMeta(res.meta);
+          if ((res as any).meta) {
+            setMeta((res as any).meta);
           }
         }
+
       } catch (err) {
         console.error("Failed to fetch community posts:", err);
       } finally {

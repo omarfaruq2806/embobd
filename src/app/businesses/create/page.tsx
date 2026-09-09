@@ -258,8 +258,9 @@ export default function CreateBusinessPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300">
-                    Logo or Photo URL (Optional)
+                  <label className="flex items-center justify-between text-xs font-semibold text-zinc-700 dark:text-zinc-300">
+                    <span>Logo or Photo URL (Optional)</span>
+                    <span className="text-[10px] text-zinc-400 font-normal">Direct link</span>
                   </label>
                   <input
                     type="url"
@@ -269,7 +270,11 @@ export default function CreateBusinessPage() {
                     placeholder="https://example.com/logo.png"
                     className="mt-1 w-full rounded-xl border border-black/15 bg-transparent px-3.5 py-2.5 text-xs text-black placeholder:text-zinc-400 focus:border-black focus:outline-none dark:border-white/15 dark:text-white"
                   />
+                  <p className="mt-1 text-[10px] text-zinc-500 dark:text-zinc-400">
+                    ☁️ <strong>R2 Upload [Demo Mode]:</strong> Direct image upload via Cloudflare R2 coming soon. Enter image URL for now.
+                  </p>
                 </div>
+
               </div>
 
               <div>

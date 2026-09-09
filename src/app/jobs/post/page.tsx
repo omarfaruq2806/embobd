@@ -344,8 +344,9 @@ export default function PostJobPage() {
               </div>
 
               <div className="sm:col-span-2">
-                <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300">
-                  Company Logo URL (Optional)
+                <label className="flex items-center justify-between text-xs font-semibold text-zinc-700 dark:text-zinc-300">
+                  <span>Company Logo URL (Optional)</span>
+                  <span className="text-[10px] text-zinc-400 font-normal">Direct image link</span>
                 </label>
                 <input
                   type="url"
@@ -354,7 +355,11 @@ export default function PostJobPage() {
                   placeholder="https://images.unsplash.com/photo-..."
                   className="mt-1.5 w-full rounded-xl border border-black/15 bg-transparent px-3.5 py-2.5 text-sm text-black placeholder:text-zinc-400 focus:border-black focus:outline-none dark:border-white/15 dark:text-white dark:focus:border-white"
                 />
+                <div className="mt-2 flex items-center gap-1.5 rounded-lg border border-dashed border-zinc-300 bg-zinc-50 p-2 text-[11px] text-zinc-600 dark:border-zinc-800 dark:bg-zinc-900/50 dark:text-zinc-400">
+                  <span>☁️ <strong>Cloudflare R2 File Upload [Demo Mode]:</strong> Direct image upload via R2 is coming soon. Enter an image URL for now.</span>
+                </div>
               </div>
+
             </div>
           </div>
 

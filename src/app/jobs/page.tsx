@@ -237,11 +237,10 @@ export default function JobsPage() {
                   setSortBy("createdAt");
                   setSortOrder("desc");
                 }}
-                className={`rounded-lg px-2.5 py-1 transition ${
-                  sortBy === "createdAt" && sortOrder === "desc"
-                    ? "bg-black font-bold text-white dark:bg-white dark:text-black"
-                    : "hover:bg-zinc-100 dark:hover:bg-zinc-800"
-                }`}
+                className={`rounded-lg px-2.5 py-1 transition ${sortBy === "createdAt" && sortOrder === "desc"
+                  ? "bg-black font-bold text-white dark:bg-white dark:text-black"
+                  : "hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                  }`}
               >
                 Newest First
               </button>
@@ -251,11 +250,10 @@ export default function JobsPage() {
                   setSortBy("salaryMax");
                   setSortOrder("desc");
                 }}
-                className={`rounded-lg px-2.5 py-1 transition ${
-                  sortBy === "salaryMax"
-                    ? "bg-black font-bold text-white dark:bg-white dark:text-black"
-                    : "hover:bg-zinc-100 dark:hover:bg-zinc-800"
-                }`}
+                className={`rounded-lg px-2.5 py-1 transition ${sortBy === "salaryMax"
+                  ? "bg-black font-bold text-white dark:bg-white dark:text-black"
+                  : "hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                  }`}
               >
                 Highest Salary
               </button>
@@ -265,11 +263,10 @@ export default function JobsPage() {
                   setSortBy("deadline");
                   setSortOrder("asc");
                 }}
-                className={`rounded-lg px-2.5 py-1 transition ${
-                  sortBy === "deadline"
-                    ? "bg-black font-bold text-white dark:bg-white dark:text-black"
-                    : "hover:bg-zinc-100 dark:hover:bg-zinc-800"
-                }`}
+                className={`rounded-lg px-2.5 py-1 transition ${sortBy === "deadline"
+                  ? "bg-black font-bold text-white dark:bg-white dark:text-black"
+                  : "hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                  }`}
               >
                 Closing Soon
               </button>
@@ -332,6 +329,8 @@ export default function JobsPage() {
                 Post an Embroidery Job
               </Link>
             </div>
+
+
           </div>
         ) : (
           /* Job Cards Grid */
@@ -389,8 +388,8 @@ export default function JobsPage() {
                         {job.salaryMin && job.salaryMax
                           ? `৳${job.salaryMin.toLocaleString()} - ৳${job.salaryMax.toLocaleString()}`
                           : job.salaryMin
-                          ? `৳${job.salaryMin.toLocaleString()}+`
-                          : `Up to ৳${job.salaryMax?.toLocaleString()}`}{" "}
+                            ? `৳${job.salaryMin.toLocaleString()}+`
+                            : `Up to ৳${job.salaryMax?.toLocaleString()}`}{" "}
                         {job.jobType === "FREELANCE" ? "/ design" : "/ mo"}
                       </span>
                     )}
@@ -416,6 +415,7 @@ export default function JobsPage() {
           </div>
         )}
       </div>
+
     </main>
   );
 }

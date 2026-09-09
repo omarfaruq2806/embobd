@@ -25,6 +25,12 @@ import {
 const FAQ_ITEMS = [
   {
     category: "General & Accounts",
+    question: "How do I upgrade my account from Candidate to Employer?",
+    answer:
+      "Per EMBOBD verification guidelines, candidate accounts require manual validation before posting jobs or managing company profiles. To upgrade your role to Employer, simply submit a ticket using the contact form below with Category 'Role Upgrade (Candidate to Employer)' and include your factory name, location, and phone number.",
+  },
+  {
+    category: "General & Accounts",
     question: "How do I create an account on EMBOBD?",
     answer:
       "Click on 'Sign Up' at the top right of the navbar. Choose whether you are registering as a 'Candidate / Digitizer' (to apply for jobs and share community tutorials) or an 'Employer / Factory' (to post vacancies and manage company profiles).",
@@ -290,6 +296,7 @@ export default function SupportPage() {
                       onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                       className="mt-1 w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-xs font-semibold text-zinc-900 shadow-xs focus:border-black focus:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-white"
                     >
+                      <option value="Role Upgrade">Role Upgrade (Candidate to Employer)</option>
                       <option value="Technical Support">Technical & Wilcom Support</option>
                       <option value="Business Verification">Business Verification Request</option>
                       <option value="Job Posting Inquiry">Job Posting Assistance</option>
