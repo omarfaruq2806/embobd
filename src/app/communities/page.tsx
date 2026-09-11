@@ -22,13 +22,13 @@ import {
 import { communityApi } from "@/services";
 
 const CATEGORY_PRESETS = [
-  { name: "ALL", label: "All Topics" },
-  { name: "Tutorial", label: "Tutorials & Digitizing" },
-  { name: "Design Showcase", label: "Design Showcase" },
-  { name: "Machine Tech", label: "Machine & Mechanics" },
-  { name: "Industry News", label: "Industry & Market" },
-  { name: "Job Tips", label: "Career & Job Tips" },
-  { name: "General", label: "General Discussion" },
+  { name: "ALL", label: "সকল বিষয়" },
+  { name: "Tutorial", label: "টিউটোরিয়াল ও ডিজিটাইজিং" },
+  { name: "Design Showcase", label: "ডিজাইন শোকেস" },
+  { name: "Machine Tech", label: "মেশিন ও মেকানিক্স" },
+  { name: "Industry News", label: "শিল্প সংবাদ ও মার্কেট" },
+  { name: "Job Tips", label: "ক্যারিয়ার ও ইন্টারভিউ টিপস" },
+  { name: "General", label: "সাধারণ আলোচনা" },
 ];
 
 export default function CommunitiesPage() {
@@ -97,7 +97,6 @@ export default function CommunitiesPage() {
             setMeta((res as any).meta);
           }
         }
-
       } catch (err) {
         console.error("Failed to fetch community posts:", err);
       } finally {
@@ -112,7 +111,7 @@ export default function CommunitiesPage() {
   const calculateReadTime = (content: any) => {
     const wordCount = content ? String(content).trim().split(/\s+/).length : 0;
     const minutes = Math.max(1, Math.ceil(wordCount / 180));
-    return `${minutes} min read`;
+    return `${minutes} মিনিট পাঠ`;
   };
 
   // Helper: Format Date
@@ -120,7 +119,7 @@ export default function CommunitiesPage() {
     if (!dateString) return "";
     try {
       const date = new Date(dateString);
-      return date.toLocaleDateString("en-US", {
+      return date.toLocaleDateString("bn-BD", {
         month: "short",
         day: "numeric",
         year: "numeric",
@@ -134,26 +133,26 @@ export default function CommunitiesPage() {
     switch (role) {
       case "ADMIN":
         return (
-          <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-black text-white dark:bg-white dark:text-black">
-            Admin
+          <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800">
+            অ্যাডমিন
           </span>
         );
       case "MODERATOR":
         return (
-          <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold border border-zinc-300 bg-zinc-100 text-zinc-900 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100">
-            Mod
+          <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-800">
+            মডারেটর
           </span>
         );
       case "EMPLOYER":
         return (
-          <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium border border-zinc-200 bg-zinc-50 text-zinc-700 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
-            Employer
+          <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-indigo-100 text-indigo-800">
+            নিয়োগকারী
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-            Digitizer
+          <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-zinc-100 text-zinc-700">
+            ডিজিটাইজার
           </span>
         );
     }
@@ -163,26 +162,24 @@ export default function CommunitiesPage() {
   const regularPosts = posts.filter((p: any) => !p.isPinned || posts.indexOf(p) > 0);
 
   return (
-    <main className="min-h-screen bg-zinc-50/70 pb-20 dark:bg-black">
-      {/* ========================================================================= */}
-      {/* 🌟 HERO & SEARCH HEADER (Black & White Aesthetic) */}
-      {/* ========================================================================= */}
-      <section className="relative overflow-hidden border-b border-zinc-200 bg-white py-14 dark:border-zinc-800 dark:bg-zinc-950">
+    <main className="min-h-screen bg-zinc-50/60 pb-20 font-sans text-zinc-900">
+      {/* HERO & SEARCH HEADER */}
+      <section className="relative overflow-hidden border-b border-zinc-200 bg-white py-14">
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center text-center">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-zinc-300 bg-zinc-100/80 px-3.5 py-1.5 text-xs font-semibold text-zinc-900 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200">
-              <Sparkles className="h-3.5 w-3.5 text-black dark:text-white" />
-              <span>Embroidery Community & Knowledge Hub</span>
+            <div className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-zinc-50 px-3.5 py-1.5 text-xs font-semibold text-zinc-800">
+              <Sparkles className="h-3.5 w-3.5 text-amber-500" />
+              <span>এমব্রয়ডারি কমিউনিটি ও জ্ঞান ভাণ্ডার</span>
             </div>
 
             {/* Main Title */}
-            <h1 className="mt-4 text-3xl font-black tracking-tight text-black sm:text-4xl lg:text-5xl dark:text-white">
-              Discover, Learn & Share in the Embroidery Universe
+            <h1 className="mt-4 text-3xl font-black tracking-tight text-zinc-950 sm:text-4xl lg:text-5xl">
+              জানুন, শিখুন ও শেয়ার করুন আপনার এমব্রয়ডারি অভিজ্ঞতা
             </h1>
 
-            <p className="mx-auto mt-4 max-w-2xl text-base text-zinc-600 sm:text-lg dark:text-zinc-400">
-              Tutorials on Wilcom & digitizing, Tajima machine troubleshooting, stitches & sequins tricks, and masterclass insights shared by Bangladesh’s top professionals.
+            <p className="mx-auto mt-4 max-w-2xl text-base text-zinc-600 sm:text-lg">
+              উইলকম ডিজিটাইজিং গাইড, তাজিমা মেশিন ট্রাবলশুটিং, সুতা ও সিকোয়েন্সের কৌশল এবং দেশের শীর্ষ কারিগরদের সাথে যুক্ত হওয়ার উন্মুক্ত ফোরাম।
             </p>
 
             {/* Action Bar & Search */}
@@ -192,15 +189,15 @@ export default function CommunitiesPage() {
                 <Search className="absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-zinc-400" />
                 <input
                   type="text"
-                  placeholder="Search articles, Wilcom tutorials, machine tips, keywords..."
+                  placeholder="আর্টিকেল, উইলকম টিউটোরিয়াল, মেশিন টিপস খুঁজুন..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full rounded-xl border border-zinc-300 bg-white py-3.5 pl-11 pr-10 text-sm text-zinc-900 shadow-xs transition placeholder:text-zinc-400 focus:border-black focus:outline-none focus:ring-1 focus:ring-black dark:border-zinc-800 dark:bg-zinc-900 dark:text-white dark:placeholder:text-zinc-500 dark:focus:border-white dark:focus:ring-white"
+                  className="w-full rounded-xl border border-zinc-300 bg-white py-3.5 pl-11 pr-10 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none"
                 />
                 {search && (
                   <button
                     onClick={() => setSearch("")}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600"
                   >
                     <X className="h-4 w-4" />
                   </button>
@@ -210,21 +207,21 @@ export default function CommunitiesPage() {
               {/* Create Post Button */}
               <Link
                 href="/communities/create"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-black px-6 py-3.5 text-sm font-bold text-white shadow-sm transition hover:bg-zinc-800 active:scale-95 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-zinc-950 px-6 py-3.5 text-sm font-bold text-white shadow-sm transition hover:bg-zinc-800 shrink-0"
               >
                 <PenSquare className="h-4 w-4" />
-                <span>Write an Article</span>
+                <span>নতুন পোস্ট লিখুন</span>
               </Link>
             </div>
 
             {/* Active Tag Filter Indicator */}
             {selectedTag && (
-              <div className="mt-4 inline-flex items-center gap-2 rounded-lg border border-zinc-300 bg-zinc-100 px-3 py-1.5 text-xs font-medium text-zinc-900 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-200">
+              <div className="mt-4 inline-flex items-center gap-2 rounded-lg border border-zinc-300 bg-zinc-100 px-3 py-1.5 text-xs font-semibold text-zinc-900">
                 <Tag className="h-3 w-3" />
-                <span>Filtered by tag: <strong>#{selectedTag}</strong></span>
+                <span>ট্যাগ ফিল্টার: <strong>#{selectedTag}</strong></span>
                 <button
                   onClick={() => setSelectedTag(null)}
-                  className="ml-1 rounded-full p-0.5 hover:bg-zinc-200 dark:hover:bg-zinc-700"
+                  className="ml-1 rounded-full p-0.5 hover:bg-zinc-200"
                 >
                   <X className="h-3 w-3" />
                 </button>
@@ -234,10 +231,8 @@ export default function CommunitiesPage() {
         </div>
       </section>
 
-      {/* ========================================================================= */}
-      {/* 🏷️ CATEGORY PILLS BAR (B&W Minimalist) */}
-      {/* ========================================================================= */}
-      <section className="sticky top-16 z-20 border-b border-zinc-200 bg-white/95 backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/95">
+      {/* CATEGORY PILLS BAR */}
+      <section className="sticky top-16 z-20 border-b border-zinc-200 bg-white/95 backdrop-blur-md">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between gap-4 overflow-x-auto py-3 no-scrollbar">
             <div className="flex items-center gap-2">
@@ -253,10 +248,10 @@ export default function CommunitiesPage() {
                       setSelectedCategory(cat.name);
                       setPage(1);
                     }}
-                    className={`whitespace-nowrap rounded-full px-4 py-1.5 text-xs font-semibold transition-all ${
+                    className={`whitespace-nowrap rounded-full px-4 py-1.5 text-xs font-bold transition-all ${
                       isActive
-                        ? "bg-black text-white shadow-xs dark:bg-white dark:text-black"
-                        : "border border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300 hover:bg-zinc-100 hover:text-black dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-white"
+                        ? "bg-zinc-950 text-white shadow-xs"
+                        : "border border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300 hover:bg-zinc-100 hover:text-black"
                     }`}
                   >
                     <span>{cat.label}</span>
@@ -264,8 +259,8 @@ export default function CommunitiesPage() {
                       <span
                         className={`ml-1.5 rounded-full px-1.5 py-0.2 text-[10px] font-bold ${
                           isActive
-                            ? "bg-zinc-700 text-white dark:bg-zinc-300 dark:text-black"
-                            : "bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400"
+                            ? "bg-zinc-700 text-white"
+                            : "bg-zinc-100 text-zinc-600"
                         }`}
                       >
                         {countObj.count}
@@ -278,36 +273,32 @@ export default function CommunitiesPage() {
 
             {/* Sort Control */}
             <div className="flex items-center gap-2 pl-4">
-              <span className="text-xs text-zinc-400 whitespace-nowrap hidden sm:inline">Sort:</span>
+              <span className="text-xs text-zinc-400 whitespace-nowrap hidden sm:inline">সাজান:</span>
               <select
                 value={sortBy}
                 onChange={(e: any) => setSortBy(e.target.value)}
-                className="rounded-lg border border-zinc-300 bg-white px-2.5 py-1.5 text-xs font-semibold text-zinc-800 shadow-xs focus:border-black focus:outline-none dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:focus:border-white"
+                className="rounded-lg border border-zinc-300 bg-white px-2.5 py-1.5 text-xs font-bold text-zinc-800 shadow-xs focus:border-zinc-950 focus:outline-none"
               >
-                <option value="latest">Latest First</option>
-                <option value="most_viewed">Most Viewed</option>
-                <option value="oldest">Oldest First</option>
+                <option value="latest">সর্বশেষ পোস্ট</option>
+                <option value="most_viewed">সর্বাধিক পঠিত</option>
+                <option value="oldest">পুরাতন পোস্ট</option>
               </select>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ========================================================================= */}
-      {/* 📰 MAIN FEED & SIDEBAR */}
-      {/* ========================================================================= */}
+      {/* MAIN FEED & SIDEBAR */}
       <div className="mx-auto mt-8 max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
-          {/* ======================================================= */}
           {/* LEFT 8 COLS: ARTICLES FEED */}
-          {/* ======================================================= */}
           <div className="lg:col-span-8">
-            {/* Pinned Featured Story (if available on page 1) */}
+            {/* Pinned Featured Story */}
             {pinnedPost && page === 1 && !debouncedSearch && selectedCategory === "ALL" && !selectedTag && (
-              <div className="mb-8 overflow-hidden rounded-2xl border border-zinc-300 bg-white p-1 shadow-sm transition hover:shadow-md dark:border-zinc-700 dark:bg-zinc-900">
-                <div className="relative flex flex-col md:flex-row overflow-hidden rounded-xl bg-white dark:bg-zinc-950">
+              <div className="mb-8 overflow-hidden rounded-2xl border border-zinc-200 bg-white p-1 shadow-sm transition hover:shadow-md">
+                <div className="relative flex flex-col md:flex-row overflow-hidden rounded-xl bg-white">
                   {/* Spotlight Banner Image */}
-                  <div className="relative h-56 w-full md:h-auto md:w-2/5 overflow-hidden bg-zinc-100 dark:bg-zinc-900">
+                  <div className="relative h-56 w-full md:h-auto md:w-2/5 overflow-hidden bg-zinc-100">
                     {pinnedPost.coverImage ? (
                       <img
                         src={pinnedPost.coverImage}
@@ -315,13 +306,13 @@ export default function CommunitiesPage() {
                         className="h-full w-full object-cover transition duration-500 hover:scale-105"
                       />
                     ) : (
-                      <div className="flex h-full w-full items-center justify-center bg-zinc-900 text-white dark:bg-zinc-800">
+                      <div className="flex h-full w-full items-center justify-center bg-zinc-900 text-white">
                         <BookOpen className="h-12 w-12 opacity-80" />
                       </div>
                     )}
-                    <div className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-black/90 px-3 py-1 text-xs font-bold text-white shadow backdrop-blur dark:bg-white/90 dark:text-black">
+                    <div className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-zinc-950/90 px-3 py-1 text-xs font-bold text-white shadow backdrop-blur">
                       <Flame className="h-3.5 w-3.5 text-amber-400" />
-                      <span>Featured Article</span>
+                      <span>হাইলাইট পোস্ট</span>
                     </div>
                   </div>
 
@@ -329,46 +320,46 @@ export default function CommunitiesPage() {
                   <div className="flex flex-1 flex-col justify-between p-6">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="rounded-md border border-zinc-200 bg-zinc-100 px-2.5 py-0.5 text-xs font-bold text-zinc-900 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200">
+                        <span className="rounded-md border border-zinc-200 bg-zinc-100 px-2.5 py-0.5 text-xs font-bold text-zinc-900">
                           {pinnedPost.category}
                         </span>
                         <span className="text-xs text-zinc-400">•</span>
-                        <span className="flex items-center gap-1 text-xs text-zinc-500 dark:text-zinc-400">
+                        <span className="flex items-center gap-1 text-xs text-zinc-500">
                           <Clock className="h-3 w-3" />
                           {calculateReadTime(pinnedPost.content)}
                         </span>
                         <span className="text-xs text-zinc-400">•</span>
-                        <span className="flex items-center gap-1 text-xs font-semibold text-zinc-700 dark:text-zinc-300">
+                        <span className="flex items-center gap-1 text-xs font-semibold text-zinc-700">
                           <Eye className="h-3 w-3" />
-                          {pinnedPost.views} views
+                          {pinnedPost.views} বার পঠিত
                         </span>
                       </div>
 
                       <Link href={`/communities/${pinnedPost.slug}`}>
-                        <h2 className="mt-3 text-xl font-bold tracking-tight text-zinc-900 transition hover:text-zinc-600 sm:text-2xl dark:text-white dark:hover:text-zinc-300">
+                        <h2 className="mt-3 text-xl font-bold tracking-tight text-zinc-950 transition hover:text-zinc-600 sm:text-2xl">
                           {pinnedPost.title}
                         </h2>
                       </Link>
 
-                      <p className="mt-2 line-clamp-3 text-sm text-zinc-600 dark:text-zinc-300">
+                      <p className="mt-2 line-clamp-3 text-sm text-zinc-600 leading-relaxed">
                         {pinnedPost.excerpt || pinnedPost.content.substring(0, 150)}
                       </p>
                     </div>
 
                     {/* Author & CTA */}
-                    <div className="mt-6 flex items-center justify-between border-t border-zinc-100 pt-4 dark:border-zinc-850">
+                    <div className="mt-6 flex items-center justify-between border-t border-zinc-100 pt-4">
                       <div className="flex items-center gap-3">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-900 text-sm font-bold text-white dark:bg-white dark:text-black">
+                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-950 text-sm font-bold text-white">
                           {pinnedPost.author?.name?.charAt(0) || "U"}
                         </div>
                         <div>
                           <div className="flex items-center gap-1.5">
-                            <span className="text-xs font-bold text-zinc-900 dark:text-white">
+                            <span className="text-xs font-bold text-zinc-900">
                               {pinnedPost.author?.name}
                             </span>
                             {getRoleBadge(pinnedPost.author?.role)}
                           </div>
-                          <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
+                          <p className="text-[11px] text-zinc-500">
                             {formatDate(pinnedPost.createdAt)}
                           </p>
                         </div>
@@ -376,9 +367,9 @@ export default function CommunitiesPage() {
 
                       <Link
                         href={`/communities/${pinnedPost.slug}`}
-                        className="inline-flex items-center gap-1 text-xs font-bold text-black underline-offset-4 hover:underline dark:text-white"
+                        className="inline-flex items-center gap-1 text-xs font-bold text-zinc-950 underline underline-offset-4 hover:opacity-80"
                       >
-                        <span>Read Full Story</span>
+                        <span>সম্পূর্ণ পড়ুন</span>
                         <ArrowRight className="h-3.5 w-3.5" />
                       </Link>
                     </div>
@@ -387,37 +378,32 @@ export default function CommunitiesPage() {
               </div>
             )}
 
-            {/* Articles Grid / State */}
+            {/* Articles Grid */}
             {loading ? (
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                {[1, 2, 3, 4, 5, 6].map((n) => (
+                {[1, 2, 3, 4].map((n) => (
                   <div
                     key={n}
-                    className="flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white p-5 shadow-xs animate-pulse dark:border-zinc-800 dark:bg-zinc-950"
+                    className="flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white p-5 animate-pulse"
                   >
-                    <div className="h-44 w-full rounded-xl bg-zinc-200 dark:bg-zinc-900" />
-                    <div className="mt-4 h-4 w-24 rounded bg-zinc-200 dark:bg-zinc-900" />
-                    <div className="mt-3 h-6 w-3/4 rounded bg-zinc-200 dark:bg-zinc-900" />
-                    <div className="mt-2 h-4 w-full rounded bg-zinc-200 dark:bg-zinc-900" />
-                    <div className="mt-6 flex items-center gap-3 pt-4">
-                      <div className="h-8 w-8 rounded-full bg-zinc-200 dark:bg-zinc-900" />
-                      <div className="h-4 w-28 rounded bg-zinc-200 dark:bg-zinc-900" />
-                    </div>
+                    <div className="h-44 w-full rounded-xl bg-zinc-100" />
+                    <div className="mt-4 h-4 w-24 rounded bg-zinc-100" />
+                    <div className="mt-3 h-6 w-3/4 rounded bg-zinc-100" />
                   </div>
                 ))}
               </div>
             ) : regularPosts.length === 0 ? (
-              <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-zinc-300 bg-white py-16 px-4 text-center dark:border-zinc-800 dark:bg-zinc-950">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-zinc-100 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100">
+              <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-zinc-300 bg-white py-16 px-4 text-center">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-zinc-100 text-zinc-900">
                   <Compass className="h-8 w-8" />
                 </div>
-                <h3 className="mt-4 text-lg font-bold text-zinc-900 dark:text-white">
-                  No articles found
+                <h3 className="mt-4 text-lg font-bold text-zinc-900">
+                  কোনো আর্টিকেল পাওয়া যায়নি
                 </h3>
-                <p className="mt-1 max-w-sm text-sm text-zinc-500 dark:text-zinc-400">
+                <p className="mt-1 max-w-sm text-sm text-zinc-500">
                   {search || selectedTag || selectedCategory !== "ALL"
-                    ? "Try adjusting your search criteria or clear the filters."
-                    : "No community articles published yet. Be the first to share your embroidery expertise!"}
+                    ? "অনুগ্রহ করে অন্য শব্দ দিয়ে খুঁজুন অথবা ফিল্টার মুছুন।"
+                    : "এখনো কোনো আর্টিকেল প্রকাশিত হয়নি। আপনিই প্রথম আপনার অভিজ্ঞতা শেয়ার করুন!"}
                 </p>
 
                 <div className="mt-6 flex gap-3">
@@ -428,17 +414,17 @@ export default function CommunitiesPage() {
                         setSelectedTag(null);
                         setSelectedCategory("ALL");
                       }}
-                      className="rounded-xl border border-zinc-300 px-4 py-2 text-xs font-bold text-zinc-800 transition hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-900"
+                      className="rounded-xl border border-zinc-300 px-4 py-2 text-xs font-bold text-zinc-800 transition hover:bg-zinc-100"
                     >
-                      Clear All Filters
+                      ফিল্টার রিসেট করুন
                     </button>
                   )}
                   <Link
                     href="/communities/create"
-                    className="inline-flex items-center gap-2 rounded-xl bg-black px-4 py-2 text-xs font-bold text-white shadow-xs transition hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
+                    className="inline-flex items-center gap-2 rounded-xl bg-zinc-950 px-4 py-2 text-xs font-bold text-white shadow-xs transition hover:bg-zinc-800"
                   >
                     <PenSquare className="h-3.5 w-3.5" />
-                    <span>Create Post</span>
+                    <span>পোস্ট লিখুন</span>
                   </Link>
                 </div>
               </div>
@@ -447,13 +433,13 @@ export default function CommunitiesPage() {
                 {regularPosts.map((post: any) => (
                   <article
                     key={post.id}
-                    className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-zinc-400 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-600"
+                    className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-zinc-400 hover:shadow-md"
                   >
                     <div>
                       {/* Thumbnail Container */}
                       <Link
                         href={`/communities/${post.slug}`}
-                        className="relative block h-48 w-full overflow-hidden bg-zinc-100 dark:bg-zinc-900"
+                        className="relative block h-48 w-full overflow-hidden bg-zinc-100"
                       >
                         {post.coverImage ? (
                           <img
@@ -462,11 +448,11 @@ export default function CommunitiesPage() {
                             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                           />
                         ) : (
-                          <div className="flex h-full w-full items-center justify-center bg-zinc-900 text-white dark:bg-zinc-850">
+                          <div className="flex h-full w-full items-center justify-center bg-zinc-950 text-white">
                             <BookOpen className="h-10 w-10 opacity-70 transition group-hover:scale-110" />
                           </div>
                         )}
-                        <span className="absolute left-3 top-3 rounded-md border border-zinc-300/80 bg-white/90 px-2.5 py-0.5 text-[11px] font-bold text-black shadow-xs backdrop-blur-md dark:border-zinc-700 dark:bg-black/90 dark:text-white">
+                        <span className="absolute left-3 top-3 rounded-md border border-zinc-200 bg-white/95 px-2.5 py-0.5 text-[11px] font-bold text-black shadow-xs backdrop-blur-md">
                           {post.category}
                         </span>
                       </Link>
@@ -474,7 +460,7 @@ export default function CommunitiesPage() {
                       {/* Content Body */}
                       <div className="p-5">
                         {/* Meta Line */}
-                        <div className="flex items-center justify-between text-[11px] text-zinc-500 dark:text-zinc-400">
+                        <div className="flex items-center justify-between text-[11px] text-zinc-500">
                           <span className="flex items-center gap-1">
                             <Calendar className="h-3 w-3" />
                             {formatDate(post.createdAt)}
@@ -485,7 +471,7 @@ export default function CommunitiesPage() {
                               {calculateReadTime(post.content)}
                             </span>
                             <span>•</span>
-                            <span className="flex items-center gap-1 text-zinc-700 font-semibold dark:text-zinc-300">
+                            <span className="flex items-center gap-1 text-zinc-700 font-semibold">
                               <Eye className="h-3 w-3" />
                               {post.views}
                             </span>
@@ -494,244 +480,120 @@ export default function CommunitiesPage() {
 
                         {/* Title */}
                         <Link href={`/communities/${post.slug}`}>
-                          <h3 className="mt-2.5 line-clamp-2 text-base font-bold tracking-tight text-zinc-900 transition group-hover:text-zinc-600 dark:text-white dark:group-hover:text-zinc-300">
+                          <h3 className="mt-2.5 line-clamp-2 text-base font-bold tracking-tight text-zinc-950 transition group-hover:text-zinc-600">
                             {post.title}
                           </h3>
                         </Link>
 
                         {/* Excerpt */}
-                        <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-zinc-600 dark:text-zinc-400">
-                          {post.excerpt || post.content.substring(0, 120)}
+                        <p className="mt-2 line-clamp-2 text-xs text-zinc-600 leading-relaxed">
+                          {post.excerpt || post.content.substring(0, 100)}
                         </p>
 
-                        {/* Tags Badges */}
-                        {Array.isArray(post.tags) && post.tags.length > 0 && (
+                        {/* Tags */}
+                        {post.tags && post.tags.length > 0 && (
                           <div className="mt-3 flex flex-wrap gap-1.5">
-                            {post.tags.slice(0, 3).map((t: string) => (
+                            {post.tags.slice(0, 3).map((tag: any, i: number) => (
                               <button
-                                key={t}
-                                onClick={() => setSelectedTag(t)}
-                                className={`rounded-md px-2 py-0.5 text-[10px] font-semibold transition ${
-                                  selectedTag === t
-                                    ? "bg-black text-white dark:bg-white dark:text-black"
-                                    : "border border-zinc-200 bg-zinc-50 text-zinc-700 hover:bg-zinc-200 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800"
-                                }`}
+                                key={i}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setSelectedTag(tag);
+                                }}
+                                className="rounded-md bg-zinc-100 px-2 py-0.5 text-[10px] font-medium text-zinc-600 hover:bg-zinc-200 transition"
                               >
-                                #{t}
+                                #{tag}
                               </button>
                             ))}
-                            {post.tags.length > 3 && (
-                              <span className="text-[10px] text-zinc-400 self-center">
-                                +{post.tags.length - 3}
-                              </span>
-                            )}
                           </div>
                         )}
                       </div>
                     </div>
 
-                    {/* Author & Footer Line */}
-                    <div className="border-t border-zinc-100 bg-zinc-50/50 p-4 dark:border-zinc-850 dark:bg-zinc-900/40">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2.5">
-                          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-black text-xs font-bold text-white dark:bg-white dark:text-black">
-                            {post.author?.name?.charAt(0) || "U"}
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="text-xs font-bold text-zinc-900 dark:text-white line-clamp-1">
-                              {post.author?.name}
-                            </span>
-                            <span className="text-[10px] text-zinc-500 dark:text-zinc-400">
-                              {post.author?.profile?.title || "Community Member"}
-                            </span>
-                          </div>
+                    {/* Author Footer */}
+                    <div className="flex items-center justify-between border-t border-zinc-100 p-5 pt-3">
+                      <div className="flex items-center gap-2.5">
+                        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-zinc-950 text-xs font-bold text-white">
+                          {post.author?.name?.charAt(0) || "U"}
                         </div>
-
-                        <Link
-                          href={`/communities/${post.slug}`}
-                          className="inline-flex items-center gap-1 text-xs font-bold text-black transition group-hover:translate-x-0.5 dark:text-white"
-                        >
-                          <span>Read</span>
-                          <ArrowRight className="h-3 w-3" />
-                        </Link>
+                        <div className="overflow-hidden">
+                          <p className="truncate text-xs font-bold text-zinc-900">
+                            {post.author?.name}
+                          </p>
+                          <p className="text-[10px] text-zinc-500">{post.author?.role}</p>
+                        </div>
                       </div>
+
+                      <Link
+                        href={`/communities/${post.slug}`}
+                        className="inline-flex items-center gap-1 text-xs font-bold text-zinc-950 hover:underline"
+                      >
+                        পড়ুন <ArrowRight className="h-3 w-3" />
+                      </Link>
                     </div>
                   </article>
                 ))}
               </div>
             )}
-
-            {/* Pagination Controls */}
-            {meta.totalPages > 1 && (
-              <div className="mt-10 flex items-center justify-center gap-2">
-                <button
-                  disabled={page <= 1}
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
-                  className="rounded-lg border border-zinc-300 bg-white px-3.5 py-2 text-xs font-bold text-zinc-800 shadow-xs transition disabled:opacity-40 hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
-                >
-                  Previous
-                </button>
-                <div className="flex items-center gap-1 px-2 text-xs text-zinc-500">
-                  <span>Page</span>
-                  <strong className="text-zinc-900 dark:text-white">{page}</strong>
-                  <span>of</span>
-                  <strong>{meta.totalPages}</strong>
-                </div>
-                <button
-                  disabled={page >= meta.totalPages}
-                  onClick={() => setPage((p) => p + 1)}
-                  className="rounded-lg border border-zinc-300 bg-white px-3.5 py-2 text-xs font-bold text-zinc-800 shadow-xs transition disabled:opacity-40 hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
-                >
-                  Next
-                </button>
-              </div>
-            )}
           </div>
 
-          {/* ======================================================= */}
-          {/* RIGHT 4 COLS: SIDEBAR & TRENDS (B&W Minimalist) */}
-          {/* ======================================================= */}
+          {/* RIGHT 4 COLS: SIDEBAR */}
           <aside className="space-y-6 lg:col-span-4">
-            {/* ✍️ CTA CARD: SHARE YOUR EXPERTISE */}
-            <div className="rounded-2xl border border-zinc-300 bg-black p-6 text-white shadow-md dark:border-zinc-800 dark:bg-zinc-900">
-              <div className="inline-flex rounded-lg border border-zinc-700 bg-zinc-800 p-2.5">
-                <PenSquare className="h-6 w-6 text-white" />
-              </div>
-              <h3 className="mt-4 text-lg font-bold tracking-tight text-white">
-                Got an Embroidery Tip or Design?
-              </h3>
-              <p className="mt-1.5 text-xs text-zinc-300 leading-relaxed">
-                Share your Wilcom tutorials, machine maintenance solutions, or design collections with thousands of factory owners and punchers across Bangladesh.
+            {/* Write Card */}
+            <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs">
+              <h3 className="text-base font-bold text-zinc-950">আপনার অভিজ্ঞতা শেয়ার করুন</h3>
+              <p className="mt-1 text-xs text-zinc-600 leading-relaxed">
+                আপনার তৈরি করা নতুন স্টিচিং কৌশল, উইলকম টিপস বা এমব্রয়ডারি ডিজাইন কমিউনিটির সাথে শেয়ার করুন।
               </p>
               <Link
                 href="/communities/create"
-                className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white py-2.5 px-4 text-xs font-bold text-black shadow-xs transition hover:bg-zinc-200 active:scale-98"
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-zinc-950 py-2.5 text-xs font-bold text-white shadow-xs transition hover:bg-zinc-800"
               >
-                <span>Publish Your First Article</span>
-                <ArrowRight className="h-3.5 w-3.5" />
+                <PenSquare size={14} /> নতুন পোস্ট তৈরি করুন
               </Link>
             </div>
 
-            {/* 🏷️ POPULAR EMBROIDERY TOPICS */}
-            <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-xs dark:border-zinc-800 dark:bg-zinc-950">
-              <div className="flex items-center gap-2 border-b border-zinc-100 pb-3 dark:border-zinc-850">
-                <Layers className="h-4 w-4 text-zinc-900 dark:text-zinc-100" />
-                <h4 className="text-sm font-bold text-zinc-900 dark:text-white">
-                  Topics & Categories
-                </h4>
-              </div>
-              <div className="mt-3 space-y-1">
-                {CATEGORY_PRESETS.slice(1).map((cat) => {
-                  const countObj = categories.find(
-                    (c) => c.name.toLowerCase() === cat.name.toLowerCase()
-                  );
-                  const isSelected = selectedCategory === cat.name;
-                  return (
+            {/* Popular Tags Widget */}
+            {popularTags.length > 0 && (
+              <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+                  জনপ্রিয় ট্যাগসমূহ
+                </h3>
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {popularTags.map((tagObj: any) => (
                     <button
-                      key={cat.name}
-                      onClick={() => {
-                        setSelectedCategory(isSelected ? "ALL" : cat.name);
-                        setPage(1);
-                      }}
-                      className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-semibold transition ${
-                        isSelected
-                          ? "bg-black text-white dark:bg-white dark:text-black"
-                          : "text-zinc-600 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-900"
+                      key={tagObj.tag}
+                      onClick={() => setSelectedTag(tagObj.tag)}
+                      className={`rounded-lg px-2.5 py-1 text-xs font-medium transition ${
+                        selectedTag === tagObj.tag
+                          ? "bg-zinc-950 text-white font-bold"
+                          : "bg-zinc-100 text-zinc-700 hover:bg-zinc-200"
                       }`}
                     >
-                      <span>{cat.label}</span>
-                      <span
-                        className={`rounded-md px-2 py-0.5 text-[10px] font-bold ${
-                          isSelected
-                            ? "bg-zinc-800 text-white dark:bg-zinc-200 dark:text-black"
-                            : "bg-zinc-100 text-zinc-500 dark:bg-zinc-850 dark:text-zinc-400"
-                        }`}
-                      >
-                        {countObj?.count || 0}
-                      </span>
+                      #{tagObj.tag} ({tagObj.count})
                     </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* #️⃣ TRENDING TAGS CLOUD */}
-            <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-xs dark:border-zinc-800 dark:bg-zinc-950">
-              <div className="flex items-center justify-between border-b border-zinc-100 pb-3 dark:border-zinc-850">
-                <div className="flex items-center gap-2">
-                  <TrendingUp className="h-4 w-4 text-zinc-900 dark:text-zinc-100" />
-                  <h4 className="text-sm font-bold text-zinc-900 dark:text-white">
-                    Trending Tags
-                  </h4>
+                  ))}
                 </div>
-                {selectedTag && (
-                  <button
-                    onClick={() => setSelectedTag(null)}
-                    className="text-[11px] font-bold text-black underline dark:text-white"
-                  >
-                    Reset Tag
-                  </button>
-                )}
               </div>
+            )}
 
-              <div className="mt-4 flex flex-wrap gap-2">
-                {popularTags.length > 0 ? (
-                  popularTags.map(({ tag, count }: any) => {
-                    const isSelected = selectedTag === tag;
-                    return (
-                      <button
-                        key={tag}
-                        onClick={() => setSelectedTag(isSelected ? null : tag)}
-                        className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs font-bold transition ${
-                          isSelected
-                            ? "border-black bg-black text-white dark:border-white dark:bg-white dark:text-black"
-                            : "border-zinc-200 bg-zinc-50 text-zinc-700 hover:border-zinc-400 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-zinc-700"
-                        }`}
-                      >
-                        <span>#{tag}</span>
-                        <span
-                          className={`text-[10px] font-bold ${
-                            isSelected ? "text-zinc-300 dark:text-zinc-700" : "text-zinc-400"
-                          }`}
-                        >
-                          {count}
-                        </span>
-                      </button>
-                    );
-                  })
-                ) : (
-                  ["wilcom", "digitizing", "tajima", "3dpuff", "sequins", "embroidery", "garments"].map(
-                    (tag) => (
-                      <button
-                        key={tag}
-                        onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
-                        className={`rounded-lg border border-zinc-200 bg-zinc-50 px-2.5 py-1 text-xs font-bold text-zinc-700 transition hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300`}
-                      >
-                        #{tag}
-                      </button>
-                    )
-                  )
-                )}
-              </div>
-            </div>
-
-            {/* 🛡️ COMMUNITY GUIDELINES WIDGET */}
-            <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-5 dark:border-zinc-800 dark:bg-zinc-900/60">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
-                Community Standards
-              </h4>
-              <ul className="mt-3 space-y-2 text-xs text-zinc-600 dark:text-zinc-400">
+            {/* Guidelines Card */}
+            <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-6">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-700">
+                কমিউনিটি নীতিমালা
+              </h3>
+              <ul className="mt-3 space-y-2 text-xs text-zinc-600">
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-black dark:text-white mt-0.5 shrink-0" />
-                  <span>Share authentic embroidery knowledge & techniques.</span>
+                  <CheckCircle2 size={14} className="text-emerald-600 shrink-0 mt-0.5" />
+                  <span>সকলের সাথে শালীন ও সহযোগিতাপূর্ণ আচরণ করুন।</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-black dark:text-white mt-0.5 shrink-0" />
-                  <span>Credit design sources & original punchers.</span>
+                  <CheckCircle2 size={14} className="text-emerald-600 shrink-0 mt-0.5" />
+                  <span>অপ্রাসঙ্গিক বিজ্ঞাপন বা স্প্যামিং সম্পূর্ণ নিষিদ্ধ।</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-black dark:text-white mt-0.5 shrink-0" />
-                  <span>Submissions are reviewed by moderators for quality.</span>
+                  <CheckCircle2 size={14} className="text-emerald-600 shrink-0 mt-0.5" />
+                  <span>অন্যের কাজের কপিরাইট ও মেধার সম্মান বজায় রাখুন।</span>
                 </li>
               </ul>
             </div>

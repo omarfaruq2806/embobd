@@ -7,19 +7,17 @@ import {
   Search,
   CheckCircle2,
   XCircle,
-  Trash2,
   ExternalLink,
   ShieldCheck,
   ShieldAlert,
   Loader2,
+  Clock,
   MapPin,
   Phone,
-  Filter,
-  PlusCircle,
 } from "lucide-react";
 import { businessApi } from "@/services";
 
-export default function AdminBusinessesPage() {
+export default function ModeratorBusinessesPage() {
   const [businesses, setBusinesses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -29,7 +27,6 @@ export default function AdminBusinessesPage() {
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // Debounce search input (300ms)
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearch(search.trim());
@@ -69,7 +66,7 @@ export default function AdminBusinessesPage() {
         setBusinesses((prev) =>
           prev.map((b) => (b.id === id ? { ...b, status: "APPROVED", isVerified: true } : b))
         );
-        setMessage("Business approved and verified successfully! 🎉");
+        setMessage("Business listing verified & approved! 🎉");
         setTimeout(() => setMessage(null), 3000);
       } else {
         setError(res.message || "Failed to approve business.");
@@ -82,7 +79,7 @@ export default function AdminBusinessesPage() {
   };
 
   const handleReject = async (id: string) => {
-    const reason = prompt("বাতিল করার কারণ লিখুন (ঐচ্ছিক):", "তথ্য অসম্পূর্ণ বা ডুপ্লিকেট এন্ট্রি");
+    const reason = prompt("বাতিল করার কারণ লিখুন (ঐচ্ছিক):", "অসম্পূর্ণ ঠিকানা বা অপরীক্ষিত ফোন নম্বর");
     if (reason === null) return;
 
     setUpdatingId(id);
@@ -106,23 +103,6 @@ export default function AdminBusinessesPage() {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("আপনি কি নিশ্চিত যে এই ব্যবসার তথ্য স্থায়ীভাবে মুছে ফেলতে চান?")) return;
-
-    try {
-      const res = await businessApi.delete(id);
-      if (res.success) {
-        setBusinesses((prev) => prev.filter((b) => b.id !== id));
-        setMessage("ব্যবসা সফলভাবে মুছে ফেলা হয়েছে।");
-        setTimeout(() => setMessage(null), 3000);
-      }
-    } catch (err) {
-      console.error("Failed to delete business:", err);
-    }
-  };
-
-  const filtered = businesses;
-
   const pendingCount = businesses.filter((b) => b.status === "PENDING").length;
 
   return (
@@ -130,20 +110,24 @@ export default function AdminBusinessesPage() {
       {/* Header */}
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-zinc-950">
-            ব্যবসা ও কারখানা ডিরেক্টরি মডারেশন
-          </h1>
+          <div className="flex items-center gap-2">
+            <h1 className="text-2xl font-extrabold tracking-tight text-zinc-950">
+              ব্যবসা ডিরেক্টরি যাচাই ও অনুমোদন
+            </h1>
+            <span className="rounded-full bg-purple-50 border border-purple-200 px-2.5 py-0.5 text-[10px] font-bold text-purple-700">
+              মডারেটর স্টেশন
+            </span>
+          </div>
           <p className="mt-1 text-xs text-zinc-500">
-            ইউজারদের যুক্ত করা এমব্রয়ডারি কারখানা, শপ ও ডিলার প্রোফাইল যাচাই এবং অনুমোদন করুন।
+            দাখিলকৃত এমব্রয়ডারি শপ, কারখানা ও মেশিনারিজ ডিলারদের প্রোফাইল যাচাই করে ডিরেক্টরিতে অন্তর্ভুক্ত করুন।
           </p>
         </div>
 
-        <Link
-          href="/businesses/create"
-          className="flex items-center gap-1.5 rounded-xl bg-zinc-950 px-4 py-2 text-xs font-semibold text-white shadow-xs transition hover:bg-zinc-800"
-        >
-          <PlusCircle size={15} /> নতুন ব্যবসা যুক্ত করুন
-        </Link>
+        {pendingCount > 0 && (
+          <div className="flex items-center gap-2 rounded-xl bg-amber-50 px-3.5 py-2 text-xs font-semibold text-amber-800 border border-amber-200">
+            <Clock size={14} /> {pendingCount}টি ব্যবসার আবেদন অপেক্ষমাণ
+          </div>
+        )}
       </div>
 
       {/* Notifications */}
@@ -158,7 +142,7 @@ export default function AdminBusinessesPage() {
         </div>
       )}
 
-      {/* Search & Status Filter Tabs */}
+      {/* Search & Filter Bar */}
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
         <div className="relative flex-1">
           <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400" />
@@ -167,11 +151,11 @@ export default function AdminBusinessesPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="ব্যবসার নাম, জেলা বা ফোন নম্বর দিয়ে খুঁজুন..."
-            className="w-full rounded-xl border border-zinc-200 bg-white py-2 pl-9 pr-4 text-xs text-zinc-900 focus:border-zinc-950 focus:outline-none"
+            className="w-full rounded-xl border border-zinc-200 bg-white py-2 pl-9 pr-4 text-xs text-zinc-900 focus:border-purple-600 focus:outline-none"
           />
         </div>
 
-        {/* Status Pills */}
+        {/* Status Filter Tabs */}
         <div className="flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-white p-1">
           {[
             { label: "সকল", value: "ALL" },
@@ -185,7 +169,7 @@ export default function AdminBusinessesPage() {
               onClick={() => setStatusFilter(tab.value)}
               className={`rounded-lg px-3 py-1 text-xs font-semibold transition ${
                 statusFilter === tab.value
-                  ? "bg-zinc-950 text-white"
+                  ? "bg-purple-600 text-white"
                   : "text-zinc-600 hover:text-zinc-950"
               }`}
             >
@@ -204,28 +188,27 @@ export default function AdminBusinessesPage() {
                 <th className="px-6 py-3.5">ব্যবসা ও ক্যাটাগরি</th>
                 <th className="px-6 py-3.5">যোগাযোগ ও জেলা</th>
                 <th className="px-6 py-3.5">দাখিলকারী ইউজার</th>
-                <th className="px-6 py-3.5">স্ট্যাটাস</th>
-                <th className="px-6 py-3.5 text-right">মডারেশন কার্যক্রম</th>
+                <th className="px-6 py-3.5">ভেরিফিকেশন স্ট্যাটাস</th>
+                <th className="px-6 py-3.5 text-right">কার্যক্রম</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-200">
               {loading ? (
                 <tr>
                   <td colSpan={5} className="py-12 text-center text-zinc-400">
-                    <Loader2 size={20} className="mx-auto animate-spin text-zinc-600" />
+                    <Loader2 size={20} className="mx-auto animate-spin text-purple-600" />
                     <p className="mt-2 text-xs text-zinc-500">ব্যবসার তালিকা লোড হচ্ছে...</p>
                   </td>
                 </tr>
-              ) : filtered.length === 0 ? (
+              ) : businesses.length === 0 ? (
                 <tr>
                   <td colSpan={5} className="py-8 text-center text-zinc-500">
                     কোনো ব্যবসার তথ্য খুঁজে পাওয়া যায়নি।
                   </td>
                 </tr>
               ) : (
-                filtered.map((b) => (
+                businesses.map((b) => (
                   <tr key={b.id} className="hover:bg-zinc-50">
-                    {/* Business Name & Type */}
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
                         {b.logo ? (
@@ -235,7 +218,7 @@ export default function AdminBusinessesPage() {
                             className="h-9 w-9 rounded-xl object-cover border border-zinc-200"
                           />
                         ) : (
-                          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-zinc-950 text-xs font-bold text-white">
+                          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-purple-600 text-xs font-bold text-white">
                             {b.name.charAt(0).toUpperCase()}
                           </div>
                         )}
@@ -253,23 +236,20 @@ export default function AdminBusinessesPage() {
                       </div>
                     </td>
 
-                    {/* Contact & District */}
                     <td className="px-6 py-4 text-zinc-600">
                       <p className="font-medium text-zinc-950">{b.phone}</p>
                       <p className="text-[11px] text-zinc-500">{b.district}</p>
                     </td>
 
-                    {/* Submitter */}
                     <td className="px-6 py-4 text-zinc-600">
                       <p className="font-medium text-zinc-800">
-                        {b.submittedUser?.name || "সরাসরি অন্তর্ভুক্তি"}
+                        {b.submittedUser?.name || "সরাসরি দাখিল"}
                       </p>
                       <span className="text-[10px] text-zinc-400 uppercase">
                         উৎস: {b.source}
                       </span>
                     </td>
 
-                    {/* Status Badge */}
                     <td className="px-6 py-4">
                       <span
                         className={`inline-block rounded-full px-2.5 py-0.5 text-[10px] font-bold ${
@@ -289,7 +269,6 @@ export default function AdminBusinessesPage() {
                       )}
                     </td>
 
-                    {/* Actions */}
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">
                         {b.status !== "APPROVED" && (
@@ -323,15 +302,6 @@ export default function AdminBusinessesPage() {
                         >
                           <ExternalLink size={15} />
                         </Link>
-
-                        <button
-                          type="button"
-                          onClick={() => handleDelete(b.id)}
-                          className="rounded-lg p-1.5 text-zinc-400 hover:bg-red-50 hover:text-red-600"
-                          title="ব্যবসার রেকর্ড মুছে ফেলুন"
-                        >
-                          <Trash2 size={15} />
-                        </button>
                       </div>
                     </td>
                   </tr>

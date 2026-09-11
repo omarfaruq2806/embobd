@@ -3,24 +3,22 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
-  Store,
+  MessageSquare,
   Search,
   CheckCircle2,
   XCircle,
   Trash2,
   ExternalLink,
-  ShieldCheck,
-  ShieldAlert,
   Loader2,
-  MapPin,
-  Phone,
-  Filter,
-  PlusCircle,
+  Clock,
+  ShieldCheck,
+  Tag,
+  User,
 } from "lucide-react";
-import { businessApi } from "@/services";
+import { communityApi } from "@/services";
 
-export default function AdminBusinessesPage() {
-  const [businesses, setBusinesses] = useState<any[]>([]);
+export default function AdminCommunityPage() {
+  const [posts, setPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
@@ -29,7 +27,6 @@ export default function AdminBusinessesPage() {
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // Debounce search input (300ms)
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearch(search.trim());
@@ -37,26 +34,26 @@ export default function AdminBusinessesPage() {
     return () => clearTimeout(handler);
   }, [search]);
 
-  const fetchBusinesses = async () => {
+  const fetchPosts = async () => {
     try {
       setLoading(true);
-      const res = await businessApi.getAll({
+      const res = await communityApi.getAll({
         status: statusFilter !== "ALL" ? statusFilter : undefined,
         search: debouncedSearch || undefined,
       });
 
       if (res.success && Array.isArray(res.data)) {
-        setBusinesses(res.data);
+        setPosts(res.data);
       }
     } catch (err) {
-      console.error("Failed to load businesses:", err);
+      console.error("Failed to load community posts:", err);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchBusinesses();
+    fetchPosts();
   }, [statusFilter, debouncedSearch]);
 
   const handleApprove = async (id: string) => {
@@ -64,66 +61,69 @@ export default function AdminBusinessesPage() {
     setMessage(null);
     setError(null);
     try {
-      const res = await businessApi.approve(id);
+      const res = await communityApi.approve(id);
       if (res.success) {
-        setBusinesses((prev) =>
-          prev.map((b) => (b.id === id ? { ...b, status: "APPROVED", isVerified: true } : b))
+        setPosts((prev) =>
+          prev.map((p) => (p.id === id ? { ...p, status: "APPROVED" } : p))
         );
-        setMessage("Business approved and verified successfully! 🎉");
+        setMessage("Post approved and published to community! 🎉");
         setTimeout(() => setMessage(null), 3000);
       } else {
-        setError(res.message || "Failed to approve business.");
+        setError(res.message || "Failed to approve post.");
       }
     } catch (err: any) {
-      setError(err?.message || "Error approving business.");
+      setError(err?.message || "Error approving post.");
     } finally {
       setUpdatingId(null);
     }
   };
 
   const handleReject = async (id: string) => {
-    const reason = prompt("বাতিল করার কারণ লিখুন (ঐচ্ছিক):", "তথ্য অসম্পূর্ণ বা ডুপ্লিকেট এন্ট্রি");
+    const reason = prompt(
+      "বাতিল করার কারণ লিখুন (ঐচ্ছিক):",
+      "পোস্টটি কমিউনিটি নীতিমালা লঙ্ঘন করেছে অথবা বিজ্ঞাপনী স্প্যাম হিসেবে চিহ্নিত।"
+    );
     if (reason === null) return;
 
     setUpdatingId(id);
     setMessage(null);
     setError(null);
     try {
-      const res = await businessApi.reject(id, reason);
+      const res = await communityApi.reject(id, reason);
       if (res.success) {
-        setBusinesses((prev) =>
-          prev.map((b) => (b.id === id ? { ...b, status: "REJECTED", rejectionReason: reason } : b))
+        setPosts((prev) =>
+          prev.map((p) =>
+            p.id === id ? { ...p, status: "REJECTED", rejectionReason: reason } : p
+          )
         );
-        setMessage("ব্যবসা বাতিল করা হয়েছে।");
+        setMessage("পোস্ট বাতিল করা হয়েছে।");
         setTimeout(() => setMessage(null), 3000);
       } else {
-        setError(res.message || "বাতিল করতে ব্যর্থ হয়েছে।");
+        setError(res.message || "পোস্ট বাতিল করতে ব্যর্থ হয়েছে।");
       }
     } catch (err: any) {
-      setError(err?.message || "ব্যবসা বাতিলের সময় সমস্যা হয়েছে।");
+      setError(err?.message || "পোস্ট বাতিলের সময় সমস্যা হয়েছে।");
     } finally {
       setUpdatingId(null);
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("আপনি কি নিশ্চিত যে এই ব্যবসার তথ্য স্থায়ীভাবে মুছে ফেলতে চান?")) return;
+    if (!confirm("আপনি কি নিশ্চিত যে এই পোস্টটি স্থায়ীভাবে মুছে ফেলতে চান?")) return;
 
     try {
-      const res = await businessApi.delete(id);
+      const res = await communityApi.delete(id);
       if (res.success) {
-        setBusinesses((prev) => prev.filter((b) => b.id !== id));
-        setMessage("ব্যবসা সফলভাবে মুছে ফেলা হয়েছে।");
+        setPosts((prev) => prev.filter((p) => p.id !== id));
+        setMessage("পোস্ট সফলভাবে মুছে ফেলা হয়েছে।");
         setTimeout(() => setMessage(null), 3000);
       }
     } catch (err) {
-      console.error("Failed to delete business:", err);
+      console.error("Failed to delete post:", err);
     }
   };
 
-  const filtered = businesses;
-
-  const pendingCount = businesses.filter((b) => b.status === "PENDING").length;
+  const pendingCount = posts.filter((p) => p.status === "PENDING").length;
 
   return (
     <div className="mx-auto max-w-7xl">
@@ -131,18 +131,18 @@ export default function AdminBusinessesPage() {
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
           <h1 className="text-2xl font-extrabold tracking-tight text-zinc-950">
-            ব্যবসা ও কারখানা ডিরেক্টরি মডারেশন
+            কমিউনিটি পোস্ট ও আলোচনা মডারেশন
           </h1>
           <p className="mt-1 text-xs text-zinc-500">
-            ইউজারদের যুক্ত করা এমব্রয়ডারি কারখানা, শপ ও ডিলার প্রোফাইল যাচাই এবং অনুমোদন করুন।
+            এমব্রয়ডারি ফোরাম থ্রেড, টিউটোরিয়াল, প্রযুক্তিগত আলোচনা ও স্টিচ আর্ট শোকেস পর্যালোচনা করুন।
           </p>
         </div>
 
         <Link
-          href="/businesses/create"
+          href="/communities/create"
           className="flex items-center gap-1.5 rounded-xl bg-zinc-950 px-4 py-2 text-xs font-semibold text-white shadow-xs transition hover:bg-zinc-800"
         >
-          <PlusCircle size={15} /> নতুন ব্যবসা যুক্ত করুন
+          <MessageSquare size={15} /> নতুন পোস্ট তৈরি করুন
         </Link>
       </div>
 
@@ -158,7 +158,7 @@ export default function AdminBusinessesPage() {
         </div>
       )}
 
-      {/* Search & Status Filter Tabs */}
+      {/* Search & Filter Bar */}
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
         <div className="relative flex-1">
           <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400" />
@@ -166,12 +166,12 @@ export default function AdminBusinessesPage() {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="ব্যবসার নাম, জেলা বা ফোন নম্বর দিয়ে খুঁজুন..."
+            placeholder="পোস্টের শিরোনাম, লেখক বা ট্যাগ দিয়ে খুঁজুন..."
             className="w-full rounded-xl border border-zinc-200 bg-white py-2 pl-9 pr-4 text-xs text-zinc-900 focus:border-zinc-950 focus:outline-none"
           />
         </div>
 
-        {/* Status Pills */}
+        {/* Status Filter Tabs */}
         <div className="flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-white p-1">
           {[
             { label: "সকল", value: "ALL" },
@@ -195,17 +195,17 @@ export default function AdminBusinessesPage() {
         </div>
       </div>
 
-      {/* Businesses Table */}
+      {/* Posts Table */}
       <div className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead className="border-b border-zinc-200 bg-zinc-50 text-[11px] font-semibold text-zinc-600">
               <tr>
-                <th className="px-6 py-3.5">ব্যবসা ও ক্যাটাগরি</th>
-                <th className="px-6 py-3.5">যোগাযোগ ও জেলা</th>
-                <th className="px-6 py-3.5">দাখিলকারী ইউজার</th>
+                <th className="px-6 py-3.5">পোস্টের শিরোনাম ও ক্যাটাগরি</th>
+                <th className="px-6 py-3.5">লেখক</th>
+                <th className="px-6 py-3.5">তারিখ</th>
                 <th className="px-6 py-3.5">স্ট্যাটাস</th>
-                <th className="px-6 py-3.5 text-right">মডারেশন কার্যক্রম</th>
+                <th className="px-6 py-3.5 text-right">কার্যক্রম</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-200">
@@ -213,122 +213,106 @@ export default function AdminBusinessesPage() {
                 <tr>
                   <td colSpan={5} className="py-12 text-center text-zinc-400">
                     <Loader2 size={20} className="mx-auto animate-spin text-zinc-600" />
-                    <p className="mt-2 text-xs text-zinc-500">ব্যবসার তালিকা লোড হচ্ছে...</p>
+                    <p className="mt-2 text-xs text-zinc-500">পোস্ট তালিকা লোড হচ্ছে...</p>
                   </td>
                 </tr>
-              ) : filtered.length === 0 ? (
+              ) : posts.length === 0 ? (
                 <tr>
                   <td colSpan={5} className="py-8 text-center text-zinc-500">
-                    কোনো ব্যবসার তথ্য খুঁজে পাওয়া যায়নি।
+                    কোনো কমিউনিটি পোস্ট খুঁজে পাওয়া যায়নি।
                   </td>
                 </tr>
               ) : (
-                filtered.map((b) => (
-                  <tr key={b.id} className="hover:bg-zinc-50">
-                    {/* Business Name & Type */}
+                posts.map((post) => (
+                  <tr key={post.id} className="hover:bg-zinc-50">
                     <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        {b.logo ? (
-                          <img
-                            src={b.logo}
-                            alt={b.name}
-                            className="h-9 w-9 rounded-xl object-cover border border-zinc-200"
-                          />
-                        ) : (
-                          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-zinc-950 text-xs font-bold text-white">
-                            {b.name.charAt(0).toUpperCase()}
-                          </div>
-                        )}
-                        <div>
-                          <p className="font-bold text-zinc-950 flex items-center gap-1.5">
-                            {b.name}
-                            {b.isVerified && (
-                              <ShieldCheck size={14} className="text-emerald-600 shrink-0" />
-                            )}
-                          </p>
+                      <div className="max-w-md">
+                        <p className="font-bold text-zinc-950 truncate">
+                          {post.title}
+                        </p>
+                        <div className="mt-1 flex items-center gap-2">
                           <span className="rounded-md bg-zinc-100 px-1.5 py-0.5 text-[10px] font-semibold text-zinc-600">
-                            {b.type}
+                            {post.category || "সাধারণ"}
                           </span>
+                          {post.tags && post.tags.length > 0 && (
+                            <span className="text-[10px] text-zinc-400">
+                              #{post.tags.slice(0, 2).join(" #")}
+                            </span>
+                          )}
                         </div>
                       </div>
                     </td>
 
-                    {/* Contact & District */}
                     <td className="px-6 py-4 text-zinc-600">
-                      <p className="font-medium text-zinc-950">{b.phone}</p>
-                      <p className="text-[11px] text-zinc-500">{b.district}</p>
-                    </td>
-
-                    {/* Submitter */}
-                    <td className="px-6 py-4 text-zinc-600">
-                      <p className="font-medium text-zinc-800">
-                        {b.submittedUser?.name || "সরাসরি অন্তর্ভুক্তি"}
+                      <p className="font-semibold text-zinc-950">
+                        {post.author?.name || "বেনামী"}
                       </p>
-                      <span className="text-[10px] text-zinc-400 uppercase">
-                        উৎস: {b.source}
-                      </span>
+                      <p className="text-[10px] text-zinc-400">{post.author?.email}</p>
                     </td>
 
-                    {/* Status Badge */}
+                    <td className="px-6 py-4 text-zinc-500">
+                      {new Date(post.createdAt).toLocaleDateString("bn-BD", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
+                    </td>
+
                     <td className="px-6 py-4">
                       <span
                         className={`inline-block rounded-full px-2.5 py-0.5 text-[10px] font-bold ${
-                          b.status === "APPROVED"
+                          post.status === "APPROVED"
                             ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
-                            : b.status === "PENDING"
+                            : post.status === "PENDING"
                             ? "bg-amber-50 text-amber-800 border border-amber-200"
                             : "bg-red-50 text-red-800 border border-red-200"
                         }`}
                       >
-                        {b.status === "APPROVED" ? "অনুমোদিত" : b.status === "PENDING" ? "অপেক্ষমাণ" : "বাতিলকৃত"}
+                        {post.status === "APPROVED" ? "অনুমোদিত" : post.status === "PENDING" ? "অপেক্ষমাণ" : "বাতিলকৃত"}
                       </span>
-                      {b.rejectionReason && (
-                        <p className="mt-1 text-[10px] text-red-600 truncate max-w-[140px]" title={b.rejectionReason}>
-                          কারণ: {b.rejectionReason}
+                      {post.rejectionReason && (
+                        <p className="mt-1 text-[10px] text-red-600 truncate max-w-[140px]" title={post.rejectionReason}>
+                          {post.rejectionReason}
                         </p>
                       )}
                     </td>
 
-                    {/* Actions */}
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">
-                        {b.status !== "APPROVED" && (
+                        {post.status !== "APPROVED" && (
                           <button
                             type="button"
-                            disabled={updatingId === b.id}
-                            onClick={() => handleApprove(b.id)}
+                            disabled={updatingId === post.id}
+                            onClick={() => handleApprove(post.id)}
                             className="rounded-lg bg-emerald-600 px-2.5 py-1 text-[11px] font-semibold text-white shadow-xs hover:bg-emerald-700 disabled:opacity-50"
-                            title="অনুমোদন ও ভেরিফাই করুন"
+                            title="পোস্ট অনুমোদন করুন"
                           >
                             অনুমোদন
                           </button>
                         )}
-
-                        {b.status !== "REJECTED" && (
+                        {post.status !== "REJECTED" && (
                           <button
                             type="button"
-                            disabled={updatingId === b.id}
-                            onClick={() => handleReject(b.id)}
+                            disabled={updatingId === post.id}
+                            onClick={() => handleReject(post.id)}
                             className="rounded-lg border border-red-200 bg-red-50 px-2.5 py-1 text-[11px] font-semibold text-red-700 hover:bg-red-100 disabled:opacity-50"
-                            title="আবেদন বাতিল করুন"
+                            title="পোস্ট বাতিল করুন"
                           >
                             বাতিল
                           </button>
                         )}
-
                         <Link
-                          href={`/businesses/${b.slug}`}
+                          href={`/communities/${post.slug || post.id}`}
                           className="rounded-lg p-1.5 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-950"
-                          title="লাইভ প্রোফাইল দেখুন"
+                          title="পোস্ট পড়ুন"
                         >
                           <ExternalLink size={15} />
                         </Link>
-
                         <button
                           type="button"
-                          onClick={() => handleDelete(b.id)}
+                          onClick={() => handleDelete(post.id)}
                           className="rounded-lg p-1.5 text-zinc-400 hover:bg-red-50 hover:text-red-600"
-                          title="ব্যবসার রেকর্ড মুছে ফেলুন"
+                          title="পোস্ট মুছে ফেলুন"
                         >
                           <Trash2 size={15} />
                         </button>

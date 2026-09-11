@@ -5,17 +5,16 @@ import Link from "next/link";
 import {
   Briefcase,
   Search,
-  Trash2,
   ExternalLink,
-  PlusCircle,
   CheckCircle2,
   Loader2,
-  DollarSign,
-  MapPin,
+  Clock,
+  ShieldCheck,
+  AlertCircle,
 } from "lucide-react";
 import { jobApi } from "@/services";
 
-export default function AdminJobsPage() {
+export default function ModeratorJobsPage() {
   const [jobs, setJobs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -24,7 +23,6 @@ export default function AdminJobsPage() {
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
 
-  // Debounce search input (300ms)
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearch(search.trim());
@@ -63,7 +61,7 @@ export default function AdminJobsPage() {
         setJobs((prev) =>
           prev.map((j) => (j.id === jobId ? { ...j, status: newStatus } : j))
         );
-        setMessage(`Job status updated to ${newStatus}`);
+        setMessage(`বিজ্ঞপ্তির স্ট্যাটাস সফলভাবে পরিবর্তিত হয়েছে: ${newStatus}`);
         setTimeout(() => setMessage(null), 3000);
       }
     } catch (err) {
@@ -73,45 +71,31 @@ export default function AdminJobsPage() {
     }
   };
 
-  const handleDeleteJob = async (jobId: string) => {
-    if (!confirm("Are you sure you want to delete this job posting?")) {
-      return;
-    }
-
-    try {
-      const res = await jobApi.delete(jobId);
-      if (res.success) {
-        setJobs((prev) => prev.filter((j) => j.id !== jobId));
-        setMessage("Job deleted successfully");
-        setTimeout(() => setMessage(null), 3000);
-      }
-    } catch (err) {
-      console.error("Failed to delete job:", err);
-    }
-  };
-
-  const filteredJobs = jobs;
+  const draftCount = jobs.filter((j) => j.status === "DRAFT").length;
 
   return (
     <div className="mx-auto max-w-7xl">
       {/* Header */}
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-zinc-950">
-            চাকরির বিজ্ঞপ্তি ব্যবস্থাপনা ও অনুমোদন
-          </h1>
+          <div className="flex items-center gap-2">
+            <h1 className="text-2xl font-extrabold tracking-tight text-zinc-950">
+              চাকরির বিজ্ঞপ্তি মডারেশন ও অনুমোদন
+            </h1>
+            <span className="rounded-full bg-purple-50 border border-purple-200 px-2.5 py-0.5 text-[10px] font-bold text-purple-700">
+              মডারেটর স্টেশন
+            </span>
+          </div>
           <p className="mt-1 text-xs text-zinc-500">
-            প্ল্যাটফর্মের সকল এমব্রয়ডারি চাকরির বিজ্ঞপ্তি পর্যালোচনা, অনুমোদন, ড্রাফট বা বাতিল করুন।
+            নিয়োগদাতাদের চাকরির বিজ্ঞপ্তি যাচাই করুন এবং লাইভ প্ল্যাটফর্মে প্রকাশের জন্য অনুমোদন দিন।
           </p>
         </div>
 
-        <Link
-          href="/jobs/post"
-          className="flex items-center gap-1.5 rounded-xl bg-zinc-950 px-4 py-2 text-xs font-semibold text-white shadow-xs transition hover:bg-zinc-800"
-        >
-          <PlusCircle size={15} />
-          নতুন চাকরি পোস্ট করুন
-        </Link>
+        {draftCount > 0 && (
+          <div className="flex items-center gap-2 rounded-xl bg-amber-50 px-3.5 py-2 text-xs font-semibold text-amber-800 border border-amber-200">
+            <Clock size={14} /> {draftCount}টি ড্রাফট বিজ্ঞপ্তি অনুমোদনের অপেক্ষায়
+          </div>
+        )}
       </div>
 
       {/* Success Notification */}
@@ -130,20 +114,32 @@ export default function AdminJobsPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="বিজ্ঞপ্তির শিরোনাম, কোম্পানি বা ক্যাটাগরি দিয়ে খুঁজুন..."
-            className="w-full rounded-xl border border-zinc-200 bg-white py-2 pl-9 pr-4 text-xs text-zinc-900 focus:border-zinc-950 focus:outline-none"
+            className="w-full rounded-xl border border-zinc-200 bg-white py-2 pl-9 pr-4 text-xs text-zinc-900 focus:border-purple-600 focus:outline-none"
           />
         </div>
 
-        <select
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
-          className="rounded-xl border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-700 focus:outline-none"
-        >
-          <option value="ALL">সকল স্ট্যাটাস</option>
-          <option value="PUBLISHED">লাইভ ও প্রকাশিত (PUBLISHED)</option>
-          <option value="DRAFT">অপেক্ষমাণ ড্রাফট (DRAFT)</option>
-          <option value="CLOSED">সম্পন্ন / বন্ধ (CLOSED)</option>
-        </select>
+        {/* Status Filter Tabs */}
+        <div className="flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-white p-1">
+          {[
+            { label: "সকল", value: "ALL" },
+            { label: `ড্রাফট (${draftCount})`, value: "DRAFT" },
+            { label: "প্রকাশিত", value: "PUBLISHED" },
+            { label: "বন্ধ", value: "CLOSED" },
+          ].map((tab) => (
+            <button
+              key={tab.value}
+              type="button"
+              onClick={() => setStatusFilter(tab.value)}
+              className={`rounded-lg px-3 py-1 text-xs font-semibold transition ${
+                statusFilter === tab.value
+                  ? "bg-purple-600 text-white"
+                  : "text-zinc-600 hover:text-zinc-950"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Jobs Table */}
@@ -152,29 +148,29 @@ export default function AdminJobsPage() {
           <table className="w-full text-left text-xs">
             <thead className="border-b border-zinc-200 bg-zinc-50 text-[11px] font-semibold text-zinc-600">
               <tr>
-                <th className="px-6 py-3.5">বিজ্ঞপ্তির শিরোনাম ও প্রতিষ্ঠান</th>
+                <th className="px-6 py-3.5">বিজ্ঞপ্তির শিরোনাম ও কোম্পানি</th>
                 <th className="px-6 py-3.5">ক্যাটাগরি</th>
-                <th className="px-6 py-3.5">কাজের ধরণ ও অবস্থান</th>
-                <th className="px-6 py-3.5">স্ট্যাটাস</th>
-                <th className="px-6 py-3.5 text-right">কার্যক্রম</th>
+                <th className="px-6 py-3.5">ধরণ ও অবস্থান</th>
+                <th className="px-6 py-3.5">বর্তমান স্ট্যাটাস</th>
+                <th className="px-6 py-3.5 text-right">মডারেশন কার্যক্রম</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-200">
               {loading ? (
                 <tr>
                   <td colSpan={5} className="py-12 text-center text-zinc-400">
-                    <Loader2 size={20} className="mx-auto animate-spin text-zinc-600" />
-                    <p className="mt-2 text-xs text-zinc-500">বিজ্ঞপ্তির তালিকা লোড হচ্ছে...</p>
+                    <Loader2 size={20} className="mx-auto animate-spin text-purple-600" />
+                    <p className="mt-2 text-xs text-zinc-500">বিজ্ঞপ্তি তালিকা লোড হচ্ছে...</p>
                   </td>
                 </tr>
-              ) : filteredJobs.length === 0 ? (
+              ) : jobs.length === 0 ? (
                 <tr>
                   <td colSpan={5} className="py-8 text-center text-zinc-500">
                     কোনো চাকরির বিজ্ঞপ্তি খুঁজে পাওয়া যায়নি।
                   </td>
                 </tr>
               ) : (
-                filteredJobs.map((job) => (
+                jobs.map((job) => (
                   <tr key={job.id} className="hover:bg-zinc-50">
                     <td className="px-6 py-4">
                       <p className="font-bold text-zinc-950">
@@ -199,7 +195,7 @@ export default function AdminJobsPage() {
                         value={job.status}
                         disabled={updatingId === job.id}
                         onChange={(e) => handleStatusChange(job.id, e.target.value)}
-                        className={`rounded-lg border px-2 py-1 text-[11px] font-bold focus:outline-none ${
+                        className={`rounded-lg border px-2.5 py-1 text-[11px] font-bold focus:outline-none ${
                           job.status === "PUBLISHED"
                             ? "border-emerald-300 bg-emerald-50 text-emerald-800"
                             : job.status === "CLOSED"
@@ -218,28 +214,21 @@ export default function AdminJobsPage() {
                         {job.status === "DRAFT" && (
                           <button
                             type="button"
+                            disabled={updatingId === job.id}
                             onClick={() => handleStatusChange(job.id, "PUBLISHED")}
-                            className="rounded-lg bg-emerald-600 px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-emerald-700 shadow-xs"
-                            title="অনুমোদন করুন এবং লাইভ করুন"
+                            className="rounded-lg bg-emerald-600 px-3 py-1 text-[11px] font-semibold text-white shadow-xs hover:bg-emerald-700 disabled:opacity-50"
+                            title="বিজ্ঞপ্তি অনুমোদন করুন ও লাইভ বোর্ডে প্রকাশ করুন"
                           >
-                            অনুমোদন
+                            অনুমোদন ও প্রকাশ
                           </button>
                         )}
                         <Link
                           href={`/jobs/${job.id}`}
                           className="rounded-lg p-1.5 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-950"
-                          title="সরাসরি বিজ্ঞপ্তি দেখুন"
+                          title="লাইভ বিজ্ঞপ্তি দেখুন"
                         >
                           <ExternalLink size={15} />
                         </Link>
-                        <button
-                          type="button"
-                          onClick={() => handleDeleteJob(job.id)}
-                          className="rounded-lg p-1.5 text-zinc-400 hover:bg-red-50 hover:text-red-600"
-                          title="বিজ্ঞপ্তি মুছে ফেলুন"
-                        >
-                          <Trash2 size={15} />
-                        </button>
                       </div>
                     </td>
                   </tr>

@@ -30,7 +30,7 @@ export default function DashboardRedirectPage() {
     <div className="flex min-h-[60vh] items-center justify-center">
       <div className="flex flex-col items-center gap-3">
         <Loader2 size={24} className="animate-spin text-zinc-500" />
-        <p className="text-xs font-medium text-zinc-500">Redirecting to your dashboard...</p>
+        <p className="text-xs font-medium text-zinc-500">আপনার ড্যাশবোর্ডে নিয়ে যাওয়া হচ্ছে...</p>
       </div>
     </div>
   );

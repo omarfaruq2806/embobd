@@ -23,12 +23,12 @@ import {
 import { businessApi } from "@/services";
 
 const BUSINESS_TYPES = [
-  { value: "SHOP", label: "Retail / Embroidery Shop" },
-  { value: "FACTORY", label: "Garment / Embroidery Factory" },
-  { value: "COMPANY", label: "Corporate Business / Studio" },
-  { value: "DEALER", label: "Machinery & Spare Parts Dealer" },
-  { value: "DISTRIBUTOR", label: "Official Distributor" },
-  { value: "SUPPLIER", label: "Thread & Raw Materials Supplier" },
+  { value: "SHOP", label: "এমব্রয়ডারি শপ / আউটলেট" },
+  { value: "FACTORY", label: "গার্মেন্টস / এমব্রয়ডারি ফ্যাক্টরি" },
+  { value: "COMPANY", label: "কর্পোরেট স্টুডিও / প্রতিষ্ঠান" },
+  { value: "DEALER", label: "মেশিনারিজ ও খুচরা যন্ত্রাংশ ডিলার" },
+  { value: "DISTRIBUTOR", label: "অফিসিয়াল ডিস্ট্রিবিউটর" },
+  { value: "SUPPLIER", label: "সুতা ও কাঁচামাল সরবরাহকারী" },
 ];
 
 export default function CreateBusinessPage() {
@@ -47,7 +47,7 @@ export default function CreateBusinessPage() {
     website: "",
     address: "",
     area: "",
-    district: "Dhaka",
+    district: "ঢাকা",
   });
 
   const [loading, setLoading] = useState(false);
@@ -66,27 +66,27 @@ export default function CreateBusinessPage() {
     setError(null);
 
     if (!user) {
-      setError("You must be logged in to submit a business.");
+      setError("ব্যবসা যুক্ত করতে অনুগ্রহ করে আগে লগইন করুন।");
       return;
     }
 
     if (!formData.name.trim()) {
-      setError("Business name is required.");
+      setError("প্রতিষ্ঠানের নাম আবশ্যক।");
       return;
     }
 
     if (!formData.phone.trim()) {
-      setError("Phone number is required.");
+      setError("ফোন নম্বর দেওয়া আবশ্যক।");
       return;
     }
 
     if (!formData.address.trim()) {
-      setError("Street address is required.");
+      setError("সঠিক ঠিকানা দেওয়া আবশ্যক।");
       return;
     }
 
     if (!formData.district.trim()) {
-      setError("District is required.");
+      setError("জেলা নির্বাচন করুন।");
       return;
     }
 
@@ -114,10 +114,10 @@ export default function CreateBusinessPage() {
         setSuccess(true);
         setCreatedSlug(res.data.slug);
       } else {
-        setError(res.message || "Failed to submit business. Please try again.");
+        setError(res.message || "ব্যবসা যুক্ত করা সম্ভব হয়নি। আবার চেষ্টা করুন।");
       }
     } catch (err: any) {
-      setError(err?.message || "An unexpected error occurred.");
+      setError(err?.message || "সার্ভারে সমস্যা দেখা দিয়েছে।");
     } finally {
       setLoading(false);
     }
@@ -126,27 +126,27 @@ export default function CreateBusinessPage() {
   // Auth gate check
   if (!isPending && !user) {
     return (
-      <main className="flex min-h-[70vh] items-center justify-center px-6 py-20">
-        <div className="max-w-md rounded-3xl border border-black/10 bg-white p-8 text-center shadow-xs dark:border-white/10 dark:bg-zinc-950">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-white dark:bg-white dark:text-black">
+      <main className="flex min-h-[70vh] items-center justify-center bg-zinc-50 px-4 py-20 font-sans">
+        <div className="max-w-md rounded-2xl border border-zinc-200 bg-white p-8 text-center shadow-sm">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-zinc-900 text-white shadow-sm">
             <Lock size={24} />
           </div>
-          <h1 className="mt-4 text-xl font-black text-black dark:text-white">Authentication Required</h1>
-          <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-400">
-            You must be signed in to your EMBOBD account to list a business or factory in our verified directory.
+          <h1 className="mt-4 text-xl font-bold text-zinc-950">লগইন আবশ্যক</h1>
+          <p className="mt-2 text-xs text-zinc-600">
+            EMBOBD ভেরিফাইড ডিরেক্টরিতে আপনার ফ্যাক্টরি বা ব্যবসা যুক্ত করতে অ্যাকাউন্টে সাইন-ইন করুন।
           </p>
           <div className="mt-6 flex flex-col gap-2">
             <Link
               href="/login"
-              className="rounded-xl bg-black py-2.5 text-xs font-semibold text-white shadow-xs dark:bg-white dark:text-black"
+              className="rounded-xl bg-zinc-950 py-2.5 text-xs font-bold text-white shadow-sm hover:opacity-90"
             >
-              Sign In to Continue
+              লগইন করুন
             </Link>
             <Link
               href="/register"
-              className="rounded-xl border border-black/10 py-2.5 text-xs font-semibold text-zinc-700 dark:border-white/15 dark:text-zinc-300"
+              className="rounded-xl border border-zinc-300 py-2.5 text-xs font-bold text-zinc-800 hover:bg-zinc-100"
             >
-              Create Free Account
+              নতুন অ্যাকাউন্ট খুলুন
             </Link>
           </div>
         </div>
@@ -155,52 +155,55 @@ export default function CreateBusinessPage() {
   }
 
   return (
-    <main className="min-h-screen bg-zinc-50/60 pb-24 pt-8 dark:bg-black">
-      <div className="mx-auto max-w-3xl px-6 lg:px-8">
+    <main className="min-h-screen bg-zinc-50 pb-24 pt-8 font-sans">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         {/* Back link */}
         <Link
           href="/businesses"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-500 hover:text-black dark:hover:text-white"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-600 hover:text-zinc-950 transition-colors"
         >
-          <ArrowLeft size={14} /> Back to Directory
+          <ArrowLeft size={14} /> ডিরেক্টরিতে ফিরে যান
         </Link>
 
-        {/* Page Header */}
+        {/* Page Header with Hook */}
         <div className="mt-4">
-          <h1 className="text-2xl font-black tracking-tight text-black dark:text-white sm:text-3xl">
-            List Your Embroidery Business
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-200 px-3 py-1 text-xs font-bold text-blue-800 mb-2">
+            <Sparkles size={12} /> ভেরিফাইড ডিরেক্টরি
+          </div>
+          <h1 className="text-2xl font-bold tracking-tight text-zinc-950 sm:text-3xl">
+            আপনার প্রতিষ্ঠান বা ফ্যাক্টরি যুক্ত করুন 🏢
           </h1>
-          <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-400">
-            Submit your embroidery factory, machinery shop, or material dealership to connect with buyers and recruiters across Bangladesh.
+          <p className="mt-1 text-xs text-zinc-600">
+            সারা দেশের টেক্সটাইল বায়ার, গার্মেন্টস কারখানা ও পেশাদারদের সাথে সরাসরি ব্যবসার সংযোগ তৈরি করুন।
           </p>
         </div>
 
         {/* Success State */}
         {success ? (
-          <div className="mt-8 rounded-3xl border border-emerald-500/20 bg-emerald-50/60 p-8 text-center dark:bg-emerald-950/20">
-            <CheckCircle2 size={44} className="mx-auto text-emerald-600 dark:text-emerald-400" />
-            <h2 className="mt-4 text-xl font-black text-black dark:text-white">
-              Business Submitted Successfully! 🎉
+          <div className="mt-8 rounded-2xl border border-emerald-200 bg-emerald-50 p-8 text-center shadow-xs">
+            <CheckCircle2 size={44} className="mx-auto text-emerald-600" />
+            <h2 className="mt-4 text-xl font-bold text-zinc-950">
+              ব্যবসা সফলভাবে জমা দেওয়া হয়েছে! 🎉
             </h2>
-            <p className="mt-2 text-xs text-zinc-600 dark:text-zinc-400">
+            <p className="mt-2 text-xs text-zinc-700">
               {user?.role === "ADMIN" || user?.role === "MODERATOR"
-                ? "Your business has been verified and published immediately."
-                : "Your submission has been received and is currently under review by our moderation team. It will appear on the public directory once approved."}
+                ? "আপনার ব্যবসা প্রোফাইল তাৎক্ষণিকভাবে ভেরিফাই ও পাবলিশ করা হয়েছে।"
+                : "আপনার সাবমিশনটি গ্রহণ করা হয়েছে এবং মডারেশন টিম এটি রিভিউ করছে। অনুমোদিত হলেই এটি পাবলিক ডিরেক্টরিতে প্রদর্শিত হবে।"}
             </p>
             <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
               {createdSlug && (
                 <Link
                   href={`/businesses/${createdSlug}`}
-                  className="rounded-xl bg-black px-4 py-2.5 text-xs font-semibold text-white dark:bg-white dark:text-black"
+                  className="rounded-xl bg-zinc-950 px-4 py-2.5 text-xs font-bold text-white shadow-sm"
                 >
-                  View Business Profile
+                  প্রোফাইল দেখুন
                 </Link>
               )}
               <Link
                 href="/businesses"
-                className="rounded-xl border border-black/15 bg-white px-4 py-2.5 text-xs font-semibold text-black dark:border-white/15 dark:bg-zinc-900 dark:text-white"
+                className="rounded-xl border border-zinc-300 bg-white px-4 py-2.5 text-xs font-bold text-zinc-900 hover:bg-zinc-100"
               >
-                Back to Directory
+                ডিরেক্টরিতে ফিরে যান
               </Link>
             </div>
           </div>
@@ -208,10 +211,10 @@ export default function CreateBusinessPage() {
           /* Business Submission Form */
           <form
             onSubmit={handleSubmit}
-            className="mt-8 space-y-6 rounded-3xl border border-black/10 bg-white p-6 shadow-xs dark:border-white/10 dark:bg-zinc-950 sm:p-10"
+            className="mt-8 space-y-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm sm:p-10"
           >
             {error && (
-              <div className="flex items-center gap-2 rounded-2xl bg-red-50 p-4 text-xs font-semibold text-red-600 dark:bg-red-950/40 dark:text-red-400">
+              <div className="flex items-center gap-2 rounded-xl bg-rose-50 border border-rose-200 p-4 text-xs font-semibold text-rose-700">
                 <AlertCircle size={16} />
                 {error}
               </div>
@@ -219,13 +222,13 @@ export default function CreateBusinessPage() {
 
             {/* Section 1: Basic Information */}
             <div className="space-y-4">
-              <h2 className="text-sm font-bold text-black dark:text-white border-b border-black/5 pb-2 dark:border-white/5">
-                1. Basic Business Details
+              <h2 className="text-sm font-bold text-zinc-950 border-b border-zinc-100 pb-2">
+                ১. প্রতিষ্ঠানের প্রাথমিক তথ্য
               </h2>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300">
-                  Business / Factory Name *
+                <label className="block text-xs font-semibold text-zinc-800">
+                  ব্যবসা / ফ্যাক্টরির নাম *
                 </label>
                 <input
                   type="text"
@@ -233,21 +236,21 @@ export default function CreateBusinessPage() {
                   required
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="e.g. Tajima Embroidery & Punching House"
-                  className="mt-1 w-full rounded-xl border border-black/15 bg-transparent px-3.5 py-2.5 text-xs text-black placeholder:text-zinc-400 focus:border-black focus:outline-none dark:border-white/15 dark:text-white"
+                  placeholder="যেমন: তাজিমা এমব্রয়ডারি অ্যান্ড পাঞ্চিং হাউস"
+                  className="mt-1 w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300">
-                    Business Category / Type *
+                  <label className="block text-xs font-semibold text-zinc-800">
+                    ব্যবসার ধরণ *
                   </label>
                   <select
                     name="type"
                     value={formData.type}
                     onChange={handleChange}
-                    className="mt-1 w-full rounded-xl border border-black/15 bg-transparent px-3.5 py-2.5 text-xs font-semibold text-black focus:border-black focus:outline-none dark:border-white/15 dark:bg-zinc-900 dark:text-white"
+                    className="mt-1 w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-xs font-semibold text-zinc-900 focus:border-zinc-950 focus:outline-none"
                   >
                     {BUSINESS_TYPES.map((t) => (
                       <option key={t.value} value={t.value}>
@@ -258,9 +261,8 @@ export default function CreateBusinessPage() {
                 </div>
 
                 <div>
-                  <label className="flex items-center justify-between text-xs font-semibold text-zinc-700 dark:text-zinc-300">
-                    <span>Logo or Photo URL (Optional)</span>
-                    <span className="text-[10px] text-zinc-400 font-normal">Direct link</span>
+                  <label className="flex items-center justify-between text-xs font-semibold text-zinc-800">
+                    <span>লোগো বা ফটো URL (ঐচ্ছিক)</span>
                   </label>
                   <input
                     type="url"
@@ -268,57 +270,50 @@ export default function CreateBusinessPage() {
                     value={formData.logo}
                     onChange={handleChange}
                     placeholder="https://example.com/logo.png"
-                    className="mt-1 w-full rounded-xl border border-black/15 bg-transparent px-3.5 py-2.5 text-xs text-black placeholder:text-zinc-400 focus:border-black focus:outline-none dark:border-white/15 dark:text-white"
+                    className="mt-1 w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none"
                   />
-                  <p className="mt-1 text-[10px] text-zinc-500 dark:text-zinc-400">
-                    ☁️ <strong>R2 Upload [Demo Mode]:</strong> Direct image upload via Cloudflare R2 coming soon. Enter image URL for now.
-                  </p>
                 </div>
-
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300">
-                  Description & Specialties
+                <label className="block text-xs font-semibold text-zinc-800">
+                  বিবরণ ও বিশেষ পারদর্শিতা
                 </label>
                 <textarea
                   name="description"
                   rows={3}
                   value={formData.description}
                   onChange={handleChange}
-                  placeholder="Describe your machinery, daily production capacity, special techniques (e.g. sequin, cording, 3D puff), or available parts..."
-                  className="mt-1 w-full rounded-xl border border-black/15 bg-transparent px-3.5 py-2.5 text-xs text-black placeholder:text-zinc-400 focus:border-black focus:outline-none dark:border-white/15 dark:text-white"
+                  placeholder="আপনার মেশিনারিজ, দৈনিক প্রোডাকশন ক্যাপাসিটি, বিশেষ টেকনিক (যেমন: সিকোয়েন্স, ৩ডি পাফ, কর্ডিং) সম্পর্কে লিখুন..."
+                  className="mt-1 w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300">
-                  Brands & Machine Models Handled (Comma-separated)
+                <label className="block text-xs font-semibold text-zinc-800">
+                  মেশিনের ব্র্যান্ডসমূহ (কমা দিয়ে লিখুন)
                 </label>
                 <input
                   type="text"
                   name="brands"
                   value={formData.brands}
                   onChange={handleChange}
-                  placeholder="e.g. Tajima, Barudan, SWF, Feiya, Brother"
-                  className="mt-1 w-full rounded-xl border border-black/15 bg-transparent px-3.5 py-2.5 text-xs text-black placeholder:text-zinc-400 focus:border-black focus:outline-none dark:border-white/15 dark:text-white"
+                  placeholder="যেমন: Tajima, Barudan, SWF, Feiya, Brother"
+                  className="mt-1 w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none"
                 />
-                <p className="mt-1 text-[11px] text-zinc-400">
-                  Separate each brand name with a comma so visitors can search easily.
-                </p>
               </div>
             </div>
 
             {/* Section 2: Contact Information */}
             <div className="space-y-4 pt-4">
-              <h2 className="text-sm font-bold text-black dark:text-white border-b border-black/5 pb-2 dark:border-white/5">
-                2. Contact & Online Presence
+              <h2 className="text-sm font-bold text-zinc-950 border-b border-zinc-100 pb-2">
+                ২. যোগাযোগের বিবরণ
               </h2>
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300">
-                    Phone Number *
+                  <label className="block text-xs font-semibold text-zinc-800">
+                    ফোন নম্বর *
                   </label>
                   <input
                     type="tel"
@@ -326,14 +321,14 @@ export default function CreateBusinessPage() {
                     required
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="017XXXXXXXX"
-                    className="mt-1 w-full rounded-xl border border-black/15 bg-transparent px-3.5 py-2.5 text-xs text-black placeholder:text-zinc-400 focus:border-black focus:outline-none dark:border-white/15 dark:text-white"
+                    placeholder="০১৭১২-৩৪৫৬৭৮"
+                    className="mt-1 w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300">
-                    Official Email
+                  <label className="block text-xs font-semibold text-zinc-800">
+                    অফিসিয়াল ইমেইল
                   </label>
                   <input
                     type="email"
@@ -341,13 +336,13 @@ export default function CreateBusinessPage() {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="contact@business.com"
-                    className="mt-1 w-full rounded-xl border border-black/15 bg-transparent px-3.5 py-2.5 text-xs text-black placeholder:text-zinc-400 focus:border-black focus:outline-none dark:border-white/15 dark:text-white"
+                    className="mt-1 w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300">
-                    Website (Optional)
+                  <label className="block text-xs font-semibold text-zinc-800">
+                    ওয়েবসাইট (ঐচ্ছিক)
                   </label>
                   <input
                     type="url"
@@ -355,7 +350,7 @@ export default function CreateBusinessPage() {
                     value={formData.website}
                     onChange={handleChange}
                     placeholder="https://business.com"
-                    className="mt-1 w-full rounded-xl border border-black/15 bg-transparent px-3.5 py-2.5 text-xs text-black placeholder:text-zinc-400 focus:border-black focus:outline-none dark:border-white/15 dark:text-white"
+                    className="mt-1 w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none"
                   />
                 </div>
               </div>
@@ -363,14 +358,14 @@ export default function CreateBusinessPage() {
 
             {/* Section 3: Location */}
             <div className="space-y-4 pt-4">
-              <h2 className="text-sm font-bold text-black dark:text-white border-b border-black/5 pb-2 dark:border-white/5">
-                3. Physical Location
+              <h2 className="text-sm font-bold text-zinc-950 border-b border-zinc-100 pb-2">
+                ৩. সঠিক অবস্থান ও ঠিকানা
               </h2>
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300">
-                    District *
+                  <label className="block text-xs font-semibold text-zinc-800">
+                    জেলা *
                   </label>
                   <input
                     type="text"
@@ -378,29 +373,29 @@ export default function CreateBusinessPage() {
                     required
                     value={formData.district}
                     onChange={handleChange}
-                    placeholder="e.g. Dhaka / Narayanganj / Gazipur"
-                    className="mt-1 w-full rounded-xl border border-black/15 bg-transparent px-3.5 py-2.5 text-xs text-black placeholder:text-zinc-400 focus:border-black focus:outline-none dark:border-white/15 dark:text-white"
+                    placeholder="যেমন: ঢাকা / নারায়ণগঞ্জ / গাজীপুর"
+                    className="mt-1 w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300">
-                    Area / Zone (Optional)
+                  <label className="block text-xs font-semibold text-zinc-800">
+                    এলাকা / জোন (ঐচ্ছিক)
                   </label>
                   <input
                     type="text"
                     name="area"
                     value={formData.area}
                     onChange={handleChange}
-                    placeholder="e.g. Uttara, Fatullah, EPZ"
-                    className="mt-1 w-full rounded-xl border border-black/15 bg-transparent px-3.5 py-2.5 text-xs text-black placeholder:text-zinc-400 focus:border-black focus:outline-none dark:border-white/15 dark:text-white"
+                    placeholder="যেমন: উত্তরা, ফতুল্লা, ইপিজেড"
+                    className="mt-1 w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300">
-                  Full Street Address *
+                <label className="block text-xs font-semibold text-zinc-800">
+                  পূর্ণাঙ্গ সড়ক ঠিকানা *
                 </label>
                 <input
                   type="text"
@@ -408,28 +403,28 @@ export default function CreateBusinessPage() {
                   required
                   value={formData.address}
                   onChange={handleChange}
-                  placeholder="e.g. House 12, Road 4, Sector 7, Uttara"
-                  className="mt-1 w-full rounded-xl border border-black/15 bg-transparent px-3.5 py-2.5 text-xs text-black placeholder:text-zinc-400 focus:border-black focus:outline-none dark:border-white/15 dark:text-white"
+                  placeholder="যেমন: বাড়ি ১২, রোড ৪, সেক্টর ৭, উত্তরা"
+                  className="mt-1 w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none"
                 />
               </div>
             </div>
 
             {/* Submit Button */}
-            <div className="border-t border-black/5 pt-6 dark:border-white/5">
+            <div className="border-t border-zinc-100 pt-6">
               <button
                 type="submit"
                 disabled={loading}
-                className="flex w-full items-center justify-center gap-2 rounded-2xl bg-black py-3.5 text-xs font-bold text-white shadow-sm transition-all hover:opacity-90 disabled:opacity-50 dark:bg-white dark:text-black"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-zinc-950 py-3.5 text-xs font-bold text-white shadow-sm transition-all hover:opacity-90 disabled:opacity-50"
               >
                 {loading ? (
                   <>
                     <Loader2 size={16} className="animate-spin" />
-                    Submitting business...
+                    তালিকাভুক্ত হচ্ছে...
                   </>
                 ) : (
                   <>
                     <PlusCircle size={16} />
-                    Submit Business for Listing
+                    ব্যবসা তালিকাভুক্ত করুন
                   </>
                 )}
               </button>

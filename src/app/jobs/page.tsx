@@ -17,6 +17,7 @@ import {
   Sparkles,
   ArrowUpDown,
   Loader2,
+  Calendar,
 } from "lucide-react";
 import { jobApi, categoryApi } from "@/services";
 
@@ -112,15 +113,15 @@ export default function JobsPage() {
   const formatJobType = (type: string) => {
     switch (type) {
       case "FULL_TIME":
-        return "Full-Time";
+        return "ফুল-টাইম";
       case "PART_TIME":
-        return "Part-Time";
+        return "পার্ট-টাইম";
       case "FREELANCE":
-        return "Freelance";
+        return "ফ্রিল্যান্স";
       case "CONTRACT":
-        return "Contract";
+        return "চুক্তিভিত্তিক";
       case "INTERNSHIP":
-        return "Internship";
+        return "ইন্টার্নশিপ";
       default:
         return type;
     }
@@ -129,41 +130,41 @@ export default function JobsPage() {
   const formatWorkplace = (wp: string) => {
     switch (wp) {
       case "ONSITE":
-        return "On-Site";
+        return "অন-সাইট";
       case "REMOTE":
-        return "Remote";
+        return "রিমোট (বাসা থেকে)";
       case "HYBRID":
-        return "Hybrid";
+        return "হাইব্রিড";
       default:
         return wp;
     }
   };
 
   return (
-    <main className="min-h-screen bg-zinc-50/50 pb-20 dark:bg-black">
+    <main className="min-h-screen bg-zinc-50/60 pb-20 font-sans text-zinc-900">
       {/* Header Banner */}
-      <section className="border-b border-black/10 bg-white px-6 py-12 dark:border-white/10 dark:bg-zinc-950 lg:px-8">
+      <section className="border-b border-zinc-200 bg-white px-6 py-12 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-center">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-zinc-50 px-3.5 py-1 text-xs font-semibold text-zinc-800 dark:border-white/15 dark:bg-zinc-900 dark:text-zinc-200">
+              <div className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-zinc-50 px-3.5 py-1 text-xs font-semibold text-zinc-800">
                 <Sparkles size={14} className="text-amber-500" />
-                Embroidery & Garment Opportunities
+                এমব্রয়ডারি ও গার্মেন্টস ক্যারিয়ার
               </div>
-              <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-black dark:text-white sm:text-4xl">
-                Explore Embroidery Jobs
+              <h1 className="mt-3 text-3xl font-black tracking-tight text-zinc-950 sm:text-4xl">
+                এমব্রয়ডারি চাকরির বিজ্ঞপ্তি
               </h1>
-              <p className="mt-2 max-w-2xl text-sm text-zinc-600 dark:text-zinc-400 sm:text-base">
-                Discover Wilcom digitizing roles, factory production shifts, bridal Karchupi positions, and freelance gigs across Bangladesh.
+              <p className="mt-2 max-w-2xl text-sm text-zinc-600 sm:text-base">
+                উইলকম ডিজিটাইজিং, ফ্যাক্টরি প্রোডাকশন শিফট, ব্রাইডাল কারচুপি এবং দেশ-বিদেশের ফ্রিল্যান্স কাজের সেরা সুযোগসমূহ।
               </p>
             </div>
 
             <Link
               href="/jobs/post"
-              className="flex h-11 items-center justify-center gap-2 rounded-xl bg-black px-5 text-sm font-semibold text-white shadow-xs transition hover:opacity-90 dark:bg-white dark:text-black shrink-0"
+              className="flex h-11 items-center justify-center gap-2 rounded-xl bg-zinc-950 px-5 text-sm font-bold text-white shadow-xs transition hover:bg-zinc-800 shrink-0"
             >
               <PlusCircle size={18} />
-              Post an Embroidery Job
+              নতুন চাকরির বিজ্ঞপ্তি দিন
             </Link>
           </div>
 
@@ -179,8 +180,8 @@ export default function JobsPage() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search job title, skill (Wilcom, Tajima), company..."
-                className="w-full rounded-xl border border-black/15 bg-white py-2.5 pl-10 pr-4 text-sm text-black placeholder:text-zinc-400 focus:border-black focus:outline-none dark:border-white/15 dark:bg-zinc-900 dark:text-white dark:focus:border-white"
+                placeholder="পদবি, দক্ষতা (Wilcom, Tajima), কোম্পানির নাম..."
+                className="w-full rounded-xl border border-zinc-300 bg-white py-2.5 pl-10 pr-4 text-sm text-zinc-950 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none"
               />
             </div>
 
@@ -188,9 +189,9 @@ export default function JobsPage() {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="rounded-xl border border-black/15 bg-white px-3.5 py-2.5 text-sm text-zinc-700 focus:border-black focus:outline-none dark:border-white/15 dark:bg-zinc-900 dark:text-zinc-300 dark:focus:border-white"
+              className="rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-sm font-medium text-zinc-800 focus:border-zinc-950 focus:outline-none"
             >
-              <option value="ALL">All Categories</option>
+              <option value="ALL">সকল ক্যাটাগরি</option>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.name}>
                   {cat.name}
@@ -202,34 +203,34 @@ export default function JobsPage() {
             <select
               value={selectedType}
               onChange={(e) => setSelectedType(e.target.value)}
-              className="rounded-xl border border-black/15 bg-white px-3.5 py-2.5 text-sm text-zinc-700 focus:border-black focus:outline-none dark:border-white/15 dark:bg-zinc-900 dark:text-zinc-300 dark:focus:border-white"
+              className="rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-sm font-medium text-zinc-800 focus:border-zinc-950 focus:outline-none"
             >
-              <option value="ALL">All Job Types</option>
-              <option value="FULL_TIME">Full-Time</option>
-              <option value="FREELANCE">Freelance</option>
-              <option value="PART_TIME">Part-Time</option>
-              <option value="CONTRACT">Contract</option>
-              <option value="INTERNSHIP">Internship</option>
+              <option value="ALL">সকল কাজের ধরন</option>
+              <option value="FULL_TIME">ফুল-টাইম</option>
+              <option value="FREELANCE">ফ্রিল্যান্স</option>
+              <option value="PART_TIME">পার্ট-টাইম</option>
+              <option value="CONTRACT">চুক্তিভিত্তিক</option>
+              <option value="INTERNSHIP">ইন্টার্নশিপ</option>
             </select>
 
             {/* Workplace Filter */}
             <select
               value={selectedWorkplace}
               onChange={(e) => setSelectedWorkplace(e.target.value)}
-              className="rounded-xl border border-black/15 bg-white px-3.5 py-2.5 text-sm text-zinc-700 focus:border-black focus:outline-none dark:border-white/15 dark:bg-zinc-900 dark:text-zinc-300 dark:focus:border-white"
+              className="rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-sm font-medium text-zinc-800 focus:border-zinc-950 focus:outline-none"
             >
-              <option value="ALL">All Locations</option>
-              <option value="ONSITE">On-Site</option>
-              <option value="REMOTE">Remote</option>
-              <option value="HYBRID">Hybrid</option>
+              <option value="ALL">সকল কর্মক্ষেত্র</option>
+              <option value="ONSITE">অন-সাইট (ফ্যাক্টরি/অফিস)</option>
+              <option value="REMOTE">রিমোট (বাসা থেকে)</option>
+              <option value="HYBRID">হাইব্রিড</option>
             </select>
           </div>
 
           {/* Quick Sort Options Row */}
-          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-black/5 pt-3 dark:border-white/5 text-xs text-zinc-500">
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-zinc-100 pt-3 text-xs text-zinc-500">
             <div className="flex items-center gap-2">
-              <span className="flex items-center gap-1 font-semibold text-zinc-700 dark:text-zinc-300">
-                <ArrowUpDown size={13} /> Sort By:
+              <span className="flex items-center gap-1 font-bold text-zinc-700">
+                <ArrowUpDown size={13} /> সাজান:
               </span>
               <button
                 type="button"
@@ -237,12 +238,13 @@ export default function JobsPage() {
                   setSortBy("createdAt");
                   setSortOrder("desc");
                 }}
-                className={`rounded-lg px-2.5 py-1 transition ${sortBy === "createdAt" && sortOrder === "desc"
-                  ? "bg-black font-bold text-white dark:bg-white dark:text-black"
-                  : "hover:bg-zinc-100 dark:hover:bg-zinc-800"
-                  }`}
+                className={`rounded-lg px-2.5 py-1 font-medium transition ${
+                  sortBy === "createdAt" && sortOrder === "desc"
+                    ? "bg-zinc-950 font-bold text-white"
+                    : "hover:bg-zinc-100 text-zinc-700"
+                }`}
               >
-                Newest First
+                সর্বশেষ প্রকাশিত
               </button>
               <button
                 type="button"
@@ -250,12 +252,13 @@ export default function JobsPage() {
                   setSortBy("salaryMax");
                   setSortOrder("desc");
                 }}
-                className={`rounded-lg px-2.5 py-1 transition ${sortBy === "salaryMax"
-                  ? "bg-black font-bold text-white dark:bg-white dark:text-black"
-                  : "hover:bg-zinc-100 dark:hover:bg-zinc-800"
-                  }`}
+                className={`rounded-lg px-2.5 py-1 font-medium transition ${
+                  sortBy === "salaryMax"
+                    ? "bg-zinc-950 font-bold text-white"
+                    : "hover:bg-zinc-100 text-zinc-700"
+                }`}
               >
-                Highest Salary
+                সর্বোচ্চ বেতন
               </button>
               <button
                 type="button"
@@ -263,12 +266,13 @@ export default function JobsPage() {
                   setSortBy("deadline");
                   setSortOrder("asc");
                 }}
-                className={`rounded-lg px-2.5 py-1 transition ${sortBy === "deadline"
-                  ? "bg-black font-bold text-white dark:bg-white dark:text-black"
-                  : "hover:bg-zinc-100 dark:hover:bg-zinc-800"
-                  }`}
+                className={`rounded-lg px-2.5 py-1 font-medium transition ${
+                  sortBy === "deadline"
+                    ? "bg-zinc-950 font-bold text-white"
+                    : "hover:bg-zinc-100 text-zinc-700"
+                }`}
               >
-                Closing Soon
+                দ্রুত শেষ হচ্ছে
               </button>
             </div>
 
@@ -276,9 +280,9 @@ export default function JobsPage() {
               <button
                 type="button"
                 onClick={handleResetFilters}
-                className="font-semibold text-black underline underline-offset-4 hover:opacity-80 dark:text-white"
+                className="font-bold text-zinc-900 underline underline-offset-4 hover:opacity-80"
               >
-                Reset All Filters
+                সকল ফিল্টার রিসেট করুন
               </button>
             )}
           </div>
@@ -288,8 +292,8 @@ export default function JobsPage() {
       {/* Main Content Area */}
       <div className="mx-auto max-w-7xl px-6 pt-10 lg:px-8">
         <div className="flex items-center justify-between">
-          <p className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-            Showing {jobs.length} {jobs.length === 1 ? "Job" : "Jobs"}
+          <p className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+            মোট {jobs.length}টি চাকরির বিজ্ঞপ্তি পাওয়া গেছে
           </p>
         </div>
 
@@ -299,123 +303,106 @@ export default function JobsPage() {
             {[1, 2, 3, 4].map((n) => (
               <div
                 key={n}
-                className="h-48 animate-pulse rounded-2xl border border-black/5 bg-white p-6 dark:border-white/10 dark:bg-zinc-900"
-              />
+                className="animate-pulse rounded-2xl border border-zinc-200 bg-white p-6"
+              >
+                <div className="h-5 w-2/3 rounded-lg bg-zinc-100" />
+                <div className="mt-2 h-4 w-1/3 rounded-lg bg-zinc-100" />
+                <div className="mt-6 h-4 w-1/2 rounded-lg bg-zinc-100" />
+              </div>
             ))}
           </div>
         ) : jobs.length === 0 ? (
           /* Empty State */
-          <div className="mt-12 flex flex-col items-center justify-center rounded-3xl border border-dashed border-black/15 bg-white py-16 text-center dark:border-white/15 dark:bg-zinc-950">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-black/5 text-black dark:bg-white/10 dark:text-white">
-              <Briefcase size={26} />
-            </div>
-            <h3 className="mt-4 text-lg font-bold text-black dark:text-white">
-              No jobs found
+          <div className="mt-12 rounded-3xl border border-dashed border-zinc-300 bg-white py-16 text-center">
+            <Briefcase size={36} className="mx-auto text-zinc-400" />
+            <h3 className="mt-4 text-base font-bold text-zinc-900">
+              কোনো চাকরি পাওয়া যায়নি
             </h3>
-            <p className="mt-1 max-w-sm text-sm text-zinc-500 dark:text-zinc-400">
-              Try adjusting your search query or filters to find what you&apos;re looking for.
+            <p className="mt-1 text-xs text-zinc-500">
+              আপনার ফিল্টার পরিবর্তন করে পুনরায় চেষ্টা করুন অথবা নতুন চাকরির বিজ্ঞপ্তি দিন।
             </p>
-            <div className="mt-6 flex gap-3">
+            {hasActiveFilters && (
               <button
+                type="button"
                 onClick={handleResetFilters}
-                className="rounded-xl border border-black/15 px-4 py-2 text-xs font-semibold text-black hover:bg-zinc-100 dark:border-white/15 dark:text-white dark:hover:bg-zinc-900"
+                className="mt-4 inline-flex items-center gap-1 text-xs font-bold text-zinc-950 underline underline-offset-4"
               >
-                Clear all filters
+                ফিল্টার মুছুন
               </button>
-              <Link
-                href="/jobs/post"
-                className="rounded-xl bg-black px-4 py-2 text-xs font-semibold text-white transition hover:opacity-90 dark:bg-white dark:text-black"
-              >
-                Post an Embroidery Job
-              </Link>
-            </div>
-
-
+            )}
           </div>
         ) : (
-          /* Job Cards Grid */
+          /* Jobs Grid */
           <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
             {jobs.map((job) => (
-              <Link
+              <div
                 key={job.id}
-                href={`/jobs/${job.id}`}
-                className="group flex flex-col justify-between rounded-2xl border border-black/10 bg-white p-6 shadow-xs transition duration-200 hover:-translate-y-0.5 hover:border-black/30 hover:shadow-md dark:border-white/10 dark:bg-zinc-900/70 dark:hover:border-white/30"
+                className="flex flex-col justify-between rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs transition hover:border-zinc-400"
               >
                 <div>
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex items-center gap-3">
-                      {job.company?.logo ? (
-                        <img
-                          src={job.company.logo}
-                          alt={job.company.name}
-                          className="h-11 w-11 rounded-xl object-cover border border-black/10 dark:border-white/10"
-                        />
-                      ) : (
-                        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-black text-sm font-bold text-white dark:bg-white dark:text-black">
-                          {job.company?.name ? job.company.name.charAt(0) : "E"}
-                        </div>
-                      )}
-                      <div>
-                        <h2 className="text-base font-bold text-black transition group-hover:underline dark:text-white">
-                          {job.title}
-                        </h2>
-                        <p className="text-xs font-medium text-zinc-600 dark:text-zinc-400">
-                          {job.company?.name || "Verified Employer"}
-                        </p>
-                      </div>
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <h2 className="text-base font-bold text-zinc-950">
+                        {job.title}
+                      </h2>
+                      <p className="mt-1 text-sm font-semibold text-zinc-600">
+                        {job.company?.name || "নাম অপ্রকাশিত প্রতিষ্ঠান"}
+                      </p>
                     </div>
-
-                    <span className="shrink-0 rounded-full bg-zinc-100 px-2.5 py-1 text-[11px] font-semibold text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                    <span className="rounded-xl border border-zinc-200 bg-zinc-50 px-2.5 py-1 text-xs font-bold text-zinc-700">
                       {formatJobType(job.jobType)}
                     </span>
                   </div>
 
-                  <p className="mt-4 line-clamp-2 text-xs leading-relaxed text-zinc-600 dark:text-zinc-400">
-                    {job.description}
-                  </p>
+                  <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-zinc-500">
+                    <span className="flex items-center gap-1 font-medium">
+                      <MapPin size={14} />
+                      {job.location || formatWorkplace(job.workplaceType)}
+                    </span>
+                    <span className="flex items-center gap-1 font-bold text-zinc-950">
+                      <DollarSign size={14} />
+                      {job.salaryMin && job.salaryMax
+                        ? `৳${job.salaryMin.toLocaleString()} - ৳${job.salaryMax.toLocaleString()} / মাস`
+                        : job.salaryMin
+                        ? `৳${job.salaryMin.toLocaleString()} / মাস`
+                        : "আলোচনা সাপেক্ষে"}
+                    </span>
+                    <span className="flex items-center gap-1 font-medium">
+                      <Clock size={14} />
+                      {new Date(job.createdAt).toLocaleDateString("bn-BD", {
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </span>
+                  </div>
 
-                  <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-zinc-500 dark:text-zinc-400">
-                    {job.location && (
-                      <span className="flex items-center gap-1">
-                        <MapPin size={13} />
-                        {job.location} ({formatWorkplace(job.workplaceType)})
-                      </span>
-                    )}
-
-                    {(job.salaryMin || job.salaryMax) && (
-                      <span className="flex items-center gap-1 font-semibold text-black dark:text-white">
-                        <DollarSign size={13} />
-                        {job.salaryMin && job.salaryMax
-                          ? `৳${job.salaryMin.toLocaleString()} - ৳${job.salaryMax.toLocaleString()}`
-                          : job.salaryMin
-                            ? `৳${job.salaryMin.toLocaleString()}+`
-                            : `Up to ৳${job.salaryMax?.toLocaleString()}`}{" "}
-                        {job.jobType === "FREELANCE" ? "/ design" : "/ mo"}
-                      </span>
-                    )}
-
-                    {job.category && (
-                      <span className="rounded-md bg-zinc-100 px-2 py-0.5 text-[10px] font-medium text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                  {job.category && (
+                    <div className="mt-4">
+                      <span className="rounded-md bg-zinc-100 px-2.5 py-1 text-xs font-semibold text-zinc-700">
                         {job.category.name}
                       </span>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
 
-                <div className="mt-6 flex items-center justify-between border-t border-black/5 pt-4 text-xs font-semibold text-black dark:border-white/5 dark:text-white">
-                  <span className="text-[11px] font-normal text-zinc-400">
-                    Posted {new Date(job.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                <div className="mt-6 flex items-center justify-between border-t border-zinc-100 pt-4 text-xs">
+                  <span className="text-zinc-500 font-medium">
+                    {job.deadline
+                      ? `শেষ সময়: ${new Date(job.deadline).toLocaleDateString("bn-BD")}`
+                      : "নিয়োগ চলছে"}
                   </span>
-                  <span className="flex items-center gap-1 text-black underline underline-offset-4 group-hover:opacity-80 dark:text-white">
-                    View Details & Apply <ArrowRight size={14} />
-                  </span>
+                  <Link
+                    href={`/jobs/${job.id}`}
+                    className="flex items-center gap-1 font-bold text-zinc-950 underline underline-offset-4 hover:opacity-80"
+                  >
+                    বিস্তারিত ও আবেদন <ArrowRight size={14} />
+                  </Link>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         )}
       </div>
-
     </main>
   );
 }

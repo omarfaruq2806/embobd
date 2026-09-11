@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2, Sparkles, UserPlus } from "lucide-react";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -20,12 +20,12 @@ export default function RegisterPage() {
     setError(null);
 
     if (!name.trim() || !email.trim() || !password.trim()) {
-      setError("Please fill in all required fields.");
+      setError("দয়া করে ফর্মের সবকটি তথ্য সঠিকভাবে পূরণ করুন।");
       return;
     }
 
     if (password.length < 6) {
-      setError("Password must be at least 6 characters.");
+      setError("পাসওয়ার্ডটি কমপক্ষে ৬ অক্ষরের হতে হবে।");
       return;
     }
 
@@ -40,33 +40,39 @@ export default function RegisterPage() {
       } as any);
 
       if (response.error) {
-        setError(response.error.message || "Failed to create account. Please try again.");
+        setError(response.error.message || "অ্যাকাউন্ট তৈরি করা যায়নি। অন্য ইমেইল দিয়ে আবার চেষ্টা করুন।");
       } else {
         router.push("/");
       }
     } catch (err: any) {
-      setError(err?.message || "Something went wrong. Please try again.");
+      setError(err?.message || "সার্ভারে সমস্যা হয়েছে। অনুগ্রহ করে কিছুক্ষণ পর চেষ্টা করুন।");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <main className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-6 py-12">
-      <div className="w-full max-w-md rounded-2xl border border-black/10 bg-white p-8 shadow-xs dark:border-white/10 dark:bg-black">
-        {/* Header */}
+    <main className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-zinc-50 px-4 py-12">
+      <div className="w-full max-w-md rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm">
+        {/* Header with Hook */}
         <div className="text-center">
-          <h1 className="text-2xl font-bold tracking-tight text-black dark:text-white">
-            Create an Account
+          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100 text-zinc-900 shadow-inner">
+            <UserPlus size={22} />
+          </div>
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-[11px] font-semibold text-blue-700 border border-blue-200 mb-2">
+            <Sparkles size={12} /> সহজে ও সম্পূর্ণ ফ্রি
+          </div>
+          <h1 className="text-2xl font-bold tracking-tight text-zinc-950">
+            নতুন অ্যাকাউন্ট খুলুন
           </h1>
-          <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
-            Join EMBOBD to explore opportunities and community
+          <p className="mt-2 text-sm text-zinc-600">
+            যুক্ত হোন বাংলাদেশের সবচেয়ে বড় এমব্রয়ডারি ও টেক্সটাইল পেশাদারদের নেটওয়ার্কে।
           </p>
         </div>
 
         {/* Error Message */}
         {error && (
-          <div className="mt-4 rounded-lg border border-red-500/20 bg-red-50 p-3 text-sm text-red-600 dark:bg-red-950/30 dark:text-red-400">
+          <div className="mt-6 rounded-xl border border-rose-200 bg-rose-50 p-3.5 text-sm text-rose-700">
             {error}
           </div>
         )}
@@ -74,22 +80,22 @@ export default function RegisterPage() {
         {/* Form */}
         <form onSubmit={handleRegister} className="mt-6 flex flex-col gap-4">
           <div>
-            <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300">
-              Full Name
+            <label className="block text-xs font-semibold text-zinc-800">
+              আপনার পূর্ণ নাম
             </label>
             <input
               type="text"
               required
-              placeholder="e.g. Tanvir Hasan"
+              placeholder="যেমন: তানভীর হাসান"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="mt-1.5 w-full rounded-xl border border-black/15 bg-transparent px-3.5 py-2.5 text-sm text-black placeholder:text-zinc-400 focus:border-black focus:outline-none dark:border-white/15 dark:text-white dark:focus:border-white"
+              className="mt-1.5 w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none focus:ring-1 focus:ring-zinc-950 transition-colors"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300">
-              Email Address
+            <label className="block text-xs font-semibold text-zinc-800">
+              ইমেইল অ্যাড্রেস
             </label>
             <input
               type="email"
@@ -97,27 +103,27 @@ export default function RegisterPage() {
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1.5 w-full rounded-xl border border-black/15 bg-transparent px-3.5 py-2.5 text-sm text-black placeholder:text-zinc-400 focus:border-black focus:outline-none dark:border-white/15 dark:text-white dark:focus:border-white"
+              className="mt-1.5 w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none focus:ring-1 focus:ring-zinc-950 transition-colors"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300">
-              Password
+            <label className="block text-xs font-semibold text-zinc-800">
+              পাসওয়ার্ড
             </label>
             <div className="relative mt-1.5">
               <input
                 type={showPassword ? "text" : "password"}
                 required
-                placeholder="At least 6 characters"
+                placeholder="কমপক্ষে ৬ অক্ষরের পাসওয়ার্ড"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-xl border border-black/15 bg-transparent px-3.5 py-2.5 pr-10 text-sm text-black placeholder:text-zinc-400 focus:border-black focus:outline-none dark:border-white/15 dark:text-white dark:focus:border-white"
+                className="w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 pr-10 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none focus:ring-1 focus:ring-zinc-950 transition-colors"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-black dark:hover:text-white"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-800"
               >
                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
@@ -127,27 +133,27 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={loading}
-            className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-black py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50 dark:bg-white dark:text-black"
+            className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-zinc-950 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50 shadow-sm"
           >
             {loading ? (
               <>
                 <Loader2 size={16} className="animate-spin" />
-                Creating account...
+                অ্যাকাউন্ট তৈরি হচ্ছে...
               </>
             ) : (
-              "Create Account"
+              "অ্যাকাউন্ট তৈরি করুন"
             )}
           </button>
         </form>
 
         {/* Footer Link */}
-        <p className="mt-6 text-center text-xs text-zinc-500 dark:text-zinc-400">
-          Already have an account?{" "}
+        <p className="mt-6 text-center text-xs text-zinc-600">
+          ইতিমধ্যে একটি অ্যাকাউন্ট আছে?{" "}
           <Link
             href="/login"
-            className="font-semibold text-black underline underline-offset-4 hover:opacity-80 dark:text-white"
+            className="font-bold text-zinc-950 underline underline-offset-4 hover:opacity-80"
           >
-            Log in
+            লগইন করুন
           </Link>
         </p>
       </div>

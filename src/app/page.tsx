@@ -23,159 +23,159 @@ import {
   Share2,
 } from "lucide-react";
 
-// Mock Data
+// Mock Data localized in Bengali
 const stats = [
-  { label: "Active Professionals", value: "12,500+", icon: Users, change: "+14% this month" },
-  { label: "Embroidery Jobs Posted", value: "4,200+", icon: Briefcase, change: "+250 new this week" },
-  { label: "Verified Businesses", value: "850+", icon: Building, change: "Export & Boutique" },
-  { label: "Freelancer Earnings", value: "৳18M+", icon: DollarSign, change: "Paid securely" },
+  { label: "সক্রিয় এমব্রয়ডারি পেশাদার", value: "১২,৫০০+", icon: Users, change: "এই মাসে +১৪% বৃদ্ধি" },
+  { label: "পোস্টকৃত চাকরির বিজ্ঞপ্তি", value: "৪,২০০+", icon: Briefcase, change: "এই সপ্তাহে +২৫০টি নতুন" },
+  { label: "ভেরিফাইড প্রতিষ্ঠান ও শপ", value: "৮৫০+", icon: Building, change: "এক্সপোর্ট ও বুটিক" },
+  { label: "কারিগরদের মোট উপার্জিত আয়", value: "৳১.৮ কোটি+", icon: DollarSign, change: "সরাসরি ও নিরাপদ লেনদেন" },
 ];
 
 const categories = [
   {
-    title: "Wilcom & Machine Digitizing",
-    desc: "EMB, DST, PES conversion, underlay settings & stitch optimization.",
-    jobs: "120+ Jobs",
-    artists: "450+ Digitizers",
+    title: "উইলকম ও মেশিন ডিজিটাইজিং",
+    desc: "EMB, DST, PES ফাইল কনভার্সন, আন্ডারলে সেটিং ও নিখুঁত স্টিচ অপটিমাইজেশন।",
+    jobs: "১২০+ চাকরি",
+    artists: "৪৫০+ ডিজিটাইজার",
     icon: Scissors,
-    tag: "High Demand",
+    tag: "সর্বাধিক চাহিদা",
   },
   {
-    title: "Karchupi & Bridal Handcraft",
-    desc: "Aari work, Zardosi, Nakshi Kantha, and luxury couture embroidery.",
-    jobs: "65+ Jobs",
-    artists: "320+ Artisans",
+    title: "কারচুপি ও ব্রাইডাল হ্যান্ডক্রাফট",
+    desc: "আরি কাজ, জারদৌসি, এক্সক্লুসিভ লেহেঙ্গা ও নকশী কাঁথার শৈল্পিক কারুকাজ।",
+    jobs: "৬৫+ চাকরি",
+    artists: "৩২০+ কারিগর",
     icon: Sparkles,
-    tag: "Artisanal",
+    tag: "হস্তশিল্প",
   },
   {
-    title: "Industrial Garment Production",
-    desc: "Multi-head Tajima & Barudan machine operators, shift masters, and QC.",
-    jobs: "95+ Jobs",
-    artists: "280+ Operators",
+    title: "ইন্ডাস্ট্রিয়াল গার্মেন্টস প্রোডাকশন",
+    desc: "তাজিমা ও বারুদান মাল্টি-হেড মেশিন অপারেটর, ফ্লোর ইন-চার্জ ও কিউসি।",
+    jobs: "৯৫+ চাকরি",
+    artists: "২৮০+ অপারেটর",
     icon: Layers,
-    tag: "Factory Direct",
+    tag: "ফ্যাক্টরি ডিরেক্ট",
   },
   {
-    title: "3D Puff & Custom Badges",
-    desc: "Cap embroidery, sportswear emblems, laser-cut & military crests.",
-    jobs: "48+ Jobs",
-    artists: "190+ Specialists",
+    title: "৩ডি পাফ ও কাস্টম ব্যাজ",
+    desc: "ক্যাপ এমব্রয়ডারি, স্পোর্টসওয়ার এম্বলেম, লেজার-কাট ও মিলিটারি ক্রেস্ট।",
+    jobs: "৪৮+ চাকরি",
+    artists: "১৯০+ বিশেষজ্ঞ",
     icon: Award,
-    tag: "Vector & Stitch",
+    tag: "ভেক্টর ও স্টিচ",
   },
   {
-    title: "Boutique & Fashion Patterns",
-    desc: "Kameez, Panjabi, Saree, and designer wear embroidery layouts.",
-    jobs: "82+ Jobs",
-    artists: "390+ Designers",
+    title: "বুটিক ও ফ্যাশন প্যাটার্ন",
+    desc: "পাঞ্জাবি চেস্ট, সালোয়ার কামিজ ও শাড়ির এক্সক্লুসিভ ডিজাইনার লেআউট।",
+    jobs: "৮২+ চাকরি",
+    artists: "৩৯০+ ডিজাইনার",
     icon: TrendingUp,
-    tag: "Fashion Hub",
+    tag: "ফ্যাশন হাব",
   },
   {
-    title: "Machine Technicians & Parts",
-    desc: "Embroidery machinery maintenance, electronics repair & calibration.",
-    jobs: "34+ Jobs",
-    artists: "110+ Experts",
+    title: "মেশিন টেকনিশিয়ান ও পার্টস",
+    desc: "এমব্রয়ডারি মেশিন মেরামত, ইলেকট্রনিক্স সার্ভিসিং, সেন্সর ও খুচরা যন্ত্রাংশ।",
+    jobs: "৩৪+ চাকরি",
+    artists: "১১০+ টেকনিশিয়ান",
     icon: ShieldCheck,
-    tag: "Technical",
+    tag: "টেকনিক্যাল",
   },
 ];
 
 const featuredJobs = [
   {
     id: "job-1",
-    title: "Senior Wilcom ES Digitizer (Export Garments)",
-    company: "Apex Textile & Apparels",
-    location: "Gazipur, Dhaka (On-site)",
-    type: "Full-Time",
-    salary: "৳45,000 - ৳60,000 / mo",
+    title: "সিনিয়র উইলকম ES ডিজিটাইজার (গার্মেন্টস এক্সপোর্ট)",
+    company: "এপেক্স টেক্সটাইল অ্যান্ড অ্যাপারেলস",
+    location: "গাজীপুর, ঢাকা (অন-সাইট)",
+    type: "ফুল-টাইম",
+    salary: "৳৪৫,০০০ - ৳৬০,০০০ / মাস",
     skills: ["Wilcom e4.5", "DST", "Knitwear", "Sequins"],
-    posted: "2 hours ago",
+    posted: "২ ঘণ্টা আগে",
     urgent: true,
   },
   {
     id: "job-2",
-    title: "Lead Karchupi & Zari Master Craftsman",
-    company: "Anokhi Haute Couture",
-    location: "Gulshan-2, Dhaka",
-    type: "Full-Time",
-    salary: "৳35,000 - ৳50,000 / mo",
+    title: "প্রধান কারচুপি ও জরি কারিগর মাস্টার",
+    company: "অনুখী হট কুচিউর",
+    location: "গুলশান-২, ঢাকা",
+    type: "ফুল-টাইম",
+    salary: "৳৩৫,০০০ - ৳৫০,০০০ / মাস",
     skills: ["Bridal Zari", "Aari Work", "Nakshi", "Silk"],
-    posted: "5 hours ago",
+    posted: "৫ ঘণ্টা আগে",
     urgent: false,
   },
   {
     id: "job-3",
-    title: "Freelance 3D Puff Cap Patch Specialist",
-    company: "Global Stitch Studio",
-    location: "Remote (Bangladesh / Global)",
-    type: "Freelance",
-    salary: "৳1,200 - ৳2,500 / design",
+    title: "ফ্রিল্যান্স ৩ডি পাফ ক্যাপ প্যাচ স্পেশালিস্ট",
+    company: "গ্লোবাল স্টিচ স্টুডিও",
+    location: "রিমোট (বাংলাদেশ / গ্লোবাল)",
+    type: "ফ্রিল্যান্স",
+    salary: "৳১,২০০ - ৳২,৫০০ / ডিজাইন",
     skills: ["3D Foam", "Tajima DST", "Cap Hooping", "Vector"],
-    posted: "1 day ago",
+    posted: "১ দিন আগে",
     urgent: true,
   },
   {
     id: "job-4",
-    title: "Tajima 20-Head Machine Shift In-Charge",
-    company: "Bexi Embroidery Zone",
-    location: "Savar EPZ, Dhaka",
-    type: "Full-Time",
-    salary: "৳40,000 - ৳55,000 / mo",
+    title: "তাজিমা ২০-হেড মেশিন শিফট ইন-চার্জ",
+    company: "বেক্সি এমব্রয়ডারি জোন",
+    location: "সাভার ইপিজেড, ঢাকা",
+    type: "ফুল-টাইম",
+    salary: "৳৪০,০০০ - ৳৫৫,০০০ / মাস",
     skills: ["Tajima TMAR", "Quality Control", "Thread Tension", "Shifts"],
-    posted: "2 days ago",
+    posted: "২ দিন আগে",
     urgent: false,
   },
 ];
 
 const featuredDesigners = [
   {
-    name: "Mohammad Rafiqul Islam",
-    role: "Master Wilcom Digitizer",
-    experience: "12+ Years Exp",
-    location: "Dhaka, Bangladesh",
-    rating: "4.9",
-    reviews: 148,
-    rate: "৳1,000 / design",
+    name: "মোহাম্মদ রফিকুল ইসলাম",
+    role: "মাস্টার উইলকম ডিজিটাইজার",
+    experience: "১২+ বছরের অভিজ্ঞতা",
+    location: "ঢাকা, বাংলাদেশ",
+    rating: "৪.৯",
+    reviews: "১৪৮     ",
+    rate: "৳১,০০০ / ডিজাইন",
     specialty: ["Wilcom e4.5", "Applique", "Jacket Backs"],
-    badge: "Top Rated Pro",
+    badge: "টপ রেটেড প্রো",
     avatarBg: "bg-blue-600",
   },
   {
-    name: "Nusrat Jahan Tanha",
-    role: "Luxury Karchupi & Nakshi Designer",
-    experience: "8 Years Exp",
-    location: "Chittagong",
-    rating: "5.0",
-    reviews: 94,
-    rate: "৳25,000 / project",
+    name: "নুসরাত জাহান তানহা",
+    role: "লাক্সারি কারচুপি ও নকশী ডিজাইনার",
+    experience: "৮ বছরের অভিজ্ঞতা",
+    location: "চট্টগ্রাম",
+    rating: "৫.০",
+    reviews: "৯৪",
+    rate: "৳২৫,০০০ / প্রজেক্ট",
     specialty: ["Bridal Couture", "Aari Needle", "Custom Saree"],
-    badge: "Master Artisan",
+    badge: "মাস্টার কারিগর",
     avatarBg: "bg-emerald-600",
   },
   {
-    name: "Kamrul Hasan Shohel",
-    role: "Industrial 3D Puff & Patch Expert",
-    experience: "6 Years Exp",
-    location: "Narayanganj",
-    rating: "4.9",
-    reviews: 112,
-    rate: "৳800 / design",
+    name: "কামরুল হাসান সোহেল",
+    role: "ইন্ডাস্ট্রিয়াল ৩ডি পাফ ও প্যাচ এক্সপার্ট",
+    experience: "৬ বছরের অভিজ্ঞতা",
+    location: "নারায়ণগঞ্জ",
+    rating: "৪.৯",
+    reviews: "১১২",
+    rate: "৳৮০০ / ডিজাইন",
     specialty: ["Sports Crests", "Cap Stitch", "Laser Cut"],
-    badge: "Fast 2h Delivery",
+    badge: "দ্রুত ২ ঘণ্টায় ডেলিভারি",
     avatarBg: "bg-purple-600",
   },
   {
-    name: "Tasnim Rahman",
-    role: "Boutique & Panjabi Pattern Designer",
-    experience: "5 Years Exp",
-    location: "Sylhet",
-    rating: "4.8",
-    reviews: 76,
-    rate: "৳1,500 / pattern",
+    name: "তাসনিম রহমান",
+    role: "বুটিক ও পাঞ্জাবি প্যাটার্ন ডিজাইনার",
+    experience: "৫ বছরের অভিজ্ঞতা",
+    location: "সিলেট",
+    rating: "৪.৮",
+    reviews: "৭৬",
+    rate: "৳১,৫০০ / প্যাটার্ন",
     specialty: ["Panjabi Chest", "Kurti Neck", "Georgette"],
-    badge: "Rising Talent",
+    badge: "রাইজিং ট্যালেন্ট",
     avatarBg: "bg-amber-600",
   },
 ];
@@ -183,143 +183,142 @@ const featuredDesigners = [
 const communityPosts = [
   {
     id: "post-1",
-    author: "Mahfuzur Rahman",
-    authorRole: "Senior Digitizer",
-    title: "Tips: Eliminating thread breakage on high-speed Tajima machines for pique polo shirts",
-    category: "Technical Guide",
-    likes: 64,
-    comments: 23,
-    time: "3 hours ago",
-    tag: "Wilcom Tip",
+    author: "মাহফুজুর রহমান",
+    authorRole: "সিনিয়র ডিজিটাইজার",
+    title: "টিপস: পিকে পোলো শার্টে হাই-স্পিড তাজিমা মেশিনে সুতা ছেঁড়া রোধ করার সহজ সমাধান",
+    category: "টেকনিক্যাল গাইড",
+    likes: "৬৪",
+    comments: "২৩",
+    time: "৩ ঘণ্টা আগে",
+    tag: "উইলকম টিপস",
   },
   {
     id: "post-2",
-    author: "Fatima Akter",
-    authorRole: "Artisanal Crafter",
-    title: "✨ Royal Gold Zari Nakshi Bridal Border – Finished after 85 hours of meticulous handwork",
-    category: "Showcase",
-    likes: 182,
-    comments: 45,
-    time: "Yesterday",
-    tag: "Hand Embroidery",
+    author: "ফাতেমা আক্তার",
+    authorRole: "হস্তশিল্পী",
+    title: "✨ রয়েল গোল্ড জরি নকশী ব্রাইডাল বর্ডার – ৮৫ ঘণ্টার নিখুঁত হাতের কাজের সমাপ্তি",
+    category: "শোকেস",
+    likes: "১৮২",
+    comments: "৪৫",
+    time: "গতকাল",
+    tag: "হাতের এমব্রয়ডারি",
   },
   {
     id: "post-3",
-    author: "StitchLab BD",
-    authorRole: "Studio",
-    title: "🎁 Free EMB & DST File: Geometric Floral Motif for Eid Panjabi Collection 2026",
-    category: "Free Asset",
-    likes: 310,
-    comments: 89,
-    time: "2 days ago",
-    tag: "Free Stitch File",
+    author: "স্টিচল্যাব বিডি",
+    authorRole: "স্টুডিও",
+    title: "🎁 ফ্রি EMB ও DST ফাইল: ঈদ পাঞ্জাবি কালেকশন ২০২৬ এর জন্য এক্সক্লুসিভ ফ্লোরাল মোটিফ",
+    category: "ফ্রি এসেট",
+    likes: "৩১০",
+    comments: "৮৯",
+    time: "২ দিন আগে",
+    tag: "ফ্রি স্টিচ ফাইল",
   },
 ];
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col bg-white font-sans text-black dark:bg-black dark:text-white">
+    <div className="flex min-h-screen flex-col bg-white text-zinc-900 font-sans">
       {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden border-b border-black/10 bg-gradient-to-b from-zinc-50 via-white to-white px-6 py-20 dark:border-white/10 dark:from-zinc-950 dark:via-black dark:to-black lg:px-8 lg:py-28">
-        {/* Subtle Background Glow Accent */}
-        <div className="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-gradient-to-tr from-amber-200/20 via-sky-200/30 to-emerald-200/20 blur-3xl dark:from-amber-900/10 dark:via-sky-900/10 dark:to-emerald-900/10" />
+      <section className="relative overflow-hidden border-b border-zinc-200 bg-gradient-to-b from-zinc-50 via-white to-white px-6 py-16 lg:px-8 lg:py-24">
+        {/* Ambient Glow */}
+        <div className="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-gradient-to-tr from-amber-100/60 via-purple-100/60 to-emerald-100/60 blur-3xl" />
 
         <div className="mx-auto max-w-5xl text-center">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-1.5 text-xs font-semibold text-zinc-800 shadow-xs dark:border-white/15 dark:bg-zinc-900 dark:text-zinc-200">
+          <div className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-4 py-1.5 text-xs font-semibold text-zinc-800 shadow-xs">
             <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            Bangladesh&apos;s #1 Dedicated Embroidery Hub
+            🇧🇩 বাংলাদেশের ১ম নিবেদিত এমব্রয়ডারি প্ল্যাটফর্ম
           </div>
 
           {/* Hero Heading */}
-          <h1 className="mt-6 text-4xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl">
-            Where Embroidery Meets{" "}
-            <span className="bg-gradient-to-r from-amber-600 via-rose-600 to-indigo-600 bg-clip-text text-transparent dark:from-amber-400 dark:via-rose-400 dark:to-indigo-400">
-              Opportunity
+          <h1 className="mt-6 text-4xl font-black tracking-tight text-zinc-950 sm:text-6xl lg:text-7xl leading-[1.15]">
+            সুঁই-সুতোর কারুকাজ থেকে ডিজিটাল স্টিচ —{" "}
+            <span className="bg-gradient-to-r from-amber-600 via-rose-600 to-indigo-600 bg-clip-text text-transparent">
+              সব সমাধান এক ঠিকানায়
             </span>
           </h1>
 
           {/* Hero Description */}
-          <p className="mx-auto mt-6 max-w-2xl text-base text-zinc-600 sm:text-lg dark:text-zinc-400">
-            The premier platform connecting embroidery digitizers, artisanal craftsmen,
-            garment manufacturers, and fashion boutiques. Post jobs, hire top talent,
-            showcase your creative portfolio, and share stitch resources.
+          <p className="mx-auto mt-6 max-w-2xl text-base text-zinc-600 sm:text-lg leading-relaxed">
+            অভিজ্ঞ উইলকম ডিজিটাইজার খুঁজুন, ফ্যাক্টরির জন্য দক্ষ অপারেটর নিয়োগ দিন কিংবা ঘরে বসেই সেরা এমব্রয়ডারি কাজের সুযোগ গ্রহণ করুন। ১২,০০০+ পেশাদারের নির্ভরযোগ্য নেটওয়ার্ক।
           </p>
 
           {/* CTA Buttons */}
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               href="/jobs"
-              className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-black px-6 text-sm font-semibold text-white shadow-sm transition hover:opacity-90 dark:bg-white dark:text-black sm:w-auto"
+              className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-zinc-950 px-6 text-sm font-bold text-white shadow-md transition hover:bg-zinc-800 sm:w-auto"
             >
               <Briefcase size={17} />
-              Find Jobs
+              চাকরি খুঁজুন
               <ArrowRight size={16} />
             </Link>
             <Link
               href="/businesses"
-              className="flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-black/15 bg-white px-6 text-sm font-semibold text-black transition hover:bg-zinc-100 dark:border-white/20 dark:bg-zinc-900 dark:text-white dark:hover:bg-zinc-800 sm:w-auto"
+              className="flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-zinc-300 bg-white px-6 text-sm font-bold text-zinc-900 transition hover:bg-zinc-100 sm:w-auto"
             >
-              Explore Business Directory
+              <Building size={17} />
+              ব্যবসা ডিরেক্টরি দেখুন
             </Link>
             <Link
               href="/register"
-              className="flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-transparent bg-zinc-100 px-6 text-sm font-semibold text-zinc-800 transition hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 sm:w-auto"
+              className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-zinc-100 px-6 text-sm font-bold text-zinc-800 transition hover:bg-zinc-200 sm:w-auto"
             >
               <Users size={17} />
-              Join Community
+              কমিউনিটিতে যোগ দিন
             </Link>
           </div>
 
           {/* Quick Search Bar */}
-          <div className="mx-auto mt-12 max-w-3xl rounded-2xl border border-black/10 bg-white p-2.5 shadow-lg shadow-black/5 dark:border-white/15 dark:bg-zinc-900/90 dark:shadow-none">
+          <div className="mx-auto mt-12 max-w-3xl rounded-2xl border border-zinc-200 bg-white p-2.5 shadow-xl shadow-zinc-100">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
               <div className="relative flex flex-1 items-center">
                 <Search size={18} className="absolute left-3.5 text-zinc-400" />
                 <input
                   type="text"
-                  placeholder="Search Wilcom digitizer, Karchupi master, Tajima operator..."
-                  className="w-full rounded-xl bg-transparent py-2.5 pl-10 pr-3 text-sm text-black placeholder:text-zinc-400 focus:outline-none dark:text-white"
+                  placeholder="যেমন: Wilcom e4 ডিজিটাইজার, কারচুপি মাস্টার, তাজিমা অপারেটর..."
+                  className="w-full rounded-xl bg-transparent py-2.5 pl-10 pr-3 text-sm text-zinc-950 placeholder:text-zinc-400 focus:outline-none"
                 />
               </div>
 
-              <div className="h-6 w-[1px] bg-zinc-200 dark:bg-zinc-800 hidden sm:block" />
+              <div className="h-6 w-[1px] bg-zinc-200 hidden sm:block" />
 
-              <select className="rounded-xl border-0 bg-transparent py-2.5 px-3 text-sm text-zinc-600 focus:outline-none dark:text-zinc-300 dark:bg-zinc-900">
-                <option value="">All Categories</option>
-                <option value="digitizing">Wilcom Digitizing</option>
-                <option value="karchupi">Karchupi & Handcraft</option>
-                <option value="production">Garment Factory</option>
-                <option value="patch">3D Puff & Patches</option>
-                <option value="boutique">Fashion & Boutique</option>
+              <select className="rounded-xl border-0 bg-transparent py-2.5 px-3 text-sm font-medium text-zinc-700 focus:outline-none">
+                <option value="">সকল ক্যাটাগরি</option>
+                <option value="digitizing">উইলকম ডিজিটাইজিং</option>
+                <option value="karchupi">কারচুপি ও হস্তশিল্প</option>
+                <option value="production">গার্মেন্টস ফ্যাক্টরি</option>
+                <option value="patch">৩ডি পাফ ও প্যাচ</option>
+                <option value="boutique">ফ্যাশন ও বুটিক</option>
               </select>
 
               <Link
                 href="/jobs"
-                className="flex items-center justify-center rounded-xl bg-black px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-90 dark:bg-white dark:text-black"
+                className="flex items-center justify-center rounded-xl bg-zinc-950 px-6 py-2.5 text-sm font-bold text-white transition hover:bg-zinc-800"
               >
-                Search
+                সন্ধান করুন
               </Link>
             </div>
           </div>
 
           {/* Trust Highlights */}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-6 text-xs text-zinc-500 dark:text-zinc-400">
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-6 text-xs font-semibold text-zinc-600">
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 size={14} className="text-emerald-500" /> Verified Apparel Factories
+              <CheckCircle2 size={15} className="text-emerald-600" /> ভেরিফাইড পোশাক কারখানা
             </span>
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 size={14} className="text-emerald-500" /> Secure Milestones & Pay
+              <CheckCircle2 size={15} className="text-emerald-600" /> নিরাপদ পেমেন্ট ও চুক্তি
             </span>
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 size={14} className="text-emerald-500" /> 100% Bangladesh Focused
+              <CheckCircle2 size={15} className="text-emerald-600" /> ১০০% বাংলাদেশ কেন্দ্রিক
             </span>
           </div>
         </div>
       </section>
 
       {/* 2. COMMUNITY STATISTICS */}
-      <section className="border-b border-black/10 bg-zinc-50/50 py-12 dark:border-white/10 dark:bg-zinc-950/50">
+      <section className="border-b border-zinc-200 bg-zinc-50/70 py-12">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:gap-6">
             {stats.map((item, idx) => {
@@ -327,20 +326,20 @@ export default function Home() {
               return (
                 <div
                   key={idx}
-                  className="rounded-2xl border border-black/5 bg-white p-5 shadow-xs transition hover:border-black/20 dark:border-white/10 dark:bg-zinc-900/60 dark:hover:border-white/20"
+                  className="rounded-2xl border border-zinc-200/80 bg-white p-5 shadow-xs transition hover:border-zinc-400"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
+                    <span className="text-xs font-semibold text-zinc-500">
                       {item.label}
                     </span>
-                    <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-black/5 text-black dark:bg-white/10 dark:text-white">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-zinc-100 text-zinc-800">
                       <Icon size={16} />
                     </div>
                   </div>
-                  <p className="mt-3 text-2xl font-bold tracking-tight text-black dark:text-white sm:text-3xl">
+                  <p className="mt-3 text-2xl font-extrabold tracking-tight text-zinc-950 sm:text-3xl">
                     {item.value}
                   </p>
-                  <p className="mt-1 text-xs font-medium text-emerald-600 dark:text-emerald-400">
+                  <p className="mt-1 text-xs font-semibold text-emerald-700">
                     {item.change}
                   </p>
                 </div>
@@ -351,25 +350,25 @@ export default function Home() {
       </section>
 
       {/* 3. POPULAR CATEGORIES */}
-      <section className="border-b border-black/10 py-16 lg:py-24 dark:border-white/10">
+      <section className="border-b border-zinc-200 py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div>
-              <span className="text-xs font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-400">
-                Explore by Specialty
+              <span className="text-xs font-bold uppercase tracking-wider text-amber-600">
+                দক্ষতা ও বিভাগ অনুযায়ী খুঁজুন
               </span>
-              <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl text-black dark:text-white">
-                Popular Categories
+              <h2 className="mt-1 text-2xl font-black tracking-tight sm:text-3xl text-zinc-950">
+                জনপ্রিয় এমব্রয়ডারি ক্যাটাগরি
               </h2>
-              <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                Discover embroidery opportunities and specialists across different sectors.
+              <p className="mt-2 text-sm text-zinc-600">
+                আপনার প্রয়োজন অনুযায়ী নির্দিষ্ট সেক্টরের সেরা কারিগর ও কাজের সুযোগ খুঁজে নিন।
               </p>
             </div>
             <Link
               href="/jobs"
-              className="inline-flex items-center gap-1 text-sm font-semibold text-black hover:underline dark:text-white"
+              className="inline-flex items-center gap-1 text-sm font-bold text-zinc-950 hover:underline"
             >
-              Browse All Categories <ChevronRight size={16} />
+              সকল ক্যাটাগরি দেখুন <ChevronRight size={16} />
             </Link>
           </div>
 
@@ -379,27 +378,27 @@ export default function Home() {
               return (
                 <div
                   key={idx}
-                  className="group relative flex flex-col justify-between rounded-2xl border border-black/10 bg-white p-6 shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-black/30 hover:shadow-md dark:border-white/10 dark:bg-zinc-900/40 dark:hover:border-white/30"
+                  className="group relative flex flex-col justify-between rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-zinc-400 hover:shadow-md"
                 >
                   <div>
                     <div className="flex items-center justify-between">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-black/5 text-black transition group-hover:bg-black group-hover:text-white dark:bg-white/10 dark:text-white dark:group-hover:bg-white dark:group-hover:text-black">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100 text-zinc-900 transition group-hover:bg-zinc-950 group-hover:text-white">
                         <Icon size={22} />
                       </div>
-                      <span className="rounded-full bg-zinc-100 px-2.5 py-1 text-[11px] font-semibold text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                      <span className="rounded-full bg-zinc-100 px-2.5 py-1 text-[11px] font-bold text-zinc-700">
                         {cat.tag}
                       </span>
                     </div>
 
-                    <h3 className="mt-5 text-lg font-bold text-black dark:text-white">
+                    <h3 className="mt-5 text-lg font-bold text-zinc-950">
                       {cat.title}
                     </h3>
-                    <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+                    <p className="mt-2 text-sm text-zinc-600 leading-relaxed">
                       {cat.desc}
                     </p>
                   </div>
 
-                  <div className="mt-6 flex items-center justify-between border-t border-black/5 pt-4 text-xs font-medium text-zinc-500 dark:border-white/5 dark:text-zinc-400">
+                  <div className="mt-6 flex items-center justify-between border-t border-zinc-100 pt-4 text-xs font-semibold text-zinc-500">
                     <span>{cat.jobs}</span>
                     <span>•</span>
                     <span>{cat.artists}</span>
@@ -412,25 +411,25 @@ export default function Home() {
       </section>
 
       {/* 4. FEATURED JOBS */}
-      <section className="border-b border-black/10 bg-zinc-50/40 py-16 lg:py-24 dark:border-white/10 dark:bg-zinc-950/40">
+      <section className="border-b border-zinc-200 bg-zinc-50/50 py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
             <div>
-              <span className="text-xs font-semibold uppercase tracking-wider text-rose-600 dark:text-rose-400">
-                Opportunities
+              <span className="text-xs font-bold uppercase tracking-wider text-rose-600">
+                সেরা ক্যারিয়ারের সুযোগ
               </span>
-              <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl text-black dark:text-white">
-                Featured Embroidery Jobs
+              <h2 className="mt-1 text-2xl font-black tracking-tight sm:text-3xl text-zinc-950">
+                শীর্ষ এমব্রয়ডারি চাকরির বিজ্ঞপ্তি
               </h2>
-              <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                Apply directly to verified employers, garment factories, and fashion studios.
+              <p className="mt-2 text-sm text-zinc-600">
+                ভেরিফাইড পোশাক প্রস্তুতকারক, এক্সপোর্ট ফ্যাক্টরি ও বুটিক হাউজে সরাসরি আবেদন করুন।
               </p>
             </div>
             <Link
               href="/jobs"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-black/15 bg-white px-4 py-2 text-sm font-semibold text-black transition hover:bg-zinc-100 dark:border-white/20 dark:bg-zinc-900 dark:text-white dark:hover:bg-zinc-800"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-zinc-300 bg-white px-4 py-2 text-sm font-bold text-zinc-950 transition hover:bg-zinc-100"
             >
-              View All Jobs <ArrowRight size={15} />
+              সকল চাকরি দেখুন <ArrowRight size={15} />
             </Link>
           </div>
 
@@ -438,40 +437,40 @@ export default function Home() {
             {featuredJobs.map((job) => (
               <div
                 key={job.id}
-                className="flex flex-col justify-between rounded-2xl border border-black/10 bg-white p-6 shadow-xs transition hover:border-black/25 dark:border-white/10 dark:bg-zinc-900/60 dark:hover:border-white/25"
+                className="flex flex-col justify-between rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs transition hover:border-zinc-400"
               >
                 <div>
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="text-base font-bold text-black dark:text-white">
+                        <h3 className="text-base font-bold text-zinc-950">
                           {job.title}
                         </h3>
                         {job.urgent && (
-                          <span className="rounded-md bg-rose-50 px-2 py-0.5 text-[10px] font-bold text-rose-600 dark:bg-rose-950/50 dark:text-rose-400">
-                            Urgent
+                          <span className="rounded-md bg-rose-50 px-2 py-0.5 text-[10px] font-bold text-rose-600 border border-rose-200/60">
+                            জরুরি নিয়োগ
                           </span>
                         )}
                       </div>
-                      <p className="mt-1 text-sm font-medium text-zinc-600 dark:text-zinc-300">
+                      <p className="mt-1 text-sm font-semibold text-zinc-600">
                         {job.company}
                       </p>
                     </div>
-                    <span className="rounded-xl border border-black/10 px-2.5 py-1 text-xs font-semibold text-zinc-700 dark:border-white/10 dark:text-zinc-300">
+                    <span className="rounded-xl border border-zinc-200 bg-zinc-50 px-2.5 py-1 text-xs font-bold text-zinc-700">
                       {job.type}
                     </span>
                   </div>
 
-                  <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-zinc-500 dark:text-zinc-400">
-                    <span className="flex items-center gap-1">
+                  <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-zinc-500">
+                    <span className="flex items-center gap-1 font-medium">
                       <MapPin size={14} />
                       {job.location}
                     </span>
-                    <span className="flex items-center gap-1 font-semibold text-black dark:text-white">
+                    <span className="flex items-center gap-1 font-bold text-zinc-950">
                       <DollarSign size={14} />
                       {job.salary}
                     </span>
-                    <span className="flex items-center gap-1">
+                    <span className="flex items-center gap-1 font-medium">
                       <Clock size={14} />
                       {job.posted}
                     </span>
@@ -481,7 +480,7 @@ export default function Home() {
                     {job.skills.map((skill, i) => (
                       <span
                         key={i}
-                        className="rounded-lg bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
+                        className="rounded-lg bg-zinc-100 px-2.5 py-1 text-xs font-semibold text-zinc-700"
                       >
                         {skill}
                       </span>
@@ -489,13 +488,13 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="mt-6 flex items-center justify-between border-t border-black/5 pt-4 dark:border-white/5">
-                  <span className="text-xs text-zinc-500">Quick Apply with EMBOBD Profile</span>
+                <div className="mt-6 flex items-center justify-between border-t border-zinc-100 pt-4 text-xs">
+                  <span className="text-zinc-500 font-medium">EMBOBD প্রোফাইল দিয়ে সরাসরি আবেদন করুন</span>
                   <Link
                     href="/jobs"
-                    className="flex items-center gap-1 text-xs font-bold text-black underline underline-offset-4 hover:opacity-80 dark:text-white"
+                    className="flex items-center gap-1 font-bold text-zinc-950 underline underline-offset-4 hover:opacity-80"
                   >
-                    View Details
+                    বিস্তারিত দেখুন
                   </Link>
                 </div>
               </div>
@@ -505,25 +504,25 @@ export default function Home() {
       </section>
 
       {/* 5. FEATURED ARTISTS & DESIGNERS */}
-      <section className="border-b border-black/10 py-16 lg:py-24 dark:border-white/10">
+      <section className="border-b border-zinc-200 py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
             <div>
-              <span className="text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
-                Top Talent
+              <span className="text-xs font-bold uppercase tracking-wider text-indigo-600">
+                শীর্ষ ট্যালেন্ট
               </span>
-              <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl text-black dark:text-white">
-                Featured Artists & Digitizers
+              <h2 className="mt-1 text-2xl font-black tracking-tight sm:text-3xl text-zinc-950">
+                অভিজ্ঞ ডিজিটাইজার ও দক্ষ কারিগর
               </h2>
-              <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                Hire vetted embroidery professionals ready for freelance or full-time roles.
+              <p className="mt-2 text-sm text-zinc-600">
+                ফ্রিল্যান্স বা ফুল-টাইম কাজের জন্য সেরা ভেরিফাইড পেশাদারদের হায়ার করুন।
               </p>
             </div>
             <Link
               href="/communities"
-              className="inline-flex items-center gap-1 text-sm font-semibold text-black hover:underline dark:text-white"
+              className="inline-flex items-center gap-1 text-sm font-bold text-zinc-950 hover:underline"
             >
-              Explore All Talent <ChevronRight size={16} />
+              সকল ট্যালেন্ট দেখুন <ChevronRight size={16} />
             </Link>
           </div>
 
@@ -531,46 +530,46 @@ export default function Home() {
             {featuredDesigners.map((designer, idx) => (
               <div
                 key={idx}
-                className="flex flex-col justify-between rounded-2xl border border-black/10 bg-white p-6 shadow-xs transition hover:border-black/25 dark:border-white/10 dark:bg-zinc-900/40 dark:hover:border-white/25"
+                className="flex flex-col justify-between rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs transition hover:border-zinc-400"
               >
                 <div>
                   <div className="flex items-center justify-between">
                     <div
-                      className={`flex h-12 w-12 items-center justify-center rounded-2xl font-bold text-white shadow-xs ${designer.avatarBg}`}
+                      className={`flex h-12 w-12 items-center justify-center rounded-2xl font-black text-white shadow-xs ${designer.avatarBg}`}
                     >
                       {designer.name.charAt(0)}
                     </div>
-                    <span className="rounded-full bg-amber-500/10 px-2.5 py-0.5 text-[10px] font-bold text-amber-700 dark:text-amber-300">
+                    <span className="rounded-full bg-amber-50 px-2.5 py-0.5 text-[10px] font-bold text-amber-700 border border-amber-200/60">
                       {designer.badge}
                     </span>
                   </div>
 
-                  <h3 className="mt-4 text-base font-bold text-black dark:text-white">
+                  <h3 className="mt-4 text-base font-bold text-zinc-950">
                     {designer.name}
                   </h3>
-                  <p className="text-xs font-medium text-zinc-600 dark:text-zinc-400">
+                  <p className="text-xs font-semibold text-zinc-600">
                     {designer.role}
                   </p>
 
-                  <div className="mt-3 flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
-                    <span className="flex items-center gap-1 font-semibold text-black dark:text-white">
+                  <div className="mt-3 flex items-center gap-2 text-xs text-zinc-500">
+                    <span className="flex items-center gap-1 font-bold text-zinc-950">
                       <Star size={13} className="fill-amber-400 text-amber-400" />
                       {designer.rating}
                     </span>
-                    <span>({designer.reviews} reviews)</span>
+                    <span>({designer.reviews} রিভিউ)</span>
                     <span>•</span>
                     <span>{designer.experience}</span>
                   </div>
 
-                  <p className="mt-3 text-xs font-semibold text-black dark:text-white">
-                    Rate: <span className="font-normal text-zinc-600 dark:text-zinc-300">{designer.rate}</span>
+                  <p className="mt-3 text-xs font-bold text-zinc-950">
+                    রেট: <span className="font-normal text-zinc-600">{designer.rate}</span>
                   </p>
 
                   <div className="mt-3 flex flex-wrap gap-1.5">
                     {designer.specialty.map((item, i) => (
                       <span
                         key={i}
-                        className="rounded-md bg-zinc-100 px-2 py-0.5 text-[10px] font-medium text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400"
+                        className="rounded-md bg-zinc-100 px-2 py-0.5 text-[10px] font-semibold text-zinc-700"
                       >
                         {item}
                       </span>
@@ -578,12 +577,12 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-black/5 dark:border-white/5">
+                <div className="mt-6 pt-4 border-t border-zinc-100">
                   <Link
                     href="/communities"
-                    className="flex w-full items-center justify-center rounded-xl bg-black/5 py-2 text-xs font-semibold text-black transition hover:bg-black hover:text-white dark:bg-white/10 dark:text-white dark:hover:bg-white dark:hover:text-black"
+                    className="flex w-full items-center justify-center rounded-xl bg-zinc-100 py-2.5 text-xs font-bold text-zinc-900 transition hover:bg-zinc-950 hover:text-white"
                   >
-                    View Portfolio & Hire
+                    পোর্টফোলিও ও হায়ার করুন
                   </Link>
                 </div>
               </div>
@@ -593,25 +592,25 @@ export default function Home() {
       </section>
 
       {/* 6. TRENDING COMMUNITY POSTS & SHOWCASE */}
-      <section className="border-b border-black/10 bg-zinc-50/40 py-16 lg:py-24 dark:border-white/10 dark:bg-zinc-950/40">
+      <section className="border-b border-zinc-200 bg-zinc-50/50 py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
             <div>
-              <span className="text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                Community Feed
+              <span className="text-xs font-bold uppercase tracking-wider text-emerald-600">
+                কমিউনিটি ফিড ও রিসোর্স
               </span>
-              <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl text-black dark:text-white">
-                Trending Discussions & Free Stitch Files
+              <h2 className="mt-1 text-2xl font-black tracking-tight sm:text-3xl text-zinc-950">
+                জনপ্রিয় আলোচনা ও ফ্রি স্টিচ ফাইল
               </h2>
-              <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                Learn digitizing tricks, download free EMB/DST files, and showcase your latest stitchouts.
+              <p className="mt-2 text-sm text-zinc-600">
+                নতুন ডিজিটাইজিং কৌশল শিখুন, ফ্রি EMB/DST ফাইল ডাউনলোড করুন এবং আপনার কাজ শেয়ার করুন।
               </p>
             </div>
             <Link
               href="/communities"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-black/15 bg-white px-4 py-2 text-sm font-semibold text-black transition hover:bg-zinc-100 dark:border-white/20 dark:bg-zinc-900 dark:text-white dark:hover:bg-zinc-800"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-zinc-300 bg-white px-4 py-2 text-sm font-bold text-zinc-950 transition hover:bg-zinc-100"
             >
-              Join Community <ArrowRight size={15} />
+              কমিউনিটিতে যোগ দিন <ArrowRight size={15} />
             </Link>
           </div>
 
@@ -619,47 +618,47 @@ export default function Home() {
             {communityPosts.map((post) => (
               <div
                 key={post.id}
-                className="flex flex-col justify-between rounded-2xl border border-black/10 bg-white p-6 shadow-xs transition hover:border-black/25 dark:border-white/10 dark:bg-zinc-900/60 dark:hover:border-white/25"
+                className="flex flex-col justify-between rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs transition hover:border-zinc-400"
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <span className="rounded-full bg-zinc-100 px-2.5 py-0.5 text-[10px] font-semibold text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                    <span className="rounded-full bg-zinc-100 px-2.5 py-0.5 text-[10px] font-bold text-zinc-700">
                       {post.tag}
                     </span>
                     <span className="text-[11px] text-zinc-400">{post.time}</span>
                   </div>
 
-                  <h3 className="mt-3 text-sm font-bold leading-snug text-black hover:underline dark:text-white">
+                  <h3 className="mt-3 text-sm font-bold leading-snug text-zinc-950 hover:underline">
                     <Link href="/communities">{post.title}</Link>
                   </h3>
 
                   <div className="mt-4 flex items-center gap-2">
-                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-black/10 text-xs font-bold text-black dark:bg-white/10 dark:text-white">
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-zinc-950 text-xs font-bold text-white">
                       {post.author.charAt(0)}
                     </div>
                     <div>
-                      <p className="text-xs font-medium text-black dark:text-white">
+                      <p className="text-xs font-bold text-zinc-950">
                         {post.author}
                       </p>
-                      <p className="text-[10px] text-zinc-400">{post.authorRole}</p>
+                      <p className="text-[10px] text-zinc-500">{post.authorRole}</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="mt-6 flex items-center justify-between border-t border-black/5 pt-4 text-xs text-zinc-500 dark:border-white/5 dark:text-zinc-400">
+                <div className="mt-6 flex items-center justify-between border-t border-zinc-100 pt-4 text-xs text-zinc-500">
                   <div className="flex items-center gap-3">
-                    <span className="flex items-center gap-1 hover:text-rose-500 cursor-pointer">
+                    <span className="flex items-center gap-1 hover:text-rose-500 cursor-pointer font-medium">
                       <Heart size={14} /> {post.likes}
                     </span>
-                    <span className="flex items-center gap-1 hover:text-blue-500 cursor-pointer">
+                    <span className="flex items-center gap-1 hover:text-blue-500 cursor-pointer font-medium">
                       <MessageSquare size={14} /> {post.comments}
                     </span>
                   </div>
                   <Link
                     href="/communities"
-                    className="flex items-center gap-1 font-semibold text-black dark:text-white hover:underline"
+                    className="flex items-center gap-1 font-bold text-zinc-950 hover:underline"
                   >
-                    Read & Reply <ChevronRight size={14} />
+                    পড়ুন ও মতামত দিন <ChevronRight size={14} />
                   </Link>
                 </div>
               </div>
@@ -669,54 +668,54 @@ export default function Home() {
       </section>
 
       {/* 7. HOW IT WORKS */}
-      <section className="py-16 lg:py-24">
+      <section className="py-16 lg:py-24 border-b border-zinc-200">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="text-center">
-            <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
-              Simple Workflow
+            <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+              সহজ ৩টি ধাপ
             </span>
-            <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl text-black dark:text-white">
-              How EMBOBD Works
+            <h2 className="mt-1 text-2xl font-black tracking-tight sm:text-3xl text-zinc-950">
+              যেভাবে কাজ করে EMBOBD
             </h2>
-            <p className="mx-auto mt-2 max-w-xl text-sm text-zinc-600 dark:text-zinc-400">
-              Designed specifically for the apparel and embroidery ecosystem of Bangladesh.
+            <p className="mx-auto mt-2 max-w-xl text-sm text-zinc-600">
+              বাংলাদেশের পোশাক ও এমব্রয়ডারি শিল্পের বাস্তব চাহিদাকে কেন্দ্র করে বিশেষভাবে তৈরি।
             </p>
           </div>
 
           <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
-            <div className="rounded-2xl border border-black/10 bg-white p-6 dark:border-white/10 dark:bg-zinc-900/30">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-black text-sm font-bold text-white dark:bg-white dark:text-black">
-                1
+            <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-950 text-sm font-bold text-white">
+                ১
               </div>
-              <h3 className="mt-4 text-base font-bold text-black dark:text-white">
-                Post a Job or Create Profile
+              <h3 className="mt-4 text-base font-bold text-zinc-950">
+                চাকরির বিজ্ঞপ্তি দিন বা প্রোফাইল তৈরি করুন
               </h3>
-              <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                Employers post specific digitizing, factory, or artisan tasks. Talent builds a verified portfolio showcasing previous stitchouts.
+              <p className="mt-2 text-sm text-zinc-600 leading-relaxed">
+                নিয়োগকারীরা নির্দিষ্ট ডিজিটাইজিং বা ফ্যাক্টরি কাজের বিবরণ পোস্ট করুন। প্রফেশনালরা পূর্ববর্তী কাজের ছবি ও পোর্টফোলিও আপলোড করুন।
               </p>
             </div>
 
-            <div className="rounded-2xl border border-black/10 bg-white p-6 dark:border-white/10 dark:bg-zinc-900/30">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-black text-sm font-bold text-white dark:bg-white dark:text-black">
-                2
+            <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-950 text-sm font-bold text-white">
+                ২
               </div>
-              <h3 className="mt-4 text-base font-bold text-black dark:text-white">
-                Connect, Chat & Quote
+              <h3 className="mt-4 text-base font-bold text-zinc-950">
+                সরাসরি চ্যাট করুন ও দরদাম ঠিক করুন
               </h3>
-              <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                Directly communicate requirements, inspect machine formats (DST, EMB, PES), and agree on terms and delivery dates.
+              <p className="mt-2 text-sm text-zinc-600 leading-relaxed">
+                কাজের বিস্তারিত ও ফাইল ফরম্যাট (DST, EMB, PES) যাচাই করুন এবং পারস্পরিক বোঝাপড়ার মাধ্যমে রেট ও ডেলিভারি সময় নির্ধারণ করুন।
               </p>
             </div>
 
-            <div className="rounded-2xl border border-black/10 bg-white p-6 dark:border-white/10 dark:bg-zinc-900/30">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-black text-sm font-bold text-white dark:bg-white dark:text-black">
-                3
+            <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-950 text-sm font-bold text-white">
+                ৩
               </div>
-              <h3 className="mt-4 text-base font-bold text-black dark:text-white">
-                Deliver Flawless Stitches & Grow
+              <h3 className="mt-4 text-base font-bold text-zinc-950">
+                নিখুঁত স্টিচে প্রজেক্ট ডেলিভারি দিন ও আয় বাড়ান
               </h3>
-              <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                Complete production runs or digitizing deliverables, leave reviews, and build lasting business partnerships.
+              <p className="mt-2 text-sm text-zinc-600 leading-relaxed">
+                সফলভাবে কাজ সম্পন্ন করুন, পেমেন্ট গ্রহণ করুন এবং ক্লায়েন্টের কাছ থেকে রিভিউ নিয়ে দীর্ঘমেয়াদী ব্যবসায়িক সম্পর্ক গড়ুন।
               </p>
             </div>
           </div>
@@ -725,27 +724,27 @@ export default function Home() {
 
       {/* 8. CALL TO ACTION BANNER */}
       <section className="px-6 py-12 lg:px-8">
-        <div className="mx-auto max-w-7xl rounded-3xl bg-zinc-900 px-8 py-14 text-center text-white shadow-xl dark:bg-zinc-900 dark:border dark:border-white/10 sm:px-16">
-          <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
-            Ready to Transform Your Embroidery Business or Career?
+        <div className="mx-auto max-w-7xl rounded-3xl bg-zinc-950 px-8 py-14 text-center text-white shadow-2xl sm:px-16">
+          <h2 className="text-3xl font-black tracking-tight sm:text-4xl">
+            আপনার এমব্রয়ডারি ক্যারিয়ার বা ব্যবসাকে নতুন উচ্চতায় নিতে প্রস্তুত?
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base text-zinc-300">
-            Join thousands of digitizers, boutique owners, factory operators, and fashion designers today.
+            আজই যুক্ত হোন হাজারো দক্ষ ডিজিটাইজার, বুটিক ওনার, কারখানা কর্তৃপক্ষ ও ফ্যাশন ডিজাইনারদের সাথে।
           </p>
 
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               href="/register"
-              className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white px-6 text-sm font-semibold text-black transition hover:bg-zinc-200 sm:w-auto"
+              className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white px-6 text-sm font-bold text-zinc-950 transition hover:bg-zinc-200 sm:w-auto"
             >
-              Get Started Free
+              ফ্রি একাউন্ট খুলুন
               <ArrowRight size={16} />
             </Link>
             <Link
               href="/jobs"
-              className="flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-white/20 bg-transparent px-6 text-sm font-semibold text-white transition hover:bg-white/10 sm:w-auto"
+              className="flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-zinc-700 bg-transparent px-6 text-sm font-bold text-white transition hover:bg-zinc-900 sm:w-auto"
             >
-              Explore Job Board
+              চাকরির বিজ্ঞপ্তি দেখুন
             </Link>
           </div>
         </div>

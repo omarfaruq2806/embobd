@@ -4,14 +4,14 @@ import { useState, useEffect } from "react";
 import {
   Layers,
   PlusCircle,
-  Trash2,
   CheckCircle2,
   Loader2,
   FolderPlus,
+  Tag,
 } from "lucide-react";
 import { categoryApi } from "@/services";
 
-export default function AdminCategoriesPage() {
+export default function ModeratorCategoriesPage() {
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
@@ -70,30 +70,20 @@ export default function AdminCategoriesPage() {
     }
   };
 
-  const handleDeleteCategory = async (id: string) => {
-    if (!confirm("আপনি কি নিশ্চিত যে এই ক্যাটাগরি মুছে ফেলতে চান?")) return;
-
-    try {
-      const res = await categoryApi.delete(id);
-      if (res.success) {
-        setCategories((prev) => prev.filter((c) => c.id !== id));
-        setMessage("ক্যাটাগরি সফলভাবে মুছে ফেলা হয়েছে।");
-        setTimeout(() => setMessage(null), 3000);
-      }
-    } catch (err) {
-      console.error("Failed to delete category:", err);
-    }
-  };
-
   return (
     <div className="mx-auto max-w-5xl">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-extrabold tracking-tight text-zinc-950">
-          এমব্রয়ডারি ক্যাটাগরি ব্যবস্থাপনা
-        </h1>
+        <div className="flex items-center gap-2">
+          <h1 className="text-2xl font-extrabold tracking-tight text-zinc-950">
+            বিশেষায়িত ক্যাটাগরি ও ট্যাক্সোনমি
+          </h1>
+          <span className="rounded-full bg-purple-50 border border-purple-200 px-2.5 py-0.5 text-[10px] font-bold text-purple-700">
+            মডারেটর স্টেশন
+          </span>
+        </div>
         <p className="mt-1 text-xs text-zinc-500">
-          প্ল্যাটফর্মের জন্য বিশেষায়িত শিল্প সেক্টর, ডিজিটাইজিং নিস ও ক্রাফট ক্যাটাগরি তৈরি ও পরিচালনা করুন।
+          এমব্রয়ডারি সেক্টর, নতুন টেকনিক (যেমন: চেনিল, সিকোয়েন্স, উইলকম ডিজিটাইজিং) ও ক্রাফট ক্যাটাগরি কিউরেট করুন।
         </p>
       </div>
 
@@ -112,7 +102,7 @@ export default function AdminCategoriesPage() {
       {/* Add Category Form Card */}
       <div className="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs">
         <h2 className="flex items-center gap-2 text-sm font-bold text-zinc-950">
-          <FolderPlus size={16} /> নতুন ক্যাটাগরি যুক্ত করুন
+          <FolderPlus size={16} className="text-purple-600" /> নতুন বিশেষায়িত ক্যাটাগরি যুক্ত করুন
         </h2>
 
         <form onSubmit={handleAddCategory} className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -125,8 +115,8 @@ export default function AdminCategoriesPage() {
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="যেমন: লেজার-কাট ও এপ্লিক"
-              className="mt-1 w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none"
+              placeholder="যেমন: শিফলি লেস এমব্রয়ডারি"
+              className="mt-1 w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-purple-600 focus:outline-none"
             />
           </div>
 
@@ -138,8 +128,8 @@ export default function AdminCategoriesPage() {
               type="text"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="যেমন: লেজার কাটিং ও প্যাচ এপ্লিক কৌশল"
-              className="mt-1 w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none"
+              placeholder="যেমন: হাই-ভলিউম অল-ওভার লেস ও বর্ডার এমব্রয়ডারি"
+              className="mt-1 w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-purple-600 focus:outline-none"
             />
           </div>
 
@@ -147,10 +137,10 @@ export default function AdminCategoriesPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="flex h-9 w-full items-center justify-center gap-1.5 rounded-xl bg-zinc-950 px-4 text-xs font-semibold text-white shadow-xs transition hover:bg-zinc-800 disabled:opacity-50"
+              className="flex h-9 w-full items-center justify-center gap-1.5 rounded-xl bg-purple-600 px-4 text-xs font-semibold text-white shadow-xs transition hover:bg-purple-700 disabled:opacity-50"
             >
               {submitting ? <Loader2 size={14} className="animate-spin" /> : <PlusCircle size={14} />}
-              ক্যাটাগরি তৈরি করুন
+              ক্যাটাগরি যুক্ত করুন
             </button>
           </div>
         </form>
@@ -159,13 +149,13 @@ export default function AdminCategoriesPage() {
       {/* Categories List */}
       <div className="mt-8">
         <h2 className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
-          বর্তমান ক্যাটাগরিসমূহ ({categories.length})
+          সক্রিয় ক্যাটাগরিসমূহ ({categories.length})
         </h2>
 
         <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
           {loading ? (
             <div className="col-span-2 py-12 text-center text-zinc-400">
-              <Loader2 size={20} className="mx-auto animate-spin text-zinc-600" />
+              <Loader2 size={20} className="mx-auto animate-spin text-purple-600" />
             </div>
           ) : categories.length === 0 ? (
             <p className="col-span-2 py-8 text-center text-xs text-zinc-400">
@@ -178,22 +168,13 @@ export default function AdminCategoriesPage() {
                 className="flex items-start justify-between rounded-2xl border border-zinc-200 bg-white p-4 shadow-xs hover:border-zinc-300"
               >
                 <div>
-                  <h3 className="text-sm font-bold text-zinc-950">
-                    {cat.name}
+                  <h3 className="text-sm font-bold text-zinc-950 flex items-center gap-1.5">
+                    <Tag size={13} className="text-purple-600" /> {cat.name}
                   </h3>
                   <p className="mt-1 text-xs text-zinc-500">
-                    {cat.description || "কোনো বিবরণ প্রদান করা হয়নি।"}
+                    {cat.description || "কোনো বিবরণ নেই।"}
                   </p>
                 </div>
-
-                <button
-                  type="button"
-                  onClick={() => handleDeleteCategory(cat.id)}
-                  className="rounded-lg p-1.5 text-zinc-400 hover:bg-red-50 hover:text-red-600 shrink-0"
-                  title="ক্যাটাগরি মুছে ফেলুন"
-                >
-                  <Trash2 size={14} />
-                </button>
               </div>
             ))
           )}

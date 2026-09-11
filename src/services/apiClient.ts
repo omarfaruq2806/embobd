@@ -4,20 +4,21 @@
  */
 
 export function getBaseApiUrl(): string {
-  const envUrl = process.env.NEXT_PUBLIC_API_URL;
-  if (!envUrl) {
-    if (typeof window !== "undefined") {
-      // In browser deployment without explicit env var, use relative path via Next.js rewrites
-      return "/api/v1";
-    }
-    return "http://localhost:5000/api/v1";
+  // In the browser, always use relative path (/api/v1) so that the browser sends
+  // same-origin session cookies and Next.js rewrites proxy the request to the backend safely.
+  if (typeof window !== "undefined") {
+    return "/api/v1";
   }
+
+  const envUrl =
+    process.env.BACKEND_URL ||
+    process.env.NEXT_PUBLIC_API_URL ||
+    "http://localhost:5000";
 
   // Clean trailing slashes and redundant /api or /api/v1
   const clean = envUrl.replace(/\/+$/, "").replace(/\/api(\/v1)?\/?$/, "");
   return `${clean}/api/v1`;
 }
-
 
 interface RequestOptions extends RequestInit {
   params?: Record<string, string | number | boolean | undefined | null>;
@@ -79,7 +80,7 @@ export async function apiClient<T = any>(
     return {
       statusCode: 500,
       success: false,
-      message: error?.message || "Network request failed",
+      message: error?.message || "Network request failed. Please check your connection.",
       data: null as unknown as T,
     };
   }

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-import { Eye, EyeOff, Loader2, LogIn, Lock, Mail } from "lucide-react";
+import { Eye, EyeOff, Loader2, LogIn, Lock, Mail, Sparkles } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -20,7 +20,7 @@ export default function LoginPage() {
     setError(null);
 
     if (!email.trim() || !password.trim()) {
-      setError("Please enter your email and password.");
+      setError("অনুগ্রহ করে আপনার ইমেইল এবং পাসওয়ার্ড দুটিই লিখুন।");
       return;
     }
 
@@ -34,37 +34,40 @@ export default function LoginPage() {
       });
 
       if (response.error) {
-        setError(response.error.message || "Invalid credentials. Please try again.");
+        setError(response.error.message || "ইমেইল অথবা পাসওয়ার্ড সঠিক নয়। আবার চেষ্টা করুন।");
       } else {
         router.push("/");
         router.refresh();
       }
     } catch (err: any) {
-      setError(err?.message || "Something went wrong. Please try again.");
+      setError(err?.message || "সার্ভারে সমস্যা হয়েছে। কিছুক্ষণ পর আবার চেষ্টা করুন।");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <main className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-6 py-12">
-      <div className="w-full max-w-md rounded-2xl border border-black/10 bg-white p-8 shadow-xs dark:border-white/10 dark:bg-black">
-        {/* Header */}
+    <main className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-zinc-50 px-4 py-12">
+      <div className="w-full max-w-md rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm">
+        {/* Header with Hook */}
         <div className="text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-black/5 text-black dark:bg-white/10 dark:text-white">
+          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100 text-zinc-900 shadow-inner">
             <LogIn size={22} />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-black dark:text-white">
-            Welcome back
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-semibold text-emerald-700 border border-emerald-200 mb-2">
+            <Sparkles size={12} /> আবারও স্বাগতম
+          </div>
+          <h1 className="text-2xl font-bold tracking-tight text-zinc-950">
+            অ্যাকাউন্টে প্রবেশ করুন
           </h1>
-          <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
-            Sign in to access your EMBOBD account
+          <p className="mt-2 text-sm text-zinc-600">
+            দেশের শীর্ষ এমব্রয়ডারি ও টেক্সটাইল কমিউনিটিতে যুক্ত থাকতে লগইন করুন।
           </p>
         </div>
 
         {/* Error Message */}
         {error && (
-          <div className="mt-6 rounded-xl border border-red-500/20 bg-red-50 p-3.5 text-sm text-red-600 dark:bg-red-950/30 dark:text-red-400">
+          <div className="mt-6 rounded-xl border border-rose-200 bg-rose-50 p-3.5 text-sm text-rose-700">
             {error}
           </div>
         )}
@@ -72,8 +75,8 @@ export default function LoginPage() {
         {/* Form */}
         <form onSubmit={handleLogin} className="mt-6 flex flex-col gap-4">
           <div>
-            <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300">
-              Email Address
+            <label className="block text-xs font-semibold text-zinc-800">
+              ইমেইল অ্যাড্রেস
             </label>
             <div className="relative mt-1.5">
               <Mail
@@ -86,14 +89,14 @@ export default function LoginPage() {
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-xl border border-black/15 bg-transparent py-2.5 pl-10 pr-3.5 text-sm text-black placeholder:text-zinc-400 focus:border-black focus:outline-none dark:border-white/15 dark:text-white dark:focus:border-white"
+                className="w-full rounded-xl border border-zinc-300 bg-white py-2.5 pl-10 pr-3.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none focus:ring-1 focus:ring-zinc-950 transition-colors"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300">
-              Password
+            <label className="block text-xs font-semibold text-zinc-800">
+              পাসওয়ার্ড
             </label>
             <div className="relative mt-1.5">
               <Lock
@@ -103,15 +106,15 @@ export default function LoginPage() {
               <input
                 type={showPassword ? "text" : "password"}
                 required
-                placeholder="Enter your password"
+                placeholder="আপনার গোপন পাসওয়ার্ড দিন"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-xl border border-black/15 bg-transparent py-2.5 pl-10 pr-10 text-sm text-black placeholder:text-zinc-400 focus:border-black focus:outline-none dark:border-white/15 dark:text-white dark:focus:border-white"
+                className="w-full rounded-xl border border-zinc-300 bg-white py-2.5 pl-10 pr-10 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none focus:ring-1 focus:ring-zinc-950 transition-colors"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-black dark:hover:text-white"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-800"
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -120,21 +123,21 @@ export default function LoginPage() {
           </div>
 
           {/* Remember me & Forgot Password */}
-          <div className="flex items-center justify-between text-xs">
-            <label className="flex cursor-pointer items-center gap-2 text-zinc-600 dark:text-zinc-400">
+          <div className="flex items-center justify-between text-xs pt-1">
+            <label className="flex cursor-pointer items-center gap-2 text-zinc-700">
               <input
                 type="checkbox"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                className="h-4 w-4 rounded border-black/20 text-black focus:ring-black dark:border-white/20 dark:focus:ring-white"
+                className="h-4 w-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
               />
-              Remember me
+              মনে রাখুন
             </label>
             <Link
               href="/forgot-password"
-              className="text-zinc-500 hover:text-black hover:underline dark:text-zinc-400 dark:hover:text-white"
+              className="text-zinc-600 hover:text-zinc-950 hover:underline font-medium"
             >
-              Forgot password?
+              পাসওয়ার্ড ভুলে গেছেন?
             </Link>
           </div>
 
@@ -142,27 +145,27 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-black py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50 dark:bg-white dark:text-black"
+            className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-zinc-950 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50 shadow-sm"
           >
             {loading ? (
               <>
                 <Loader2 size={16} className="animate-spin" />
-                Signing in...
+                লগইন হচ্ছে...
               </>
             ) : (
-              "Sign In"
+              "লগইন করুন"
             )}
           </button>
         </form>
 
         {/* Footer Link */}
-        <p className="mt-6 text-center text-xs text-zinc-500 dark:text-zinc-400">
-          Don&apos;t have an account?{" "}
+        <p className="mt-6 text-center text-xs text-zinc-600">
+          কোনো অ্যাকাউন্ট নেই?{" "}
           <Link
             href="/register"
-            className="font-semibold text-black underline underline-offset-4 hover:opacity-80 dark:text-white"
+            className="font-bold text-zinc-950 underline underline-offset-4 hover:opacity-80"
           >
-            Create an account
+            নতুন অ্যাকাউন্ট খুলুন
           </Link>
         </p>
       </div>

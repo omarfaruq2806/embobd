@@ -39,7 +39,6 @@ export default function BusinessDetailPage({
         if (res.success && res.data) {
           setBusiness(res.data);
         } else {
-          // Fallback fetch by ID if slug did not match
           const resFallback = await businessApi.getById(resolvedParams.slug);
           if (resFallback.success && resFallback.data) {
             setBusiness(resFallback.data);
@@ -65,12 +64,29 @@ export default function BusinessDetailPage({
     }
   };
 
+  const formatBusinessType = (type: string) => {
+    switch (type) {
+      case "FACTORY":
+        return "গার্মেন্টস / এমব্রয়ডারি ফ্যাক্টরি";
+      case "SHOP":
+        return "এমব্রয়ডারি শপ / আউটলেট";
+      case "DEALER":
+        return "মেশিনারিজ ও খুচরা যন্ত্রাংশ ডিলার";
+      case "SUPPLIER":
+        return "সুতা ও কাঁচামাল সরবরাহকারী";
+      case "COMPANY":
+        return "কর্পোরেট স্টুডিও / প্রতিষ্ঠান";
+      default:
+        return type;
+    }
+  };
+
   if (loading) {
     return (
-      <main className="flex min-h-[60vh] items-center justify-center">
+      <main className="flex min-h-[60vh] items-center justify-center bg-zinc-50 font-sans">
         <div className="flex flex-col items-center gap-3">
-          <Loader2 size={28} className="animate-spin text-zinc-500" />
-          <p className="text-xs font-semibold text-zinc-500">Loading business profile...</p>
+          <Loader2 size={28} className="animate-spin text-zinc-600" />
+          <p className="text-xs font-semibold text-zinc-600">ব্যবসার তথ্য লোড হচ্ছে...</p>
         </div>
       </main>
     );
@@ -78,57 +94,57 @@ export default function BusinessDetailPage({
 
   if (!business) {
     return (
-      <main className="min-h-[60vh] py-20 text-center">
+      <main className="min-h-[60vh] py-20 text-center bg-zinc-50 font-sans">
         <Store size={44} className="mx-auto text-zinc-400" />
-        <h1 className="mt-4 text-xl font-bold text-black dark:text-white">Business Not Found</h1>
-        <p className="mt-2 text-xs text-zinc-500">
-          The requested business profile is either pending approval or does not exist.
+        <h1 className="mt-4 text-xl font-bold text-zinc-950">প্রতিষ্ঠানটি খুঁজে পাওয়া যায়নি</h1>
+        <p className="mt-2 text-xs text-zinc-600">
+          অনুরোধকৃত ব্যবসা প্রোফাইলটি এখনও রিভিউতে রয়েছে অথবা মুছে ফেলা হয়েছে।
         </p>
         <Link
           href="/businesses"
-          className="mt-6 inline-flex items-center gap-1.5 rounded-xl bg-black px-4 py-2.5 text-xs font-semibold text-white dark:bg-white dark:text-black"
+          className="mt-6 inline-flex items-center gap-1.5 rounded-xl bg-zinc-950 px-4 py-2.5 text-xs font-bold text-white shadow-sm"
         >
-          <ArrowLeft size={14} /> Back to Directory
+          <ArrowLeft size={14} /> ডিরেক্টরিতে ফিরে যান
         </Link>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-zinc-50/60 pb-24 pt-8 dark:bg-black">
-      <div className="mx-auto max-w-5xl px-6 lg:px-8">
+    <main className="min-h-screen bg-zinc-50 pb-24 pt-8 font-sans">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         {/* Navigation Breadcrumb & Back */}
         <div className="flex items-center justify-between">
           <Link
             href="/businesses"
-            className="flex items-center gap-1.5 text-xs font-semibold text-zinc-500 hover:text-black dark:hover:text-white"
+            className="flex items-center gap-1.5 text-xs font-semibold text-zinc-600 hover:text-zinc-950 transition-colors"
           >
-            <ArrowLeft size={14} /> Back to Directory
+            <ArrowLeft size={14} /> ডিরেক্টরিতে ফিরে যান
           </Link>
 
           <button
             type="button"
             onClick={handleShare}
-            className="flex items-center gap-1.5 rounded-xl border border-black/10 bg-white px-3.5 py-1.5 text-xs font-semibold text-zinc-700 shadow-xs transition hover:bg-zinc-50 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800"
+            className="flex items-center gap-1.5 rounded-xl border border-zinc-300 bg-white px-3.5 py-1.5 text-xs font-bold text-zinc-800 shadow-xs transition hover:bg-zinc-100"
           >
             {copied ? (
               <>
-                <CheckCircle2 size={14} className="text-emerald-500" /> Link Copied!
+                <CheckCircle2 size={14} className="text-emerald-600" /> লিংক কপি হয়েছে!
               </>
             ) : (
               <>
-                <Share2 size={14} /> Share Profile
+                <Share2 size={14} /> প্রোফাইল শেয়ার করুন
               </>
             )}
           </button>
         </div>
 
         {/* Profile Card Header */}
-        <div className="mt-6 overflow-hidden rounded-3xl border border-black/10 bg-white shadow-xs dark:border-white/10 dark:bg-zinc-950">
+        <div className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
           {/* Top Banner Accent */}
           <div className="h-32 bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-950 p-6 flex items-end justify-end">
-            <span className="rounded-full bg-white/10 backdrop-blur-md px-3 py-1 text-[11px] font-bold text-white uppercase tracking-wider">
-              {business.type}
+            <span className="rounded-full bg-white/20 backdrop-blur-md px-3.5 py-1 text-[11px] font-bold text-white uppercase tracking-wider">
+              {formatBusinessType(business.type)}
             </span>
           </div>
 
@@ -139,49 +155,49 @@ export default function BusinessDetailPage({
                 <img
                   src={business.logo}
                   alt={business.name}
-                  className="h-24 w-24 rounded-3xl border-4 border-white bg-white object-cover shadow-md dark:border-zinc-950 dark:bg-zinc-900"
+                  className="h-24 w-24 rounded-2xl border-4 border-white bg-white object-cover shadow-md"
                 />
               ) : (
-                <div className="flex h-24 w-24 items-center justify-center rounded-3xl border-4 border-white bg-black text-2xl font-black text-white shadow-md dark:border-zinc-950 dark:bg-white dark:text-black">
+                <div className="flex h-24 w-24 items-center justify-center rounded-2xl border-4 border-white bg-zinc-900 text-2xl font-black text-white shadow-md">
                   {business.name.charAt(0).toUpperCase()}
                 </div>
               )}
 
               <div className="flex-1">
                 <div className="flex flex-wrap items-center gap-2">
-                  <h1 className="text-2xl font-black tracking-tight text-black dark:text-white sm:text-3xl">
+                  <h1 className="text-2xl font-bold tracking-tight text-zinc-950 sm:text-3xl">
                     {business.name}
                   </h1>
                   {business.isVerified && (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-bold text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300">
-                      <ShieldCheck size={14} />
-                      Verified Business
+                    <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 text-xs font-bold text-emerald-800">
+                      <ShieldCheck size={14} className="text-emerald-600" />
+                      ভেরিফাইড প্রতিষ্ঠান
                     </span>
                   )}
                 </div>
 
-                <p className="mt-1 flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400">
+                <p className="mt-1 flex items-center gap-1.5 text-xs text-zinc-600 font-medium">
                   <MapPin size={13} className="text-zinc-400" />
-                  {business.address}, {business.area ? `${business.area}, ` : ""}{business.district}, {business.country || "Bangladesh"}
+                  {business.address}, {business.area ? `${business.area}, ` : ""}{business.district}, {business.country || "বাংলাদেশ"}
                 </p>
               </div>
             </div>
 
             {/* Quick Action Contact Buttons */}
-            <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-black/5 pt-6 dark:border-white/5">
+            <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-zinc-100 pt-6">
               <a
                 href={`tel:${business.phone}`}
-                className="flex items-center gap-2 rounded-2xl bg-black px-5 py-2.5 text-xs font-bold text-white shadow-sm transition hover:opacity-90 dark:bg-white dark:text-black"
+                className="flex items-center gap-2 rounded-xl bg-zinc-950 px-5 py-2.5 text-xs font-bold text-white shadow-sm transition hover:opacity-90"
               >
-                <Phone size={15} /> Call: {business.phone}
+                <Phone size={15} /> কল করুন: {business.phone}
               </a>
 
               {business.email && (
                 <a
                   href={`mailto:${business.email}`}
-                  className="flex items-center gap-2 rounded-2xl border border-black/15 bg-white px-4 py-2.5 text-xs font-bold text-black transition hover:bg-zinc-100 dark:border-white/15 dark:bg-zinc-900 dark:text-white dark:hover:bg-zinc-800"
+                  className="flex items-center gap-2 rounded-xl border border-zinc-300 bg-white px-4 py-2.5 text-xs font-bold text-zinc-900 transition hover:bg-zinc-100"
                 >
-                  <Mail size={15} /> Send Email
+                  <Mail size={15} /> ইমেইল পাঠান
                 </a>
               )}
 
@@ -190,9 +206,9 @@ export default function BusinessDetailPage({
                   href={business.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 rounded-2xl border border-black/15 bg-white px-4 py-2.5 text-xs font-bold text-black transition hover:bg-zinc-100 dark:border-white/15 dark:bg-zinc-900 dark:text-white dark:hover:bg-zinc-800"
+                  className="flex items-center gap-2 rounded-xl border border-zinc-300 bg-white px-4 py-2.5 text-xs font-bold text-zinc-900 transition hover:bg-zinc-100"
                 >
-                  <Globe size={15} /> Visit Website
+                  <Globe size={15} /> ওয়েবসাইট ভিজিট করুন
                 </a>
               )}
             </div>
@@ -202,29 +218,29 @@ export default function BusinessDetailPage({
         {/* Details & Specs Grid */}
         <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-3">
           {/* Main Description & Brands (2 Cols) */}
-          <div className="space-y-8 md:col-span-2">
+          <div className="space-y-6 md:col-span-2">
             {/* About Section */}
-            <div className="rounded-3xl border border-black/10 bg-white p-6 shadow-xs dark:border-white/10 dark:bg-zinc-950 sm:p-8">
-              <h2 className="text-base font-bold text-black dark:text-white">About the Business</h2>
-              <div className="mt-4 text-xs leading-relaxed text-zinc-600 dark:text-zinc-300 space-y-3">
+            <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm sm:p-8">
+              <h2 className="text-base font-bold text-zinc-950">প্রতিষ্ঠানের পরিচিতি ও সক্ষমতা</h2>
+              <div className="mt-4 text-xs leading-relaxed text-zinc-700 space-y-3">
                 <p>
                   {business.description ||
-                    "This verified business operates within the Bangladesh embroidery, garment, and textile network providing specialized services and machinery support."}
+                    "এই ভেরিফাইড প্রতিষ্ঠানটি বাংলাদেশের এমব্রয়ডারি, গার্মেন্টস এবং টেক্সটাইল সেক্টরে স্পেশালাইজড মেশিনারিজ ও সেবা প্রদান করে থাকে।"}
                 </p>
               </div>
             </div>
 
             {/* Brands Handled */}
             {business.brands && business.brands.length > 0 && (
-              <div className="rounded-3xl border border-black/10 bg-white p-6 shadow-xs dark:border-white/10 dark:bg-zinc-950 sm:p-8">
-                <h2 className="flex items-center gap-2 text-base font-bold text-black dark:text-white">
-                  <Tag size={16} /> Machinery & Brands Handled
+              <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm sm:p-8">
+                <h2 className="flex items-center gap-2 text-base font-bold text-zinc-950">
+                  <Tag size={16} className="text-zinc-700" /> মেশিনের ব্র্যান্ড ও স্পেয়ার পার্টস
                 </h2>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {business.brands.map((brand, idx) => (
+                  {business.brands.map((brand: string, idx: number) => (
                     <span
                       key={idx}
-                      className="rounded-xl border border-black/10 bg-zinc-50 px-3 py-1.5 text-xs font-bold text-zinc-800 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-200"
+                      className="rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-1.5 text-xs font-semibold text-zinc-800"
                     >
                       {brand}
                     </span>
@@ -236,34 +252,34 @@ export default function BusinessDetailPage({
 
           {/* Sidebar Location & Meta (1 Col) */}
           <div className="space-y-6">
-            <div className="rounded-3xl border border-black/10 bg-white p-6 shadow-xs dark:border-white/10 dark:bg-zinc-950">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-                Location & Information
+            <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+                ঠিকানা ও যোগাযোগের তথ্য
               </h3>
 
               <div className="mt-4 space-y-4 text-xs">
                 <div>
-                  <span className="font-medium text-zinc-400">District / Region</span>
-                  <p className="mt-0.5 font-bold text-black dark:text-white">{business.district}</p>
+                  <span className="font-semibold text-zinc-500">জেলা / অঞ্চল</span>
+                  <p className="mt-0.5 font-bold text-zinc-950">{business.district}</p>
                 </div>
 
                 {business.area && (
                   <div>
-                    <span className="font-medium text-zinc-400">Area / Zone</span>
-                    <p className="mt-0.5 font-bold text-black dark:text-white">{business.area}</p>
+                    <span className="font-semibold text-zinc-500">এলাকা / জোন</span>
+                    <p className="mt-0.5 font-bold text-zinc-950">{business.area}</p>
                   </div>
                 )}
 
                 <div>
-                  <span className="font-medium text-zinc-400">Complete Address</span>
-                  <p className="mt-0.5 text-zinc-700 dark:text-zinc-300">{business.address}</p>
+                  <span className="font-semibold text-zinc-500">পূর্ণাঙ্গ ঠিকানা</span>
+                  <p className="mt-0.5 text-zinc-800">{business.address}</p>
                 </div>
 
-                <div className="border-t border-black/5 pt-3 dark:border-white/5">
-                  <span className="font-medium text-zinc-400">Listed Since</span>
-                  <p className="mt-0.5 flex items-center gap-1 text-zinc-500 dark:text-zinc-400">
-                    <Calendar size={13} />
-                    {new Date(business.createdAt).toLocaleDateString("en-US", {
+                <div className="border-t border-zinc-100 pt-3">
+                  <span className="font-semibold text-zinc-500">তালিকাভুক্তির তারিখ</span>
+                  <p className="mt-0.5 flex items-center gap-1 text-zinc-600">
+                    <Calendar size={13} className="text-zinc-400" />
+                    {new Date(business.createdAt).toLocaleDateString("bn-BD", {
                       month: "short",
                       day: "numeric",
                       year: "numeric",
