@@ -19,6 +19,7 @@ import {
   Lock,
 } from "lucide-react";
 import { categoryApi, jobApi } from "@/services";
+import { ImageUpload } from "@/components/common/ImageUpload";
 
 export default function PostJobPage() {
   const router = useRouter();
@@ -343,16 +344,13 @@ export default function PostJobPage() {
               </div>
 
               <div className="sm:col-span-2">
-                <label className="flex items-center justify-between text-xs font-semibold text-zinc-800">
-                  <span>কোম্পানি লোগো লিংক (ঐচ্ছিক)</span>
-                  <span className="text-[10px] text-zinc-500 font-normal">ছবির সরাসরি লিংক</span>
-                </label>
-                <input
-                  type="url"
+                <ImageUpload
+                  label="কোম্পানি লোগো (ঐচ্ছিক)"
                   value={companyLogo}
-                  onChange={(e) => setCompanyLogo(e.target.value)}
-                  placeholder="https://images.unsplash.com/..."
-                  className="mt-1.5 w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none"
+                  onChange={(url) => setCompanyLogo(url)}
+                  folder="companies"
+                  preset="logo"
+                  helperText="কম্প্রেসড WebP ফরম্যাটে অটোমেটিক আপলোড হবে।"
                 />
               </div>
             </div>

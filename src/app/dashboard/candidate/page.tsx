@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { userApi } from "@/services/user.service";
+import { ResumeUpload } from "@/components/common/ResumeUpload";
 import {
   User as UserIcon,
   Briefcase,
@@ -596,17 +597,11 @@ export default function CandidateDashboardPage() {
                     </div>
 
                     <div>
-                      <label className="flex items-center justify-between text-xs font-bold text-zinc-800">
-                        <span>অনলাইন সিভি / জীবনবৃত্তান্ত লিংক</span>
-                        <span className="text-[10px] text-zinc-500 font-normal">গুগল ড্রাইভ বা পিডিএফ ফাইল লিংক</span>
-                      </label>
-                      <input
-                        type="url"
-                        name="resumeUrl"
+                      <ResumeUpload
+                        label="সিভি / জীবনবৃত্তান্ত (PDF)"
                         value={formData.resumeUrl}
-                        onChange={handleInputChange}
-                        placeholder="https://drive.google.com/file/d/your-cv-link"
-                        className="mt-2 w-full rounded-xl border border-zinc-300 bg-white px-4 py-2.5 text-xs text-zinc-900 placeholder-zinc-400 focus:border-zinc-950 focus:outline-none"
+                        onChange={(url) => setFormData((prev) => ({ ...prev, resumeUrl: url }))}
+                        helperText="সরাসরি PDF সিভি ড্রপ বা সিলেক্ট করুন"
                       />
                     </div>
                   </div>

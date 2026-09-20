@@ -27,6 +27,7 @@ import {
   Phone,
 } from "lucide-react";
 import { jobApi, userApi } from "@/services";
+import { ResumeUpload } from "@/components/common/ResumeUpload";
 
 export default function JobDetailsPage() {
   const params = useParams();
@@ -661,17 +662,13 @@ export default function JobDetailsPage() {
                   </div>
                 </div>
 
-                {/* Resume URL */}
+                {/* Resume Upload / URL */}
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-800">
-                    সিভি / জীবনবৃত্তান্ত লিংক
-                  </label>
-                  <input
-                    type="url"
+                  <ResumeUpload
+                    label="সিভি / জীবনবৃত্তান্ত (PDF)"
                     value={applyForm.resumeUrl}
-                    onChange={(e) => setApplyForm({ ...applyForm, resumeUrl: e.target.value })}
-                    placeholder="https://drive.google.com/file/d/... (সরাসরি লিংক)"
-                    className="mt-1 w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2 text-xs text-zinc-900 focus:border-zinc-950 focus:outline-none"
+                    onChange={(url) => setApplyForm((prev) => ({ ...prev, resumeUrl: url }))}
+                    helperText="সরাসরি PDF ফাইল নির্বাচন বা ড্র্যাগ করুন"
                   />
                 </div>
 

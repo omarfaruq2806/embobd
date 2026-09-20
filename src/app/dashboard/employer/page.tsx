@@ -6,6 +6,7 @@ import { authClient } from "@/lib/auth-client";
 import { userApi } from "@/services/user.service";
 import { companyApi } from "@/services/company.service";
 import { jobApi } from "@/services/job.service";
+import { ImageUpload } from "@/components/common/ImageUpload";
 import {
   Building,
   Briefcase,
@@ -634,16 +635,13 @@ export default function EmployerDashboardPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-zinc-800">
-                  কোম্পানি লোগো URL
-                </label>
-                <input
-                  type="url"
-                  name="companyLogo"
+                <ImageUpload
+                  label="কোম্পানি লোগো / ছবি (ঐচ্ছিক)"
                   value={formData.companyLogo}
-                  onChange={handleInputChange}
-                  placeholder="https://images.unsplash.com/... অথবা ছবির সরাসরি লিংক"
-                  className="mt-2 w-full rounded-xl border border-zinc-300 bg-white px-4 py-2.5 text-xs text-zinc-900 placeholder-zinc-400 focus:border-zinc-950 focus:outline-none"
+                  onChange={(url) => setFormData((prev) => ({ ...prev, companyLogo: url }))}
+                  folder="companies"
+                  preset="logo"
+                  helperText="কম্প্রেসড WebP ফরম্যাটে অটোমেটিক আপলোড হবে।"
                 />
               </div>
 

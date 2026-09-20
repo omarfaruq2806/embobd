@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { userApi } from "@/services/user.service";
+import { ImageUpload } from "@/components/common/ImageUpload";
+import { ResumeUpload } from "@/components/common/ResumeUpload";
 import {
   User as UserIcon,
   Mail,
@@ -222,17 +224,15 @@ export default function UniversalProfilePage() {
         {/* Profile Card Header */}
         <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm sm:p-8">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
-            {formData.image ? (
-              <img
-                src={formData.image}
-                alt={formData.name || "User Avatar"}
-                className="h-20 w-20 rounded-2xl object-cover border border-zinc-200 shadow-sm"
+            <div className="shrink-0">
+              <ImageUpload
+                value={formData.image}
+                onChange={(url) => setFormData((prev) => ({ ...prev, image: url }))}
+                folder="avatars"
+                preset="logo"
+                className="w-24"
               />
-            ) : (
-              <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-zinc-900 text-2xl font-black text-white shadow-sm">
-                {formData.name?.charAt(0) || sessionUser?.email?.charAt(0).toUpperCase() || "U"}
-              </div>
-            )}
+            </div>
 
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-2">
@@ -490,15 +490,11 @@ export default function UniversalProfilePage() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-800">
-                  সিভি / জীবনবৃত্তান্ত ড্রাইভ লিংক
-                </label>
-                <input
-                  type="url"
+                <ResumeUpload
+                  label="সিভি / জীবনবৃত্তান্ত (PDF)"
                   value={formData.resumeUrl}
-                  onChange={(e) => setFormData({ ...formData, resumeUrl: e.target.value })}
-                  placeholder="https://drive.google.com/your-cv.pdf"
-                  className="mt-1.5 w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-sm text-zinc-900 focus:border-zinc-950 focus:outline-none focus:ring-1 focus:ring-zinc-950 transition-colors"
+                  onChange={(url) => setFormData((prev) => ({ ...prev, resumeUrl: url }))}
+                  helperText="সরাসরি PDF আপলোড করুন"
                 />
               </div>
             </div>
