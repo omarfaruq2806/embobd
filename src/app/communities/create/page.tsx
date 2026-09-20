@@ -21,6 +21,7 @@ import {
   Info,
 } from "lucide-react";
 import { communityApi } from "@/services";
+import { ImageUpload } from "@/components/common/ImageUpload";
 
 const CATEGORY_OPTIONS = [
   "টিউটোরিয়াল",
@@ -273,34 +274,19 @@ export default function CreateCommunityPostPage() {
                 </select>
               </div>
 
-              {/* Cover Image URL */}
-              <div>
-                <label className="flex items-center justify-between text-xs font-semibold text-zinc-800">
-                  <span>কভার ছবির URL (ঐচ্ছিক)</span>
-                </label>
-                <div className="relative mt-2">
-                  <ImageIcon className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
-                  <input
-                    type="url"
-                    placeholder="https://images.unsplash.com/..."
-                    value={coverImage}
-                    onChange={(e) => setCoverImage(e.target.value)}
-                    className="w-full rounded-xl border border-zinc-300 bg-white py-3 pl-10 pr-4 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Cover Image Thumbnail Preview */}
-            {coverImage && (
-              <div className="mt-4 overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-100">
-                <img
-                  src={coverImage}
-                  alt="Cover Preview"
-                  className="h-44 w-full object-cover"
+              {/* Cover Image Upload */}
+              <div className="mt-4">
+                <ImageUpload
+                  label="কভার ছবি (ঐচ্ছিক)"
+                  value={coverImage}
+                  onChange={(url) => setCoverImage(url)}
+                  folder="community"
+                  preset="banner"
+                  aspectRatio="video"
+                  helperText="কম্প্রেসড WebP ফরম্যাটে অটোমেটিক আপলোড হবে।"
                 />
               </div>
-            )}
+            </div>
 
             {/* Tags (Comma Separated) with Live Badge Pills */}
             <div className="mt-6">

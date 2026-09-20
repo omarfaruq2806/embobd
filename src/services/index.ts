@@ -5,3 +5,4 @@ export * from "./category.service";
 export * from "./company.service";
 export * from "./user.service";
 export * from "./community.service";
+export * from "./upload.service";

@@ -21,6 +21,7 @@ import {
   Lock,
 } from "lucide-react";
 import { businessApi } from "@/services";
+import { ImageUpload } from "@/components/common/ImageUpload";
 
 const BUSINESS_TYPES = [
   { value: "SHOP", label: "এমব্রয়ডারি শপ / আউটলেট" },
@@ -261,16 +262,13 @@ export default function CreateBusinessPage() {
                 </div>
 
                 <div>
-                  <label className="flex items-center justify-between text-xs font-semibold text-zinc-800">
-                    <span>লোগো বা ফটো URL (ঐচ্ছিক)</span>
-                  </label>
-                  <input
-                    type="url"
-                    name="logo"
+                  <ImageUpload
+                    label="প্রতিষ্ঠানের লোগো / ফটো (ঐচ্ছিক)"
                     value={formData.logo}
-                    onChange={handleChange}
-                    placeholder="https://example.com/logo.png"
-                    className="mt-1 w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-xs text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none"
+                    onChange={(url) => setFormData((prev) => ({ ...prev, logo: url }))}
+                    folder="businesses"
+                    preset="logo"
+                    helperText="কম্প্রেসড WebP ফরম্যাটে অটোমেটিক আপলোড হবে।"
                   />
                 </div>
               </div>
